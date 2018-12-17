@@ -11,7 +11,6 @@ class ForgotPasswordForm extends Component {
                 <View>
                     <FloatingTextInput
                         label={'E-mail'}
-                        errors={['Enter a valid E-mail address']}
                         keyboardType='email-address'
                     />
                 </View>

@@ -8,14 +8,14 @@ import AddItems from './components/addItems';
 
 class Table extends Component {
     render() {
-        const {data} = this.props
+        const {data, actionClose} = this.props
         return (
             <View style={styles.container}>
                 <Headers/>
                 {
                     data.length > 0?
                     <List data={data}/>:
-                    <AddItems/>
+                    <AddItems actionClose={actionClose}/>
                 }
             </View>      
         );

@@ -75,7 +75,7 @@ class CashScreen extends Component{
           open={this.state.modalRight} onClose={()=>{this.setState({modalRight: false})}}
           openDrawerOffset={0.1} 
           content={
-              <RightSideBar data={data} subtotal={total_amount}/> 
+              <RightSideBar data={data} subtotal={total_amount} actionClose={this.closeControlPanel}/> 
           }
       >
         <View style={styles.container}>

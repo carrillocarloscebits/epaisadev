@@ -4,11 +4,12 @@ import { Dimensions,View, Text, StyleSheet, ImageBackground,TouchableOpacity,Ima
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 class AddItems extends Component {
     render() {
+        const {actionClose} = this.props
         return (
                 <View  style={styles.container} >
                 
                     <Text style={styles.carEmpty}>Your Cart is empty</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={actionClose}>
                         <Text style={styles.addMore}>Add Items</Text>
                     </TouchableOpacity>
                 </View>

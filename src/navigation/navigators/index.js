@@ -7,7 +7,8 @@ import CreateAccount from "../../features/create_account/containers/create_accou
 import ForgotPassword from "../../features/forgot_password";
 import Inside from "../../features/inside";
 import AuthLoading from "../../features/auth_loading";
-// import CashRegister from "../../features/cash_register/cashScreen";
+import cashScreen from "../../features/cash_register/cashScreen";
+import CashRegister from "../../features/cash_register/cashScreen";
   
 const AuthStack = createStackNavigator({
   [screenNames.LOGIN]: {
@@ -24,8 +25,8 @@ const AuthStack = createStackNavigator({
 });
 
 const AppStack = createStackNavigator({
-  [screenNames.INSIDE_APP]: {
-    screen: Inside,
+  [screenNames.CASH_REGISTER]: {
+    screen: CashRegister,
   }
 })
 

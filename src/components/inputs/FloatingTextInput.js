@@ -86,9 +86,17 @@ class FloatingTextInput extends Component {
     this.setState({ value: "" });
   };
 
-  handleFocus = () => this.setState({ isFocused: true });
+  handleFocus = () => {
+    this.setState({ isFocused: true })
+    if(this.props.onFocus){
+      this.props.onFocus()
+    }
+  };
   handleBlur = () => {
     this.setState({ isFocused: false });
+    if(this.props.onBlur){
+      this.props.onBlur()
+    }
   };
 
   renderValidation = () => {
@@ -150,6 +158,7 @@ class FloatingTextInput extends Component {
     if (decimals) {
       //   v = v.toFixed(decimals);
     }
+    this.setState({ value: v });
     if(this.props.onChangeText){
       this.props.onChangeText(v);
 

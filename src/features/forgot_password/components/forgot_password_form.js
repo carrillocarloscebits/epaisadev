@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Keyboard} from 'react-native';
 import {TextMontserrat, FloatingTextInput,} from 'components';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -31,6 +31,12 @@ class ForgotPasswordForm extends Component {
         }
     }
 
+    checkField(key){
+        if(key === 'email') {
+
+        }
+    }
+
     render() {
         const {email, mobile} = this.state;
         return (
@@ -42,6 +48,9 @@ class ForgotPasswordForm extends Component {
                         label={'E-mail'}
                         keyboardType='email-address'
                         onChangeText={(val) => this._textChange('email', val)}
+                        onBlur={this._changeForm}
+                        returnKeyType={'done'}
+                        onSubmitEditing={()=>{Keyboard.dismiss; this.checkField('email')}}
                     />
                 </View>
                 <TextMontserrat style={styles.or}>OR</TextMontserrat>
@@ -50,6 +59,9 @@ class ForgotPasswordForm extends Component {
                         label={'Mobile Number'}
                         keyboardType='numeric'
                         onChangeText={(val) => this._textChange('mobile', val)}
+                        onBlur={this._changeForm}
+                        returnKeyType={'done'}
+                        onSubmitEditing={()=>{Keyboard.dismiss; this.checkField('mobile')}}
                     />
                 </View>
             </View>

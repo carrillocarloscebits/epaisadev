@@ -96,6 +96,7 @@ class ForgotPassword extends Component {
 
     handleChange = ({email, mobile}) => {
         this.setState({email, mobile})
+        console.log(email)
         this.validateForm();
     }
 

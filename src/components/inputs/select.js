@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { Colors } from "api";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { TextMontserrat } from "components";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 class Select extends Component {
   state = {
     showOptions: false,
@@ -50,7 +52,7 @@ class Select extends Component {
             <TouchableOpacity onPress={() => this._selectOption(item)} key={i}>
               <View
                 style={{
-                  height: 32,
+                  height: 10,
                   width: "100%",
                   justifyContent: "center",
                   alignItems: "center"
@@ -75,7 +77,7 @@ class Select extends Component {
         width: "100%"
       },
       selectContainer: {
-        height: 50,
+        height: wp('2.0%'),
         marginTop: 20
       }
     };

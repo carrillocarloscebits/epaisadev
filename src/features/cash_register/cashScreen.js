@@ -13,14 +13,19 @@ import RightSideBar from './components/RightSideBar/rightSideBar'
 import Drawer from 'react-native-drawer'
 import {CardWithHeader} from "../../components"
 import ModalDiscount from './components/Modals/ModalDiscount/modalDiscount';
+import ModalDelivery from './components/Modals/ModalDelivery/modalDelivery';
+import ModalOptions from './components/Modals/ModalOptions/modalOptions';
 class CashScreen extends Component{
   static navigationOptions = {
     header: null
   }
   state = {
+    modalOptions: false,
     modalActive: false,
     modalRight: false,
-    modalDiscount:false
+    modalDiscount:true,
+    modalDelivery:false,
+
   }
   
   closeControlPanel  = () => {
@@ -50,6 +55,13 @@ class CashScreen extends Component{
       const {back}=this.props
       back()
   }
+  addDiscount=(value)=>{
+    const {discount}=this.props
+    discount(value)
+    this.setState({
+      modalDiscount:false,
+    })
+  }
   toggleSideBar=()=>{
     this.setState({
       modalActive: !this.state.modalActive
@@ -59,13 +71,25 @@ class CashScreen extends Component{
     const {change}=this.props
     change(value)
   }
-  toggleModaDiscount=()=>{
+  toggleModalOptions=()=>{
     this.setState({
-      modalDiscount:!this.state.modalDiscount
+      modalOptions:!this.state.modalOptions
+    })
+  }
+  toggleModalDiscount=()=>{
+    this.setState({
+      modalOptions: false,
+      modalDiscount:!this.state.modalDiscount,
+    })
+  }
+  toggleModalDelivery=()=>{
+    this.setState({
+      modalOptions: false,
+      modalDelivery:!this.state.modalDelivery,
     })
   }
   render() {
-    const {amount, total_amount,data, sideOption,totalDiscount,totalDelivery} = this.props.state
+    const {amount, total_amount,data, sideOption,totalDiscount,totalDelivery, type} = this.props.state
     const opa= this.state.modalActive || this.state.modalRight? true: false
     
     return (
@@ -82,11 +106,13 @@ class CashScreen extends Component{
           open={this.state.modalRight} onClose={()=>{this.setState({modalRight: false})}}
           openDrawerOffset={0.1} 
           content={
-              <RightSideBar data={data} discount={totalDiscount} delivery={totalDelivery} subtotal={total_amount} actionClose={this.closeControlPanel}/> 
+              <RightSideBar type={type} data={data} discount={totalDiscount} delivery={totalDelivery} subtotal={total_amount} actionClose={this.closeControlPanel}/> 
           }
       >
         <View style={styles.container}>
-          <Header label="CASH REGISTRER" cant={data.length} toggleSide={this.toggleSideBar} toggleRight={this.toggleRight} toggleDiscount= {this.toggleModaDiscount}/>
+          
+          
+          <Header label="CASH REGISTER" cant={data.length} toggleSide={this.toggleSideBar} toggleRight={this.toggleRight} toggleOptions= {this.toggleModalOptions}/>
           <TotalAmount value={total_amount}/>
           <ItemsContainer/>
           <Calculator amount={amount} sumAmount={this.sumAmount} sumTotal={this.sumTotal} cleanTotal={this.cleanTotal} backAmount={this.backAmount}/>
@@ -98,7 +124,11 @@ class CashScreen extends Component{
             </View>:null
 
           }
-          <ModalDiscount active={this.state.modalDiscount} closeModal={this.toggleModaDiscount}/>
+          { this.state.modalOptions?
+            <ModalOptions openDiscount={this.toggleModalDiscount} openDelivery={this.toggleModalDelivery}/>:null
+          }
+          <ModalDiscount active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
+          <ModalDelivery active={this.state.modalDelivery} closeModal={this.toggleModalDelivery}/>
         </View>
       </Drawer>
       </Drawer>
@@ -153,6 +183,9 @@ const mapDispatchToProps = (dispatch) =>({
   },
   change: (val) => {
     return dispatch(cashActions.change_option(val))
+  },
+  discount: (val) => {
+    return dispatch(cashActions.add_discount(val))
   }
 
 })

@@ -7,8 +7,8 @@ import ModuleDiscounts from './components/moduleDiscounts';
 
 class Footer extends Component {
     render() {
-        const {subtotal,data, discount, delivery} = this.props
-        let totalDiscount = parseFloat(discount)
+        const {subtotal,data, discount, delivery, type} = this.props
+        let totalDiscount = type=="%"?(subtotal*parseFloat(discount)/100):parseFloat(discount)
         data.map(item=>{
             if(item.type=="%"){
                 totalDiscount=parseFloat(parseFloat(totalDiscount)+(parseFloat(item.discount/100)*parseFloat(item.total)))

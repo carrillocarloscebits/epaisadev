@@ -1,5 +1,5 @@
 import { cashConstants } from "../constants/actions";
-const initialState = {total_amount:(0).toFixed(2),amount:(0).toFixed(2), data:[], totalDiscount: (0).toFixed(2), totalDelivery:(0).toFixed(2) ,sideOption: '0'};
+const initialState = {total_amount:(0).toFixed(2),amount:(0).toFixed(2), data:[],type:'%', totalDiscount: (0).toFixed(2), totalDelivery:(0).toFixed(2) ,sideOption: '0'};
 
 //dummy content
 const cashData = (state = initialState, action) => {
@@ -28,6 +28,8 @@ const cashData = (state = initialState, action) => {
       return {...state,amount: (0).toFixed(2) };
     case cashConstants.CHANGE_OPTION:
       return {...state,sideOption: action.payload };
+    case cashConstants.ADD_DISCOUNT:
+      return {...state,totalDiscount: parseFloat(action.payload.discount), type: action.payload.type };
     default:
         return state
   }

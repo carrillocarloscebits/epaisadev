@@ -9,13 +9,13 @@ import Footer from './components/Footer/footer';
 // create a component
 class RightSideBar extends Component {
     render() {
-        const {data, subtotal, discount, delivery,actionClose} = this.props
+        const {data, subtotal, discount, delivery,actionClose, type} = this.props
         return (
             <View style={styles.drawerRightContainer}>
                 <BackgroundImage source={require('./assets/side_nav_portrait_faded.png') }/>
                 <Header actionClose={actionClose}/>
                 <Table data={data} actionClose={actionClose}/>
-                <Footer data={data} discount={discount} delivery={delivery} subtotal={subtotal}/>
+                <Footer data={data} discount={discount} delivery={delivery} subtotal={subtotal} type={type}/>
             </View>       
         );
     }

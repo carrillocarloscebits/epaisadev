@@ -48,7 +48,7 @@ class ModuleDiscounts extends Component {
             }
                 <View  style={subTotalContainer}>
                     <Text style={styles.textDark2}>Total Amount</Text>       
-                    <Text style={[styles.textDark2,styles.TextBlue2]}>₹ {parseFloat(Total).toFixed(2)}</Text>
+                    <Text style={[styles.textDark2,styles.TextBlue2]}>₹ {parseFloat(Total>0?Total:0).toFixed(2)}</Text>
                 </View>
             </View>
                     

@@ -5,7 +5,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 export default class Header extends Component{
   
   render() {
-    const {label, cant, toggleSide, toggleRight, toggleDiscount}=this.props
+    const {label, cant, toggleSide, toggleRight, toggleOptions}=this.props
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.iconLeft} onPress={toggleSide}>
@@ -26,7 +26,7 @@ export default class Header extends Component{
                 <Text style={styles.badgeText}>{cant}</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.iconItem,styles.marginExtra]} onPress={toggleDiscount}>
+            <TouchableOpacity style={[styles.iconItem,styles.marginExtra]} onPress={toggleOptions}>
               <Image  source={require('../../assets/img/MoreDot.png')} resizeMode="contain" />
             </TouchableOpacity>
             
@@ -107,7 +107,8 @@ const styles = EStyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     letterSpacing: 2,
-    textAlign:'center'
+    textAlign:'center',
+    fontFamily:'Montserrat-Regular'
   },
   '@media (min-width: 200) and (max-width: 400)': { // media queries
     titleCentral: {

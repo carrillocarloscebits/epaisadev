@@ -19,7 +19,7 @@ const AuthStack = createStackNavigator({
   },
   [screenNames.FORGOT_PASSWORD]: {
     screen: ForgotPassword,
-  }
+  },
 }, {
   initialRouteName: screenNames.LOGIN
 });

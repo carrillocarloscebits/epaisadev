@@ -21,29 +21,20 @@ class ForgotPassword extends Component {
     getStyles = () => {
         return EStyleSheet.create({
             mainContainer: {
-                height:hp('100%'),
-                width:wp('100%'),
-                backgroundColor: 'green'
-            },
-            scroll: {
-                backgroundColor: 'green',
+                flex: 1,
             },
             logoContainer: {
-                height:hp('15.8%'),
-                width:wp('100%'),
-                justifyContent: 'flex-start',  
-                alignItems:'center',   
-                backgroundColor:'#F7BE81'
+                justifyContent: 'center',
+                marginVertical: '5rem'
             },
             cardContainer: {
-                backgroundColor: 'red',                
-                height:hp('42.2%'),
+                flex: 1,
+                flexGrow: 1,
                 alignItems: 'center',
             },
             card: {
-                height:hp('42.2%'),
                 paddingHorizontal: '3rem',
-                paddingBottom: '2rem'
+                paddingBottom: '3rem'
             },
             termsText: {
                 fontSize: Dimensions.get('screen').width <= 320 ? 12 : 14,
@@ -56,9 +47,8 @@ class ForgotPassword extends Component {
                 fontWeight: '700',
                 color: Colors.primary,
             },        
-            resetPasswordContainer: {     
-                alignItems: 'center',
-                paddingTop:hp('6.6%')
+            resetPasswordButton: {
+                marginTop: '4rem'
             },
             '@media (min-width: 500)': {
                 $scale: 1.5,
@@ -105,23 +95,26 @@ class ForgotPassword extends Component {
 
         return (
             <DoubleBackground>
-                <BackHeader {...this.props} />
-                <View style={styles.logoContainer}>
-                    <Logo/>
+                <View style={{width: 50, position: 'absolute', height: 50}}>
+                    <BackHeader {...this.props} />
                 </View>
-                <View style={styles.cardContainer}>
-                    <Card style={styles.card}>
-                        <ForgotPasswordForm />
-                    </Card>
-                </View>
-                <View style={styles.resetPasswordContainer}>
-                    <View style={styles.resetPasswordButton}>
-                        <ButtonGradient title={'RESET PASSWORD'} onPress={()=>this.setState({otp: true})}/>
+                <View style={styles.mainContainer}>
+                    <View style={styles.logoContainer}>
+                        <Logo/>
+                    </View>
+                    <View style={styles.cardContainer}>
+                        <Card style={styles.card}>
+                            <ForgotPasswordForm />
+                        </Card>
+                        <View style={styles.resetPasswordButton}>
+                            <ButtonGradient title={'RESET PASSWORD'} onPress={()=>this.setState({otp: true})}/>
+                        </View>
                     </View>
                 </View>
+                
                 { this.state.email && <Alert style={{height:hp('27.5%'), width:wp('85%')}} message={alertMessage} buttonTitle='OK' onPress={this.closeEmail}/> }
                 { this.state.modal && <Loading /> }
-                { this.state.otp && <OtpForgotPassword style={{height:hp('78%'), width:wp('85%')}} message={otpMessage} buttonTitle='RESEND OTP' onPress={this.closeOtp} /> }
+                { this.state.otp && <OtpForgotPassword message={otpMessage} buttonTitle='RESEND OTP' onPress={this.closeOtp} /> }
             </DoubleBackground>
         )
     }

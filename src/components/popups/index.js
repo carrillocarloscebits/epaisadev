@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Platform, Modal, TouchableOpacity} from 'react-native';
 import { Card } from 'components';
-
+import EStyleSheet from 'react-native-extended-stylesheet';
 class PopUp extends Component {
     render() {
 
@@ -13,7 +13,11 @@ class PopUp extends Component {
          }
 
         const {animation, children, style} = this.props;
-
+        const EStyle = EStyleSheet.create({
+            card: {
+                ...style
+            }
+        })
         return (
             <Modal
                 onRequestClose={ ()=>{} }
@@ -23,7 +27,7 @@ class PopUp extends Component {
                 presentationStyle="overFullScreen"
                 >
                 <TouchableOpacity style={modalContainer} activeOpacity={1}>
-                    <Card style={style}>
+                    <Card style={EStyle.card}>
                         {children}
                     </Card>
                 </TouchableOpacity>

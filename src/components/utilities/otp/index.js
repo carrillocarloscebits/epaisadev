@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
+import { View, Dimensions, ScrollView } from 'react-native';
 import { PopUp, TextMontserrat, ButtonGradient, OtpInputs, ButtonClose, FloatingTextInput } from 'components';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import EStyleSheet from 'react-native-extended-stylesheet'; 
 
 class OtpForgotPassword extends Component {
     state = {
         counter:'01:00',
-        seconds:60,
+        seconds: 60,
         colorGradient:['#BDC1CD','#BDC1CD']
     }
 
@@ -39,17 +40,7 @@ class OtpForgotPassword extends Component {
             this.setState({ colorGradient: ['#174285','#0079AA'] })
         }
     };
-
-    render() {
-
-        const {style, message, buttonTitle, onPress} = this.props;
-
-        const otpContainer = {  
-            justifyContent: 'center', 
-            alignItems: 'center',    
-            ...style
-        }
-
+    renderTopMessages = () => {
         const textStyle = {
             fontSize: hp('2.4%'),
             textAlign: 'center',
@@ -58,9 +49,23 @@ class OtpForgotPassword extends Component {
             color:'#4e5965',
             width: '100%',
         }
+        return this.props.message
+            .map((element, i) => (<TextMontserrat key={i} style={textStyle}>{element}</TextMontserrat>))
+    }
+
+    render() {
+
+        const {style, buttonTitle, onPress} = this.props;
+
+        const popupContainer = EStyleSheet.create({  
+            ...style,
+            height: (75 / 100) * Dimensions.get('screen').height,
+            width: '85%',
+            padding: '3rem',
+            paddingTop: '2rem',
+        })
 
         const numberText = {
-            width:'100%', 
             textAlign:'center', 
             fontWeight:'700', 
             fontSize:hp('2.7%'), 
@@ -68,42 +73,91 @@ class OtpForgotPassword extends Component {
         }
 
         const labelOtp = {
-            width:'100%', 
             textAlign:'center', 
-            fontWeight:'700', 
-            fontSize:hp('2.1%'), 
+            fontWeight:'700',
+            marginBottom: '0.5rem',
+            fontSize: '1.5rem', 
             color:'#6B6B6B'
         }
 
+        const mainContainer = {
+            flex: 1, 
+        }
+        const closeContainer = {
+            width:'100%',
+            alignItems:'flex-end'
+        }
+
+        const containerTopMessages = {
+        }
+
+        const containerPhoneNumber = {
+            marginBottom: 20
+        }
+
+        const containerOtpFields = {
+            alignItems:'center'
+        }
+
+        const containerTimer = {
+        }
+
+        const timerText = EStyleSheet.create({
+            fontSize: '3rem',
+            fontWeight: 'bold',
+            color:'#5D6770',
+            textAlign:'center'
+        })
+
+
+        const resendContainer = {
+            alignItems: 'center'
+        }
+
         return (
-            <PopUp style={otpContainer}>
-                <View style={{height:'100%', width:'100%', alignItems:'center'}}>
-                    <View style={{width:'100%', alignItems:'flex-end'}}>
+            <PopUp style={popupContainer}>
+                <ScrollView contentContainerStyle={mainContainer}>
+                    <View style={closeContainer}>
                         <ButtonClose onPress={onPress}/>
                     </View>
-                    {
-                        message.map((element, i) => {
-                        return <TextMontserrat key={i} style={textStyle}>{element}</TextMontserrat>
-                        })
-                    }
-                    
-                    <TextMontserrat style={numberText} >
-                        +91 9876543210
-                    </TextMontserrat>
-                    <View style={{width:'100%', alignItems:'center'}}>
-                        <TextMontserrat style={labelOtp} >
-                            Insert OTP
-                        </TextMontserrat>
-                        <OtpInputs />
-                        <TextMontserrat style={{fontWeight:'600', fontSize:hp('1.9%'), color:'#D0021B'}}>
-                            Incorrect Code - Re-insert or resend
-                        </TextMontserrat>
+                    <View style={containerTopMessages}>
+                        {this.renderTopMessages()}
                     </View>
-                    <TextMontserrat style={{width:'100%', fontFamily:'Montserrat-SemiBold', fontSize:hp('4.5%'), color:'#5D6770', textAlign:'center'}}>
-                        {this.state.counter}
-                    </TextMontserrat>
-                    <ButtonGradient title={buttonTitle} onPress={this.state.seconds != 0 ? null :onPress} colorLinearGradient={this.state.colorGradient} />
-                    <View style={{width:wp('69%')}}>
+                    <View style={containerPhoneNumber}>
+                        <TextMontserrat style={numberText}>+91 9876543210</TextMontserrat>
+                    </View>
+                    
+
+                    <View style={{flex: 1, flexGrow: 1, justifyContent: "space-between"}}>
+                        <View style={containerOtpFields}>
+                            <TextMontserrat style={labelOtp}> Insert OTP </TextMontserrat>
+                            <OtpInputs />
+                            {/* <TextMontserrat style={{fontWeight:'600', fontSize:hp('1.9%'), color:'#D0021B'}}>
+                                Incorrect Code - Re-insert or resend
+                            </TextMontserrat> */}
+                        </View>
+                        <View style={containerTimer}>
+                            <TextMontserrat style={timerText}>
+                                {this.state.counter}
+                            </TextMontserrat>
+                        </View>
+                        <View style={resendContainer}>
+                            <View style={{width: '70%'}}>
+                                <ButtonGradient 
+                                    title={buttonTitle}
+                                    onPress={this.state.seconds != 0 ? null :onPress}
+                                    colorLinearGradient={this.state.colorGradient}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                    <View>
+                        <TextMontserrat style={{
+                            fontSize: '1.8rem',
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            marginTop: '1.5rem',
+                        }}>Insert New Password</TextMontserrat>
                         <FloatingTextInput
                             label={'Password'}
                             secureTextEntry={true}
@@ -114,9 +168,13 @@ class OtpForgotPassword extends Component {
                             secureTextEntry={true}
                             editable={false}
                             />
-                        <ButtonGradient title={'RESET PASSWORD'} onPress={onPress} />
+                        <View style={{
+                            marginTop: 20
+                        }}>
+                            <ButtonGradient title={'RESET PASSWORD'} onPress={onPress} />
+                        </View>
                     </View>
-                </View>
+                </ScrollView>
             </PopUp>
         )
     }

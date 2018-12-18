@@ -34,6 +34,7 @@ class ForgotPassword extends Component {
             },
             card: {
                 paddingHorizontal: '3rem',
+                paddingBottom: '3rem'
             },
             termsText: {
                 fontSize: Dimensions.get('screen').width <= 320 ? 12 : 14,
@@ -113,7 +114,7 @@ class ForgotPassword extends Component {
                 
                 { this.state.email && <Alert style={{height:hp('27.5%'), width:wp('85%')}} message={alertMessage} buttonTitle='OK' onPress={this.closeEmail}/> }
                 { this.state.modal && <Loading /> }
-                { this.state.otp && <OtpForgotPassword style={{height:hp('78%'), width:wp('85%')}} message={otpMessage} buttonTitle='RESEND OTP' onPress={this.closeOtp} /> }
+                { this.state.otp && <OtpForgotPassword message={otpMessage} buttonTitle='RESEND OTP' onPress={this.closeOtp} /> }
             </DoubleBackground>
         )
     }

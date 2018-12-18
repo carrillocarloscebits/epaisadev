@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     },
     drawerRightContainer: {
         flexDirection:'column',
-        height:Dimensions.get('window').height-25,
+        height:Dimensions.get('window').height - 25,
         justifyContent:'center',
         backgroundColor:'#5D6770',
     },

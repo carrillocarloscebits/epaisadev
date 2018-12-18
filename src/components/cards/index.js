@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Platform} from 'react-native';
-
+import CardWithHeader from './card_header';
 class Card extends Component {
     render() {
 
@@ -32,4 +32,4 @@ class Card extends Component {
     }
 }
 
-export {Card}
+export {Card, CardWithHeader}

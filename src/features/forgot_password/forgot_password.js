@@ -9,9 +9,17 @@ import ForgotPasswordForm from './components/forgot_password_form';
 
 class ForgotPassword extends Component {
     state={
-        email: false,
-        modal: false,
-        otp: false
+        loading: false,
+        otp: false,
+        canResetPassword: false,
+        email: {
+            valid: false,
+            value: ''
+        },
+        mobile: {
+            valid: true,
+            value: ''
+        }
     }
 
     static navigationOptions = {
@@ -33,8 +41,7 @@ class ForgotPassword extends Component {
                 alignItems: 'center',
             },
             card: {
-                paddingHorizontal: '3rem',
-                paddingBottom: '3rem'
+                padding: '3rem',
             },
             termsText: {
                 fontSize: Dimensions.get('screen').width <= 320 ? 12 : 14,
@@ -80,11 +87,25 @@ class ForgotPassword extends Component {
     }
 
     closeEmail = () => {
-        this.setState({email:false})
+        this.setState({email: false})
     }
 
     closeOtp = () => {
-        this.setState({otp:false})
+        this.setState({otp: false})
+    }
+
+    handleChange = ({email, mobile}) => {
+        this.setState({email, mobile})
+        console.log(this.state)
+        this.validateForm();
+    }
+
+    validateForm = () => {
+        canReset = (this.state.mobile.valid || this.state.email.valid) ? true : false;
+        this.setState({
+            canResetPassword: canReset,
+        })
+
     }
 
     render() {
@@ -104,16 +125,16 @@ class ForgotPassword extends Component {
                     </View>
                     <View style={styles.cardContainer}>
                         <Card style={styles.card}>
-                            <ForgotPasswordForm />
+                            <ForgotPasswordForm onChangeForm={this.handleChange} />
                         </Card>
                         <View style={styles.resetPasswordButton}>
-                            <ButtonGradient title={'RESET PASSWORD'} onPress={()=>this.setState({otp: true})}/>
+                            <ButtonGradient disabled={!this.state.canResetPassword} title={'RESET PASSWORD'} onPress={() => this.setState({otp: true})}/>
                         </View>
                     </View>
                 </View>
                 
-                { this.state.email && <Alert style={{height:hp('27.5%'), width:wp('85%')}} message={alertMessage} buttonTitle='OK' onPress={this.closeEmail}/> }
-                { this.state.modal && <Loading /> }
+                {/* { this.state.email && <Alert style={{height:hp('27.5%'), width:wp('85%')}} message={alertMessage} buttonTitle='OK' onPress={this.closeEmail}/> } */}
+                { this.state.loading && <Loading /> }
                 { this.state.otp && <OtpForgotPassword message={otpMessage} buttonTitle='RESEND OTP' onPress={this.closeOtp} /> }
             </DoubleBackground>
         )

@@ -150,7 +150,6 @@ class FloatingTextInput extends Component {
     if (decimals) {
       //   v = v.toFixed(decimals);
     }
-    this.setState({ value: v });
     if(this.props.onChangeText){
       this.props.onChangeText(v);
 

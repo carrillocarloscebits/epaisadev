@@ -4,11 +4,24 @@ import { TextMontserrat } from "components";
 import LinearGradient from "react-native-linear-gradient";
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-const ButtonGradient = ({ title, onPress, style, colorLinearGradient }) => {
+const ButtonGradient = ({ title, onPress, style, disabled }) => {
+
   const { buttonText, linearGradient, container } = styles;
-  const color =  (!colorLinearGradient) ? ["#114B8C", "#0079AA"] : colorLinearGradient;
+  const color = disabled ? 
+    // Disabled Colors
+    ['#BDC1CD','#BDC1CD'] : 
+    // Active Colors
+    ["#114B8C", "#0079AA"];
+  
+
+  handlePress = () => {
+    if(!disabled) {
+      // if is button is not disabled, do onPress!
+      onPress()
+    }
+  }
   return (
-    <TouchableOpacity activeOpacity={.5} onPress={onPress} >
+    <TouchableOpacity activeOpacity={disabled ? 1 : .5} onPress={this.handlePress} >
       <View style={[container, style]}>
         <LinearGradient
           start={{ x: 0, y: 0 }}

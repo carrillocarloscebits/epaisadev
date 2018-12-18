@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { View, Image, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { icons } from "@api/constants";
-import { TextMontserrat } from "../text";
+import { Icons } from "api";
+import { TextMontserrat } from "components";
 class CardWithHeader extends Component {
   renderCloseButton = () => {
     const {
@@ -18,7 +18,7 @@ class CardWithHeader extends Component {
           activeOpacity={0.5}
           onPress={onPressCloseButton}
         >
-          <Image source={icons.close} style={{ width: 18, height: 18 }} />
+          <Image source={Icons.close} style={{ width: 18, height: 18 }} />
           {/* <Icon
             name={"close"}
             size={closeButtonSize || 30}

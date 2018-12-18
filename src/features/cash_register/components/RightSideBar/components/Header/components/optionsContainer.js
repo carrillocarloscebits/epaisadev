@@ -3,13 +3,15 @@ import React, { Component } from 'react';
 import { Dimensions,View, Text, StyleSheet, ImageBackground,TouchableOpacity,Image} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-const options = [
-    {source: require('../../../assets/Delivery2.png'), extraStyle: {marginRight:wp('2.1%')}},
-    {source: require('../../../assets/Discount2.png'), extraStyle: {marginRight:wp('2.1%')}},
-    {source: require('../../../assets/Close2.png'), extraStyle: {marginRight:wp('3.2%')}},
-]
+
 class OptionsContainer extends Component {
     render() {
+        const{actionClose}=this.props
+        const options = [
+            {source: require('../../../assets/Delivery2.png'), extraStyle: {marginRight:wp('2.1%')}},
+            {source: require('../../../assets/Discount2.png'), extraStyle: {marginRight:wp('2.1%')}},
+            {source: require('../../../assets/Close2.png'), extraStyle: {marginRight:wp('3.2%')}, onpress:actionClose},
+        ]
         return (
             <View style={styles.container}>
 
@@ -21,7 +23,7 @@ class OptionsContainer extends Component {
                 {
                     options.map((item,i)=>{
                         return(
-                        <TouchableOpacity key={i}>
+                        <TouchableOpacity key={i} onPress={item.onpress}>
                             <Image source={item.source}
                                 style={[styles.drawerRightIcon,item.extraStyle]}/>
                         </TouchableOpacity>)

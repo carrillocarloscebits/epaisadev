@@ -5,9 +5,13 @@ import Swipeout from 'react-native-swipeout';
 
 class ModuleDiscounts extends Component {
     render() {
-        const {totalDiscount, subTotalContainer} = this.props
+        const {cgst,totalDiscount, subTotal,deliveryCharge, Total, subTotalContainer} = this.props
+        
         return (
             <View style={styles.container}>
+            {
+                subTotal>0?
+                <View style={{width:'100%'}}>
                 {
                     totalDiscount > 0 ?
                     <Swipeout 
@@ -17,15 +21,34 @@ class ModuleDiscounts extends Component {
                         buttonWidth={wp('16%')}
                     >
                         <View style={subTotalContainer}>
-                        <Text style={styles.subTextOrange}>Discount</Text>       
-                        <Text style={[styles.subTextOrange,styles.textOrange]}>₹ 100</Text>
+                            <Text style={styles.subTextOrange}>Discount</Text>       
+                            <Text style={[styles.subTextOrange,styles.textOrange]}>₹ {parseFloat(totalDiscount).toFixed(2)}</Text>
                         </View>
                     </Swipeout> : null
                 }
-               
+                {
+                      deliveryCharge > 0 ? 
+                        <Swipeout 
+                          right={swipeBtns}
+                          autoClose={true}
+                          backgroundColor={'transparent'}
+                          buttonWidth={wp('16%')}
+                        >
+                          <View  style={subTotalContainer}>
+                              <Text style={styles.subTextGray}>Delivery Charge</Text>       
+                              <Text style={[styles.subTextGray,styles.subTextBlue]}>₹ {parseFloat(deliveryCharge).toFixed(2)}</Text>
+                          </View> 
+                        </Swipeout> : null
+                    }
                 <View style={[subTotalContainer, {paddingTop:hp('0%')}]}>
                     <Text style={styles.subTextGray}>CGST@9%</Text>       
-                    <Text style={[styles.subTextGray,styles.subTextBlue]}>₹ 100</Text>
+                    <Text style={[styles.subTextGray,styles.subTextBlue]}>₹ {parseFloat(cgst).toFixed(2)}</Text>
+                </View>
+                </View>:null
+            }
+                <View  style={subTotalContainer}>
+                    <Text style={styles.textDark2}>Total Amount</Text>       
+                    <Text style={[styles.textDark2,styles.TextBlue2]}>₹ {parseFloat(Total).toFixed(2)}</Text>
                 </View>
             </View>
                     
@@ -49,7 +72,7 @@ const styles = StyleSheet.create({
         textAlignVertical:'center'
     },
     subTextOrange:{
-        fontSize:hp('2.6%'),
+        fontSize:hp('2.2%'),
         color:'#FF6000',
         fontFamily: "Montserrat-SemiBold",
         paddingLeft: wp('2.65%')
@@ -58,7 +81,7 @@ const styles = StyleSheet.create({
         paddingRight: wp('4%')
     },
     subTextGray:{
-        fontSize:hp('2.6%'),
+        fontSize:hp('2.2%'),
         color:'#47525D',
         fontFamily: "Montserrat-SemiBold",
         paddingLeft: wp('2.65%')
@@ -67,6 +90,19 @@ const styles = StyleSheet.create({
         color:'#174285',
         paddingRight: wp('4%')
     },
+    textDark2:{
+        fontSize:hp('2.6%'),
+        letterSpacing:wp('0.2%'),
+        color:'#47525D',
+        fontFamily: "Montserrat-Bold",
+        paddingBottom: hp('1%'),
+        paddingLeft: wp('2.65%')
+      },
+    TextBlue2:{
+        color:'#174285',
+        letterSpacing:wp('0.22%'),
+        paddingRight: wp('4%')
+      },
 });
 const swipeBtns = [
     {

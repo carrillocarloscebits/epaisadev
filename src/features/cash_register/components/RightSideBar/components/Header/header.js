@@ -7,10 +7,11 @@ import OptionsContainer from './components/optionsContainer';
 // create a component
 class Header extends Component {
     render() {
+        const{actionClose}=this.props
         return (
             <View style={styles.container}>
                     <UsernameContainer/>
-                    <OptionsContainer/>
+                    <OptionsContainer actionClose={actionClose}/>
             </View> 
         );
     }

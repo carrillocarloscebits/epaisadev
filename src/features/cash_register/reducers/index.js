@@ -1,5 +1,5 @@
 import { cashConstants } from "../constants/actions";
-const initialState = {total_amount:(0).toFixed(2),amount:(0).toFixed(2), data:[], sideOption: '0'};
+const initialState = {total_amount:(0).toFixed(2),amount:(0).toFixed(2), data:[], totalDiscount: (0).toFixed(2), totalDelivery:(0).toFixed(2) ,sideOption: '0'};
 
 //dummy content
 const cashData = (state = initialState, action) => {
@@ -18,6 +18,8 @@ const cashData = (state = initialState, action) => {
           name: "Custom product "+(state.data.length+1),
           quant: 1,
           total: state.amount,
+          discount: (0).toFixed(2),
+          type: "%"
         }] ,
         amount:(0).toFixed(2),};
     case cashConstants.BACK_AMOUNT:

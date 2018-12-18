@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Dimensions,View, Text, StyleSheet, ImageBackground} from 'react-native';
+import {Dimensions,View, Text, StyleSheet, ImageBackground, Modal} from 'react-native';
 import Header from './components/Header/header'
 import TotalAmount from './components/TotalAmount/totalAmount'
 import ItemsContainer from './components/ItemsContainer/itemsContainer'
@@ -11,7 +11,8 @@ import { cashActions } from './actions';
 import SideBar from './components/LeftSideBar/sideBar'
 import RightSideBar from './components/RightSideBar/rightSideBar'
 import Drawer from 'react-native-drawer'
-
+import {CardWithHeader} from "../../components"
+import ModalDiscount from './components/Modals/ModalDiscount/modalDiscount';
 class CashScreen extends Component{
   static navigationOptions = {
     header: null
@@ -19,6 +20,7 @@ class CashScreen extends Component{
   state = {
     modalActive: false,
     modalRight: false,
+    modalDiscount:false
   }
   
   closeControlPanel  = () => {
@@ -57,10 +59,15 @@ class CashScreen extends Component{
     const {change}=this.props
     change(value)
   }
-
+  toggleModaDiscount=()=>{
+    this.setState({
+      modalDiscount:!this.state.modalDiscount
+    })
+  }
   render() {
-    const {amount, total_amount,data, sideOption} = this.props.state
+    const {amount, total_amount,data, sideOption,totalDiscount,totalDelivery} = this.props.state
     const opa= this.state.modalActive || this.state.modalRight? true: false
+    
     return (
       <Drawer
           ref={(ref) => this._drawer2 = ref} type="overlay" side="left" tapToClose={true}
@@ -75,11 +82,11 @@ class CashScreen extends Component{
           open={this.state.modalRight} onClose={()=>{this.setState({modalRight: false})}}
           openDrawerOffset={0.1} 
           content={
-              <RightSideBar data={data} subtotal={total_amount} actionClose={this.closeControlPanel}/> 
+              <RightSideBar data={data} discount={totalDiscount} delivery={totalDelivery} subtotal={total_amount} actionClose={this.closeControlPanel}/> 
           }
       >
         <View style={styles.container}>
-          <Header label="CASH REGISTRER" cant={data.length} toggleSide={this.toggleSideBar} toggleRight={this.toggleRight}/>
+          <Header label="CASH REGISTRER" cant={data.length} toggleSide={this.toggleSideBar} toggleRight={this.toggleRight} toggleDiscount= {this.toggleModaDiscount}/>
           <TotalAmount value={total_amount}/>
           <ItemsContainer/>
           <Calculator amount={amount} sumAmount={this.sumAmount} sumTotal={this.sumTotal} cleanTotal={this.cleanTotal} backAmount={this.backAmount}/>
@@ -91,6 +98,7 @@ class CashScreen extends Component{
             </View>:null
 
           }
+          <ModalDiscount active={this.state.modalDiscount} closeModal={this.toggleModaDiscount}/>
         </View>
       </Drawer>
       </Drawer>

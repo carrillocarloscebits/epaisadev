@@ -17,7 +17,7 @@ class ProductDetail extends React.Component{
     }
     render() {
   
-      const { id, name, quant, total} = this.props.item
+      const { id, name, quant, total,discount,type} = this.props.item
       return(
       <View>
         <TouchableOpacity>
@@ -32,6 +32,12 @@ class ProductDetail extends React.Component{
                     </Text>
                 </View>  
             </View>
+            { discount > 0 ?
+                <View style={styles.productDetailDiscountContainer}>
+                <Text style={styles.productDetailDiscountLabel}>— Discount {type=="%"? `@ ${parseFloat(discount).toFixed(2)}%`:null}</Text>
+                <Text style={[styles.productDetailDiscountLabel,styles.productDetailDiscountValue]}>₹ {type=="%"? parseFloat(total*discount/100).toFixed(2):parseFloat(discount).toFixed(2)}</Text>
+                </View> : null
+            }
           </View>
         </TouchableOpacity>
       </View>
@@ -74,5 +80,21 @@ class ProductDetail extends React.Component{
         textAlign:'right',
         fontFamily: "Montserrat-SemiBold",
     },
+    productDetailDiscountContainer:{
+        flexDirection:'row', 
+        justifyContent:'flex-end', 
+        width:'100%', 
+        paddingRight:wp('4.4%')
+      },
+    productDetailDiscountLabel:{  
+        color:'#FD853D', 
+        fontFamily:'Montserrat-SemiBold', 
+        fontSize:hp('1.72%'), 
+        width:wp('53.1%')
+    },
+    productDetailDiscountValue:{
+        textAlign:'right', 
+        width:wp('20%')
+      },
 });
   export default ProductDetail;

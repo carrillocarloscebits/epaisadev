@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Image, Dimensions, TouchableOpacity} from 'react-native';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import colors from '../../styles/colors'
 import EStyleSheet from 'react-native-extended-stylesheet';
 export default class Header extends Component{
   
   render() {
-    const {label, cant, toggleSide, toggleRight, toggleOptions}=this.props
+    const {isLandscape,label, cant, toggleSide, toggleRight, toggleOptions}=this.props
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.iconLeft} onPress={toggleSide}>
@@ -13,24 +14,32 @@ export default class Header extends Component{
         </TouchableOpacity>
         <Text style={styles.titleCentral} >{label}</Text>
         <View style={styles.iconRight}>
-          <View style={styles.iconContainer}>
+        { !isLandscape?
+            <View style={styles.iconContainer}>
+              <View style={styles.iconItem}>
+                <Image source={require('../../assets/img/Fill.png')} resizeMode="contain" />
+                <View style={styles.stack}>
+                  <Text style={styles.stackText}>5</Text>
+                </View>
+              </View>
+              <TouchableOpacity style={styles.iconItem} onPress={toggleRight}>
+                <Image source={require('../../assets/img/Cart.png')} resizeMode="contain" />
+                <View style={styles.badge}>
+                  <Text style={styles.badgeText}>{cant}</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.iconItem,styles.marginExtra]} onPress={toggleOptions}>
+                <Image  source={require('../../assets/img/MoreDot.png')} resizeMode="contain" />
+              </TouchableOpacity>
+              
+            </View>:
             <View style={styles.iconItem}>
-              <Image source={require('../../assets/img/Fill.png')} resizeMode="contain" />
-              <View style={styles.stack}>
-                <Text style={styles.stackText}>5</Text>
-              </View>
-            </View>
-            <TouchableOpacity style={styles.iconItem} onPress={toggleRight}>
-              <Image source={require('../../assets/img/Cart.png')} resizeMode="contain" />
-              <View style={styles.badge}>
-                <Text style={styles.badgeText}>{cant}</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.iconItem,styles.marginExtra]} onPress={toggleOptions}>
-              <Image  source={require('../../assets/img/MoreDot.png')} resizeMode="contain" />
-            </TouchableOpacity>
-            
-          </View>
+               <Image source={require('../../assets/img/Fill.png')} style={{width:hp('4%'),height:hp('4%')}} />
+                <View style={[styles.stack,{left: '28%',top: '-10%'}]}>
+                   <Text style={[styles.stackText,{fontSize:18}]}>5</Text>
+                </View>
+           </View>
+          }
         </View>
       </View>
     );
@@ -44,6 +53,7 @@ const styles = EStyleSheet.create({
     alignItems:'center',
     backgroundColor: colors.darkBlue,
     padding: 22,
+    elevation: 100
   },
   iconLeft:{
     position: 'absolute',
@@ -86,7 +96,7 @@ const styles = EStyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     height:'100%',
-    right:6,
+    right:10,
     alignItems:'center'
   },
   iconItem:{

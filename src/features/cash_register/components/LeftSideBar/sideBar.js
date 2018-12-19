@@ -3,7 +3,7 @@ import {Platform, StyleSheet, Text, View, Image, Dimensions, Modal,TouchableOpac
 import colors from '../../styles/colors'
 import EStyleSheet from 'react-native-extended-stylesheet';
 import ListOptions from './components/ListOptions/listOptions';
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 export default class SideBar extends Component{
     
     render() {
@@ -12,6 +12,7 @@ export default class SideBar extends Component{
                 <View style={styles.container}>
                     <View style={styles.barContainer}>
                         <View style={styles.header}>
+                            <Image source={require('../../assets/img/coffeelogo.png')} style={{height: hp('7%'),width:hp('7%'), marginBottom: hp('1%')}}/>
                             <Text style={styles.headerTextTop}>Espresso Café</Text>
                             <Text style={styles.headerTextBottom}>Abheer Kaushik</Text>
                         </View>
@@ -46,7 +47,7 @@ const styles = EStyleSheet.create({
   },
   header:{
     width:'100%',
-    marginTop: '41%',
+    marginTop: '18%',
     marginBottom: '16%'
   },
   headerTextTop:{

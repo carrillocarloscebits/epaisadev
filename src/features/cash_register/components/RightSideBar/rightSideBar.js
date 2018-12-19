@@ -6,17 +6,32 @@ import Header from './components/Header/header';
 import BackgroundImage from './components/BackgroundImage/backgroundImage';
 import Table from './components/Table/table';
 import Footer from './components/Footer/footer';
+import {BoxShadow} from 'react-native-shadow'
+
 // create a component
 class RightSideBar extends Component {
     render() {
-        const {data, subtotal, discount, delivery,actionClose, type, openDiscount,openDelivery} = this.props
+        const {isLandscape, data, subtotal, discount, delivery,actionClose, type, openDiscount,openDelivery} = this.props
+        const width = isLandscape? '39%' : null
+        const shadowOpt = {
+            width:6,
+            height:hp('100%'),
+            color:"#000",
+            border:5,
+            radius:3,
+            opacity:isLandscape?0.2:0,
+            x:isLandscape?-4:0,
+            y:3,
+            style:[styles.drawerRightContainer,{width}]
+        }
         return (
-            <View style={styles.drawerRightContainer}>
+            
+            <BoxShadow setting={shadowOpt}>
                 <BackgroundImage source={require('./assets/side_nav_portrait_faded.png') }/>
                 <Header actionClose={actionClose} openDiscount={openDiscount} openDelivery={openDelivery}/>
                 <Table data={data} actionClose={actionClose}/>
                 <Footer data={data} discount={discount} delivery={delivery} subtotal={subtotal} type={type}/>
-            </View>       
+            </BoxShadow>:null     
         );
     }
 }
@@ -28,6 +43,26 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#2c3e50',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 12,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+
+        elevation: 24,
+    },
+    shadowBox:{
+        height:'100%', 
+        width:'100%', 
+        backgroundColor:'#000000', 
+        flexDirection: 'column', 
+        position:'absolute', 
+        top:0, 
+        left:-9, 
+        borderRadius:hp('1.4%'), 
+        opacity:0.1
     },
     drawerRightContainer: {
         flexDirection:'column',

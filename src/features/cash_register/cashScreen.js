@@ -6,6 +6,8 @@ import ItemsContainer from './components/ItemsContainer/itemsContainer'
 import Calculator from './components/Calculator/Calculator'
 import Footer from './components/Footer/footer';
 import colors from './styles/colors'
+import Orientation, { lockToLandscape } from 'react-native-orientation-locker';
+import DeviceInfo from 'react-native-device-info';
 import { connect } from 'react-redux';
 import { cashActions } from './actions';
 import SideBar from './components/LeftSideBar/sideBar'
@@ -15,6 +17,8 @@ import {CardWithHeader} from "../../components"
 import ModalDiscount from './components/Modals/ModalDiscount/modalDiscount';
 import ModalDelivery from './components/Modals/ModalDelivery/modalDelivery';
 import ModalOptions from './components/Modals/ModalOptions/modalOptions';
+
+const isPhone= !DeviceInfo.isTablet()
 class CashScreen extends Component{
   static navigationOptions = {
     header: null
@@ -26,7 +30,9 @@ class CashScreen extends Component{
     modalDiscount:false,
     modalDelivery:false,
   }
-  
+  componentWillMount(){
+    isPhone? Orientation.lockToPortrait() :Orientation.lockToLandscape()
+  }
   closeControlPanel  = () => {
     this._drawer.close()
   };
@@ -102,44 +108,74 @@ class CashScreen extends Component{
     return (
       <Drawer
           ref={(ref) => this._drawer2 = ref} type="overlay" side="left" tapToClose={true}
-          open={this.state.modalActive} openDrawerOffset={0.22} 
+          open={this.state.modalActive} openDrawerOffset={ isPhone?0.22:0.70} 
           onClose={()=>{this.setState({modalActive: false})}}
           content={
             <SideBar handleOption={this.changeOption} active={this.state.modalActive} toggle={this.toggleSideBar} sideOption={sideOption}/>  
           }
       >
-      <Drawer
-          ref={(ref) => this._drawer = ref} type="overlay" side="right" tapToClose={true}
-          open={this.state.modalRight} onClose={()=>{this.setState({modalRight: false})}}
-          openDrawerOffset={0.1} 
-          content={
-              <RightSideBar type={type} data={data} discount={totalDiscount} delivery={totalDelivery} 
-                            subtotal={total_amount} actionClose={this.closeControlPanel} openDiscount={this.toggleModalDiscount}
-                            openDelivery={this.toggleModalDelivery}/> 
-          }
-      >
-        <View style={styles.container}>
-          
-          
-          <Header label="CASH REGISTER" cant={data.length} toggleSide={this.toggleSideBar} toggleRight={this.toggleRight} toggleOptions= {this.toggleModalOptions}/>
-          <TotalAmount value={total_amount}/>
-          <ItemsContainer/>
-          <Calculator amount={amount} sumAmount={this.sumAmount} sumTotal={this.sumTotal} cleanTotal={this.cleanTotal} backAmount={this.backAmount}/>
-          <Footer/>
-          {
-            opa?
-            <View style={styles.opacity}>
+      {
+        isPhone?
+        <Drawer
+            ref={(ref) => this._drawer = ref} type="overlay" side="right" tapToClose={true}
+            open={this.state.modalRight} onClose={()=>{this.setState({modalRight: false})}}
+            openDrawerOffset={0.1} 
+            content={
+                <RightSideBar type={type} data={data} discount={totalDiscount} delivery={totalDelivery} 
+                              subtotal={total_amount} actionClose={this.closeControlPanel} openDiscount={this.toggleModalDiscount}
+                              openDelivery={this.toggleModalDelivery}/> 
+            }
+        >
+          <View style={styles.container}>
+            
+            
+            <Header label="CASH REGISTER" cant={data.length} toggleSide={this.toggleSideBar} toggleRight={this.toggleRight} toggleOptions= {this.toggleModalOptions}/>
+            <TotalAmount value={total_amount}/>
+            <ItemsContainer/>
+            <Calculator amount={amount} sumAmount={this.sumAmount} sumTotal={this.sumTotal} cleanTotal={this.cleanTotal} backAmount={this.backAmount}/>
+            <Footer />
+            {
+              opa?
+              <View style={styles.opacity}>
 
-            </View>:null
+              </View>:null
 
-          }
-          { this.state.modalOptions?
-            <ModalOptions openDiscount={this.toggleModalDiscount} openDelivery={this.toggleModalDelivery}/>:null
-          }
-          <ModalDiscount active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
-          <ModalDelivery active={this.state.modalDelivery} closeModal={this.toggleModalDelivery} addDelivery={this.addDelivery}/>
+            }
+            { this.state.modalOptions?
+              <ModalOptions openDiscount={this.toggleModalDiscount} openDelivery={this.toggleModalDelivery}/>:null
+            }
+            <ModalDiscount active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
+            <ModalDelivery active={this.state.modalDelivery} closeModal={this.toggleModalDelivery} addDelivery={this.addDelivery}/>
+          </View>
+        </Drawer>
+        :<View style={styles.containerLandscape}>
+            <View style={styles.container}>
+            
+            
+            <Header label="CASH REGISTER" isLandscape={true} cant={data.length} toggleSide={this.toggleSideBar} toggleRight={this.toggleRight} toggleOptions= {this.toggleModalOptions}/>
+            
+            <ItemsContainer/>
+            <Calculator amount={amount} sumAmount={this.sumAmount} sumTotal={this.sumTotal} cleanTotal={this.cleanTotal} backAmount={this.backAmount}/>
+            
+            
+            { this.state.modalOptions?
+              <ModalOptions openDiscount={this.toggleModalDiscount} openDelivery={this.toggleModalDelivery}/>:null
+            }
+            <ModalDiscount active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
+            <ModalDelivery active={this.state.modalDelivery} closeModal={this.toggleModalDelivery} addDelivery={this.addDelivery}/>
+          </View>
+          <RightSideBar isLandscape={true} type={type} data={data} discount={totalDiscount} delivery={totalDelivery} 
+                              subtotal={total_amount} actionClose={this.closeControlPanel} openDiscount={this.toggleModalDiscount}
+                              openDelivery={this.toggleModalDelivery}/> 
+                              {
+              opa?
+              <View style={styles.opacity}>
+
+              </View>:null
+
+            }
         </View>
-      </Drawer>
+      }
       </Drawer>
     );
   }
@@ -148,7 +184,14 @@ class CashScreen extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: '100%',
     alignItems: 'center',
+    backgroundColor: colors.darkWhite,
+  },
+  containerLandscape: {
+    flex: 1,
+    height: '100%',
+    flexDirection: 'row',
     backgroundColor: colors.darkWhite,
   },
   opacity:{

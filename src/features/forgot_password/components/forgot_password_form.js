@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Keyboard} from 'react-native';
 import {TextMontserrat, FloatingTextInput,} from 'components';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {connect} from 'react-redux';
+
 class ForgotPasswordForm extends Component {
     state = {
         mobile: '',
@@ -15,8 +15,16 @@ class ForgotPasswordForm extends Component {
     }
 
     _checkField = (key) => {
-        if(key === 'email') {
-            this.props.check_email(this.state.email)
+        switch (key) {
+            case 'email':
+                this.props.check_email(this.state.email)
+                break;
+            case 'mobile':
+                this.props.check_mobile(this.state.mobile)
+                break;
+        
+            default:
+                break;
         }
     }
 

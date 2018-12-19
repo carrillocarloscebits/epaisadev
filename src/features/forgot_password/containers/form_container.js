@@ -1,8 +1,7 @@
 import {connect} from 'react-redux';
-import {check_email} from './../actions';
+import {check_email, check_mobile} from './../actions';
 import ForgotPasswordForm from './../components/forgot_password_form';
 const mapStateToProps = state => {
-    console.log('statedSet', state)
     return {
         email: state.reset_password.email,
         mobile: state.reset_password.mobile,
@@ -10,7 +9,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    check_email: (email) => { dispatch(check_email(email))}
+    check_email: (email) => { dispatch(check_email(email))},
+    check_mobile: (mobile) => { dispatch(check_mobile(mobile))}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

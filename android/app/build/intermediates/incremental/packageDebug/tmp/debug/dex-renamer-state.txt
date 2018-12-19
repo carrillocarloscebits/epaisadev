@@ -1,4 +1,0 @@
-#Mon Dec 17 14:15:00 COT 2018
-base.0=C\:\\Users\\F-035\\Documents\\GitHub\\epaisadev\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
-path.0=classes.dex
-renamed.0=classes.dex

@@ -139,7 +139,7 @@ class ForgotPassword extends Component {
                     </View>
                 </View>
                 
-                {/* { this.state.email && <Alert style={{height:hp('27.5%'), width:wp('85%')}} message={alertMessage} buttonTitle='OK' onPress={this.closeEmail}/> } */}
+                { this.props.reset_password.alert && <Alert style={{height:hp('27.5%'), width:wp('85%')}} message={this.props.reset_password.alert} buttonTitle='OK' onPress={this.props.reset_password.dismissAlert}/> }
                 { this.props.reset_password.loading && <Loading /> }
                 { this.state.otp && <OtpForgotPassword message={otpMessage} buttonTitle='RESEND OTP' onPress={this.closeOtp} /> }
             </DoubleBackground>

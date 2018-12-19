@@ -26,13 +26,24 @@ export function check_email(email) {
     })
 }
 
+export function check_mobile(mobile) {
+
+    var returnEncrypt = encryptJsonCredentials(null, mobile);
+
+    return sendRequest(returnEncrypt, '/user/check').then(({response}) => {
+        const {mobile} = response;
+        
+        return {
+            exists: mobile.exists,
+            errors: mobile.exists ? [] : [mobile.message]
+        }
+    })
+}
+
 export function opt_send(value, key) {
     var returnEncrypt = encryptForgotPassword(JSON.stringify({[key]: value}));
 
     return sendRequest(returnEncrypt, '/user/forgotpassword')
-        .then((res) => {
-            console.log(res)
-        })
 }
 
 // sendRequestApi = ()=>{

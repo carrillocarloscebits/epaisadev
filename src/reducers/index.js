@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-import otp from "./otp/otp_reducers";
 import login from "../features/login/reducers";
 import register from "../features/create_account/reducers";
 import cashData from "../features/cash_register/reducers";
@@ -9,5 +8,4 @@ export default combineReducers({
   register,
   cashData,
   reset_password,
-  otp,
 });

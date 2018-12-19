@@ -36,13 +36,13 @@ const resetPass = (state = initialState, action) => {
             }
         case userConstants.OTP_EMAIL_SUCCESS: 
             return {
+                ...state,
+                ...action.payload,
                 loading: false,
-                otpSent: true,
-                otpData: {
-                    to: 'email'
-                },
-                ...state
             }
+        case userConstants.OTP_EMAIL_ALERT_DISMISS:
+            const {alert, alertDismiss, ...newState} = state;
+            return newState
         default:
             return state
     }

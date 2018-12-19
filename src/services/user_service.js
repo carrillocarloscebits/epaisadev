@@ -30,9 +30,6 @@ export function opt_send(value, key) {
     var returnEncrypt = encryptForgotPassword(JSON.stringify({[key]: value}));
 
     return sendRequest(returnEncrypt, '/user/forgotpassword')
-        .then((res) => {
-            console.log(res)
-        })
 }
 
 // sendRequestApi = ()=>{

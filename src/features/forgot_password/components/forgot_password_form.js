@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Keyboard} from 'react-native';
 import {TextMontserrat, FloatingTextInput,} from 'components';
 import EStyleSheet from 'react-native-extended-stylesheet';
-
+import {connect} from 'react-redux';
 class ForgotPasswordForm extends Component {
     state = {
         mobile: '',
@@ -11,34 +11,17 @@ class ForgotPasswordForm extends Component {
 
     _textChange(key, value) {
         this.setState({[key]: value})
-        this._changeForm();
+
     }
 
-    _changeForm = () => {
-        if(this.props.onChangeForm) {
-            const {email, mobile} = this.state;
-            const emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-            this.props.onChangeForm({
-                email: {
-                    valid: emailRegex.test(email),
-                    value: email
-                },
-                mobile: {
-                    valid: false,
-                    value: mobile
-                }
-            })
-        }
-    }
-
-    checkField(key){
+    _checkField = (key) => {
         if(key === 'email') {
-
+            this.props.check_email(this.state.email)
         }
     }
 
     render() {
-        const {email, mobile} = this.state;
+        const {email, mobile} = this.props;
         return (
             <View style={styles.formContainer}>
                 <TextMontserrat style={styles.instructions}>Enter your mobile number or e-mail</TextMontserrat>
@@ -50,7 +33,8 @@ class ForgotPasswordForm extends Component {
                         onChangeText={(val) => this._textChange('email', val)}
                         onBlur={this._changeForm}
                         returnKeyType={'done'}
-                        onSubmitEditing={()=>{Keyboard.dismiss; this.checkField('email')}}
+                        onSubmitEditing={()=> {Keyboard.dismiss; this._checkField('email')}}
+                        errors={email.errors}
                     />
                 </View>
                 <TextMontserrat style={styles.or}>OR</TextMontserrat>
@@ -61,7 +45,8 @@ class ForgotPasswordForm extends Component {
                         onChangeText={(val) => this._textChange('mobile', val)}
                         onBlur={this._changeForm}
                         returnKeyType={'done'}
-                        onSubmitEditing={()=>{Keyboard.dismiss; this.checkField('mobile')}}
+                        onSubmitEditing={()=> {Keyboard.dismiss; this._checkField('mobile')}}
+                        errors={mobile.errors}
                     />
                 </View>
             </View>
@@ -86,4 +71,4 @@ const styles = EStyleSheet.create({
     }
 })
 
-export default ForgotPasswordForm;
+export default ForgotPasswordForm

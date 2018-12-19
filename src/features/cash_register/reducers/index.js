@@ -30,6 +30,8 @@ const cashData = (state = initialState, action) => {
       return {...state,sideOption: action.payload };
     case cashConstants.ADD_DISCOUNT:
       return {...state,totalDiscount: parseFloat(action.payload.discount), type: action.payload.type };
+    case cashConstants.ADD_DELIVERY:
+      return {...state,totalDelivery: parseFloat(action.payload)};
     default:
         return state
   }

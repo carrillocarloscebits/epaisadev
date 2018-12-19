@@ -7,11 +7,11 @@ import OptionsContainer from './components/optionsContainer';
 // create a component
 class Header extends Component {
     render() {
-        const{actionClose}=this.props
+        const{actionClose, openDiscount,openDelivery}=this.props
         return (
             <View style={styles.container}>
                     <UsernameContainer/>
-                    <OptionsContainer actionClose={actionClose}/>
+                    <OptionsContainer actionClose={actionClose} openDiscount={openDiscount} openDelivery={openDelivery}/>
             </View> 
         );
     }

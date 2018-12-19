@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Dimensions,View, Text, StyleSheet, ImageBackground, Modal} from 'react-native';
+import {Dimensions,View, Text, StyleSheet, ImageBackground, Modal,ScrollView} from 'react-native';
 import Header from './components/Header/header'
 import TotalAmount from './components/TotalAmount/totalAmount'
 import ItemsContainer from './components/ItemsContainer/itemsContainer'
@@ -23,9 +23,8 @@ class CashScreen extends Component{
     modalOptions: false,
     modalActive: false,
     modalRight: false,
-    modalDiscount:true,
+    modalDiscount:false,
     modalDelivery:false,
-
   }
   
   closeControlPanel  = () => {
@@ -60,6 +59,14 @@ class CashScreen extends Component{
     discount(value)
     this.setState({
       modalDiscount:false,
+    })
+  }
+  addDelivery=(value)=>{
+    const {delivery}=this.props
+    delivery(value)
+    //alert(value)
+    this.setState({
+      modalDelivery:false,
     })
   }
   toggleSideBar=()=>{
@@ -106,7 +113,9 @@ class CashScreen extends Component{
           open={this.state.modalRight} onClose={()=>{this.setState({modalRight: false})}}
           openDrawerOffset={0.1} 
           content={
-              <RightSideBar type={type} data={data} discount={totalDiscount} delivery={totalDelivery} subtotal={total_amount} actionClose={this.closeControlPanel}/> 
+              <RightSideBar type={type} data={data} discount={totalDiscount} delivery={totalDelivery} 
+                            subtotal={total_amount} actionClose={this.closeControlPanel} openDiscount={this.toggleModalDiscount}
+                            openDelivery={this.toggleModalDelivery}/> 
           }
       >
         <View style={styles.container}>
@@ -128,7 +137,7 @@ class CashScreen extends Component{
             <ModalOptions openDiscount={this.toggleModalDiscount} openDelivery={this.toggleModalDelivery}/>:null
           }
           <ModalDiscount active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
-          <ModalDelivery active={this.state.modalDelivery} closeModal={this.toggleModalDelivery}/>
+          <ModalDelivery active={this.state.modalDelivery} closeModal={this.toggleModalDelivery} addDelivery={this.addDelivery}/>
         </View>
       </Drawer>
       </Drawer>
@@ -186,8 +195,10 @@ const mapDispatchToProps = (dispatch) =>({
   },
   discount: (val) => {
     return dispatch(cashActions.add_discount(val))
+  },
+  delivery: (val) => {
+    return dispatch(cashActions.add_delivery(val))
   }
-
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CashScreen)

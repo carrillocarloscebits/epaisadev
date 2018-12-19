@@ -4,17 +4,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 
 class ProductDetail extends React.Component{
 
-    componentDidMount () {
-      this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
-    }
   
-    componentWillUnmount () {
-      this.keyboardDidHideListener.remove();
-    }
-  
-    _keyboardDidHide = () => {
-      this.removeFocus()
-    }
     render() {
   
       const { id, name, quant, total,discount,type} = this.props.item

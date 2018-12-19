@@ -6,10 +6,10 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 
 class OptionsContainer extends Component {
     render() {
-        const{actionClose}=this.props
+        const{actionClose,openDiscount,openDelivery}=this.props
         const options = [
-            {source: require('../../../assets/Delivery2.png'), extraStyle: {marginRight:wp('2.1%')}},
-            {source: require('../../../assets/Discount2.png'), extraStyle: {marginRight:wp('2.1%')}},
+            {source: require('../../../assets/Delivery2.png'), extraStyle: {marginRight:wp('2.1%')},onpress:openDelivery},
+            {source: require('../../../assets/Discount2.png'), extraStyle: {marginRight:wp('2.1%')},onpress:openDiscount},
             {source: require('../../../assets/Close2.png'), extraStyle: {marginRight:wp('3.2%')}, onpress:actionClose},
         ]
         return (

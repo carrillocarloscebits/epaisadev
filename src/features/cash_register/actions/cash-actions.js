@@ -6,7 +6,8 @@ export const cashActions = {
     back_amount,
     clear_amount,
     change_option,
-    add_discount
+    add_discount,
+    add_delivery
 };
 
 function sum_amount(value) {
@@ -31,4 +32,8 @@ function change_option(value) {
 
 function add_discount(value) {
     return { type: cashConstants.ADD_DISCOUNT, payload: value };
+}
+
+function add_delivery(value) {
+    return { type: cashConstants.ADD_DELIVERY, payload: value };
 }

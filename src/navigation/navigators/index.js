@@ -4,7 +4,7 @@ import {createStackNavigator, createAppContainer, createSwitchNavigator} from 'r
 // SCREENS
 import LoginContainer from "../../features/login/containers/loginContainer";
 import CreateAccount from "../../features/create_account/containers/create_account_container";
-import ForgotPassword from "../../features/forgot_password";
+import ForgotPassword from "../../features/forgot_password/containers/";
 import Inside from "../../features/inside";
 import AuthLoading from "../../features/auth_loading";
 import cashScreen from "../../features/cash_register/cashScreen";

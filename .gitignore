@@ -62,3 +62,5 @@ typings/
 
 # ignore custom files
 android/local.properties
+android/.gradle/
+android/app/build/

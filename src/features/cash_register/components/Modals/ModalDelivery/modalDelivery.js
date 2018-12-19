@@ -11,7 +11,7 @@ class ModalDelivery extends Component {
         return(
             <Modal visible={active} transparent={true} animationType="fade" onRequestClose={closeModal} >
             <View style={styles.container}>
-                <CardWithHeader headerTitle="Delivery Charge" closeButton={true} onPressCloseButton={closeModal} customCardStyle={{width: '65%',}}>
+                <CardWithHeader customBodyStyle={{alignItems:'center',justifyContent:'center'}} headerTitle="Delivery Charge" closeButton={true} onPressCloseButton={closeModal} customCardStyle={{width: '65%',}}>
                     <Text>Hola</Text>
                 </CardWithHeader>
             </View>

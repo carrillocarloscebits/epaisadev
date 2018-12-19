@@ -17,36 +17,52 @@ class ModalDiscount extends Component {
         optionSelected: 1,
         valueDiscount: 0,
         inputFocus:false,
+        wrong: false,
+    }
+    addValidate(){
+        const {addDiscount} = this.props
+        this.setState({wrong: false});
+        addDiscount({discount: parseFloat(this.state.valueDiscount) ,type:options[this.state.optionSelected-1]});                     
     }
     render() {
         const {active, closeModal,addDiscount} = this.props
+        const wrongStyleLabel= this.state.wrong? {color:'#D0021B'}:null
+        const wrongStyleBorders= this.state.wrong? {borderColor:'#D0021B'}:null
+        const noFormat = this.state.optionSelected==1 ? ((parseFloat(this.state.valueDiscount) < 0.1 || parseFloat(this.state.valueDiscount) > 99.9)? 1 :0 ): parseFloat(this.state.valueDiscount) > 0? 0: 2
         return(
             <Modal visible={active} transparent={true} animationType="fade" onRequestClose={closeModal} >
             <View style={styles.container}>
                 <CardWithHeader customBodyStyle={{alignItems:'center',justifyContent:'center'}} headerTitle="Discount" closeButton={true} onPressCloseButton={closeModal} customCardStyle={{width: '65%',}}>
                     <View style={styles.wrapper}>
-                        <View style={styles.rowForm}>
+                        <View style={[styles.rowForm,wrongStyleBorders]}>
                             <View style={styles.leftForm}>
-                                <Text style={styles.select}>{options[this.state.optionSelected-1]}</Text>
+                                <Text style={[styles.select,wrongStyleLabel]}>{options[this.state.optionSelected-1]}</Text>
                                 <TouchableOpacity style={styles.drop} onPress={()=>{this.setState({optionsActive:true})}}>
                                     <Icon  name={"angle-down"} size={20} />
                                 </TouchableOpacity>
                                 
                             </View>
-                            <View style={styles.separation}>
+                            <View style={[styles.separation,wrongStyleBorders]}>
 
                             </View>
                             <View style={styles.rightForm}>
-                                <TextInput value={this.state.valueDiscount>0 || this.state.valueDiscount?this.state.valueDiscount:""} onChangeText={(valueDiscount)=>{this.setState({valueDiscount})}} onFocus={()=>{this.setState({inputFocus:true, optionsActive:false})}} style={styles.textInput}/>
-                                <TouchableOpacity style={styles.icon} onPress={()=>{this.setState({value: 0})}}>
+                                <TextInput value={this.state.valueDiscount>'0' || this.state.valueDiscount?this.state.valueDiscount.toString():""} 
+                                        onChangeText={(valueDiscount)=>{this.setState({valueDiscount})}} 
+                                        onFocus={()=>{this.setState({inputFocus:true, optionsActive:false})}} 
+                                        style={[styles.textInput,wrongStyleLabel]}/>
+                                <TouchableOpacity style={styles.icon} onPress={()=>{this.setState({valueDiscount: 0})}}>
                                 <IconMaterialIcons  name={"cancel"} size={20} color="#666"/>
                                 </TouchableOpacity>
                             </View>
                         </View>
                         <View style={{width:'100%', justifyContent:'flex-start'}}>
-                        
+                        <View style={{width:'100%', alignItems:'center'}}>
                         <TouchableOpacity
-                            onPress={()=>{addDiscount({discount: parseFloat(this.state.valueDiscount) ,type:options[this.state.optionSelected-1]})}}
+                            onPress={()=>{
+                                noFormat==0? 
+                                this.addValidate():
+                                this.setState({wrong: true})
+                            }}
                             style={styles.touchableModalDiscountAdd }>
 
                             <LinearGradient 
@@ -59,18 +75,34 @@ class ModalDiscount extends Component {
                                 </View>
                             </LinearGradient>
                         </TouchableOpacity>
+                        </View>
                         {
                                     this.state.optionsActive?
                                     <View style={styles.dropdown}>{
                                         options.map((item,i)=>{
                                             return(
                                                 <TouchableHighlight key={i} onPress={()=>{this.setState({optionsActive:false,optionSelected: (i+1)})}}>
-                                                    <Text style={styles.option}>{item}</Text>
+                                                    <Text style={[styles.option,i==(this.state.optionSelected-1)?{backgroundColor:'#EEEEEE'}:null]}>
+                                                        {item}
+                                                    </Text>
                                                 </TouchableHighlight>
                                             )
                                         })}
                                     </View>:null
                         }
+                        {
+                            this.state.wrong?
+                            <View style={styles.messageWrong}>
+                                <View style={{flexDirection:'row',width:'125%', justifyContent:'center', alignItems:'center'}}>
+                                <Image source={require('../../../../../assets/icons/error.png')} style={{width: wp('2.8'),height:wp('2.8'),marginTop:2}}/>
+                                    <Text style={styles.messageWrongLabel}>
+                                {noFormat==1 ? " Enter a valid discount from 0.1% - 99.9%": " Enter a valid discount from > 0.0"}
+                                </Text></View>
+                            </View>
+                            :null
+                        }            
+
+                        
                         </View>
                     </View>
                 </CardWithHeader>
@@ -99,7 +131,7 @@ const styles = StyleSheet.create({
     rowForm:{
         flexDirection:'row',
         alignItems:'center',
-        borderBottomColor: '#174285',
+        borderColor: '#174285',
         borderBottomWidth: 2,
     },
     leftForm:{
@@ -141,7 +173,7 @@ const styles = StyleSheet.create({
         fontSize:wp('4.1%'),
         width:'80%',
         marginBottom: 5,
-        fontFamily: 'Montserrat-ExtraBold',
+        fontFamily: 'Montserrat-Bold',
     },
     textDiscountAddButtonPortrait:{
         fontFamily: 'Montserrat-SemiBold', 
@@ -160,9 +192,13 @@ const styles = StyleSheet.create({
       dropdown:{
         position: 'absolute',
         width: '30%',
-        elevation: moderateScale(5),
+        elevation: 20,
         top:0,
-        left:0
+        left:0,
+        borderLeftColor: colors.opacityDin(0.1),
+        borderRightColor: colors.opacityDin(0.3),
+        borderBottomColor: colors.opacityDin(0.3),
+        borderWidth: 1,
       },
       option:{
           textAlign:'center',
@@ -170,6 +206,21 @@ const styles = StyleSheet.create({
           paddingVertical: hp('1.1%'),
           backgroundColor:"#FAFAFA",
           fontFamily: 'Montserrat-ExtraBold',
+      },
+      messageWrong:{
+        width: '100%',
+        position: 'absolute',
+        top: 2,
+        flexDirection: 'row',
+        justifyContent: 'center'
+      },
+      messageWrongLabel:{
+        fontSize: wp('2.4'),
+        color: '#D0021B',
+        flexWrap: 'wrap',
+        fontFamily: 'Montserrat-Bold',
+        textAlign:'center',
+        marginTop:2,
       }
 });
 

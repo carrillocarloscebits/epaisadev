@@ -106,6 +106,7 @@ class FloatingTextInput extends Component {
       fontSize: EStyleSheet.value('1.2rem'),
       color: '#6b6b6b'
     }
+
     return (
       <View style={{flexDirection: 'row'}}>
         <TextMontserrat style={textStyle}>{title} - </TextMontserrat>
@@ -166,14 +167,18 @@ class FloatingTextInput extends Component {
   };
 
   _hasError = () => {
-    return this.state.errors.length > 0;
+    if(this.props.errors) {
+      return this.props.errors.length > 0;
+    }
+    return false
   }
 
   render() {
+
     const leftPadding = this.props.lineLeft ? 10 : 0;
 
     const { isFocused, value, secureTextEntry } = this.state;
-    const { label, underline, inputStyle, keyboardType } = this.props;
+    const { label, underline, inputStyle, keyboardType, returnKeyType, onSubmitEditing } = this.props;
 
     const inputActiveColor = this._hasError() ? Colors.danger : Colors.primary;
     const inputInActiveColor = this._hasError() ? Colors.danger : "#6b6b6b";
@@ -255,6 +260,18 @@ class FloatingTextInput extends Component {
       }
     };
 
+    renderErrors = (color, offset, fontSize) => {
+      if(!this.props.errors) return false;
+      return this.props.errors.map((error, i) => {
+        return (<TextMontserrat key={`err_${i}`} style={{
+          fontWeight: '600',
+          color: color,
+          left: offset,
+          fontSize: fontSize
+        }}>{error}</TextMontserrat>)
+      })
+    }
+
     return (
       <View>
         <Animated.Text style={labelStyle}>
@@ -281,17 +298,12 @@ class FloatingTextInput extends Component {
             secureTextEntry={secureTextEntry}
             keyboardType={keyboardType}
             underlineColorAndroid="transparent"
+            returnKeyType={returnKeyType}
+            onSubmitEditing={onSubmitEditing}
           />
         </View>
         {renderUnderline()}
-        {this.state.errors.map((error, i) => {
-          return (<TextMontserrat key={`err_${i}`} style={{
-            fontWeight: '600',
-            color: inputActiveColor,
-            left: leftOffset,
-            fontSize: ExtendedStyles.errorText.fontSize
-          }}>{error}</TextMontserrat>)
-        })}
+        {renderErrors(inputActiveColor, leftOffset, ExtendedStyles.errorText.fontSize)}
         {!!this.props.validate && this.state.isFocused && this.renderValidation()}
       </View>
     );

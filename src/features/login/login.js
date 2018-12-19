@@ -134,6 +134,7 @@ class Login extends Component {
     }
 
     render() {
+
         const {container, containerSignIn, logoContainer,createAccountButton, containerCreateAccount,signInButton, scroll, upperSide, card, cardContainer, forgotPasswordText, forgotContainer} = this.getEStyle();
         const {email, password} = this.state;
         return (

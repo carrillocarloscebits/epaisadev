@@ -1,4 +1,4 @@
-import { sendRequest, encryptJson, encryptJsonCreateUser } from '../services/server-api';
+import { sendRequest, encryptJson, encryptJsonCreateUser, encryptJsonCredentials, encryptForgotPassword } from '../services/server-api';
 
 export function login(email, password) {
     const returnEncrypt = encryptJson(email, password);
@@ -10,6 +10,29 @@ export function create_account(userData) {
     var returnEncrypt = encryptJsonCreateUser(userData);
 
     return sendRequest(returnEncrypt,'/user/register')
+}
+
+export function check_email(email) {
+
+    var returnEncrypt = encryptJsonCredentials(email, null);
+
+    return sendRequest(returnEncrypt, '/user/check').then(({response}) => {
+        const {username} = response;
+
+        return {
+            exists: username.exists,
+            errors: username.exists ? [] : [username.message]
+        }
+    })
+}
+
+export function opt_send(value, key) {
+    var returnEncrypt = encryptForgotPassword(JSON.stringify({[key]: value}));
+
+    return sendRequest(returnEncrypt, '/user/forgotpassword')
+        .then((res) => {
+            console.log(res)
+        })
 }
 
 // sendRequestApi = ()=>{

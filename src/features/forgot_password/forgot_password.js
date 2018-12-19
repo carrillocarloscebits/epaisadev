@@ -5,7 +5,7 @@ import { DoubleBackground, Card, Loading, Alert, OtpForgotPassword, TextMontserr
 import Logo from 'components/utilities/logo';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import ForgotPasswordForm from './components/forgot_password_form';
+import ForgotPasswordForm from './containers/form_container';
 
 class ForgotPassword extends Component {
     state={
@@ -96,7 +96,6 @@ class ForgotPassword extends Component {
 
     handleChange = ({email, mobile}) => {
         this.setState({email, mobile})
-        console.log(email)
         this.validateForm();
     }
 
@@ -105,7 +104,12 @@ class ForgotPassword extends Component {
         this.setState({
             canResetPassword: canReset,
         })
+    }
 
+    checkField = (key) => {
+       if(key === 'email') {
+           this.props.check_email(this.state.email.value);
+       }
     }
 
     render() {
@@ -125,7 +129,9 @@ class ForgotPassword extends Component {
                     </View>
                     <View style={styles.cardContainer}>
                         <Card style={styles.card}>
-                            <ForgotPasswordForm onChangeForm={this.handleChange} />
+                            <ForgotPasswordForm 
+                                onChangeForm={this.handleChange} 
+                            />
                         </Card>
                         <View style={styles.resetPasswordButton}>
                             <ButtonGradient disabled={!this.state.canResetPassword} title={'RESET PASSWORD'} onPress={() => this.setState({otp: true})}/>
@@ -134,7 +140,7 @@ class ForgotPassword extends Component {
                 </View>
                 
                 {/* { this.state.email && <Alert style={{height:hp('27.5%'), width:wp('85%')}} message={alertMessage} buttonTitle='OK' onPress={this.closeEmail}/> } */}
-                { this.state.loading && <Loading /> }
+                { this.props.reset_password.loading && <Loading /> }
                 { this.state.otp && <OtpForgotPassword message={otpMessage} buttonTitle='RESEND OTP' onPress={this.closeOtp} /> }
             </DoubleBackground>
         )

@@ -11,7 +11,8 @@ class CardWithHeader extends Component {
       closeButton,
       onPressCloseButton,
       closeButtonSize,
-      closeButtonColor
+      closeButtonColor,
+      isLandscape
     } = this.props;
     if (closeButton) {
       return (
@@ -20,7 +21,7 @@ class CardWithHeader extends Component {
           activeOpacity={0.5}
           onPress={onPressCloseButton}
         >
-          <Image source={Icons.close} style={{ width: wp('4.0'), height: wp('4.0')}} />
+          <Image source={Icons.close} style={isLandscape?{width: hp('3%'), height: hp('3%')}:{width: wp('4%'), height: wp('4%')}} />
           {/* <Icon
             name={"close"}
             size={closeButtonSize || 30}
@@ -31,13 +32,21 @@ class CardWithHeader extends Component {
     }
   };
   render() {
-    const { cardStyles, cardBody, cardHeader, cardHeaderText } = styles;
+    const { cardStyles, cardBody, cardHeader } = styles;
     const {
       children,
       customCardStyle,
       customBodyStyle,
-      headerTitle
+      headerTitle,
+      sizeHeaderLabel,
+      
     } = this.props;
+    
+    const cardHeaderText = {
+      fontWeight: "bold",
+      fontSize: hp(sizeHeaderLabel),
+      color: "#47525d"
+    }
     return (
       <View style={[cardStyles, customCardStyle]}>
         <View style={cardHeader}>
@@ -65,15 +74,10 @@ const styles = {
     justifyContent: "center",
     alignItems: "center"
   },
-  cardHeaderText: {
-    fontWeight: "bold",
-    fontSize: wp('5.0'),
-    color: "#47525d"
-  },
   closeButtonStyle: {
     position: "absolute",
     right: 12,
-    top:hp('1.8%')
+    top:hp('1.5%')
   }
 };
 

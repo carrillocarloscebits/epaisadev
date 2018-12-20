@@ -31,23 +31,23 @@ const styles = StyleSheet.create({
     },
     usernameBox:{
         height:'100%', 
-        paddingLeft:wp('2.65%'), 
-        paddingTop:hp('2.6%')
+        paddingLeft:hp('1.9%'), 
+        paddingTop:hp('2.6%'),
     },
     shadowBox:{
         height:hp('7%'), 
-        width:wp('40%'), 
+        width:'96%',  
         backgroundColor:'#000000', 
         flexDirection: 'column', 
         position:'absolute', 
         top:hp('3%'), 
-        left:wp('3.3%'), 
+        left:hp('1.8%'), 
         borderRadius:hp('1.4%'), 
         opacity:0.15
     },
     borderBox:{
         height:hp('7%'), 
-        width:wp('40%'), 
+        width:'95%', 
         backgroundColor:'#5D6770',  
         flexDirection: 'column', 
         borderWidth:hp('0.14%'), 

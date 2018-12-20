@@ -31,7 +31,7 @@ const styles = EStyleSheet.create({
         alignItems:'center',
       },
       optionText:{
-        fontSize: 19,
+        fontSize: hp('3%'),
         fontWeight: '300',
         fontFamily: 'Montserrat-Bold',
       },

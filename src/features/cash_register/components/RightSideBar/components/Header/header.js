@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
         height:hp('13.6%'), 
         flexDirection:'row', 
         borderBottomWidth:hp('0.15%'), 
-        elevation:hp('1.4%')
+        elevation:hp('1.4%'),
+        backgroundColor:'#5D6770',
     }
 });
 

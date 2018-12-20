@@ -1,22 +1,22 @@
 import React, {Component} from 'react';
-import {Dimensions,View, Text, StyleSheet, ImageBackground, Modal,ScrollView} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Header from './components/Header/header'
 import TotalAmount from './components/TotalAmount/totalAmount'
 import ItemsContainer from './components/ItemsContainer/itemsContainer'
 import Calculator from './components/Calculator/Calculator'
 import Footer from './components/Footer/footer';
 import colors from './styles/colors'
-import Orientation, { lockToLandscape } from 'react-native-orientation-locker';
+import Orientation from 'react-native-orientation-locker';
 import DeviceInfo from 'react-native-device-info';
 import { connect } from 'react-redux';
 import { cashActions } from './actions';
 import SideBar from './components/LeftSideBar/sideBar'
 import RightSideBar from './components/RightSideBar/rightSideBar'
 import Drawer from 'react-native-drawer'
-import {CardWithHeader} from "../../components"
 import ModalDiscount from './components/Modals/ModalDiscount/modalDiscount';
 import ModalDelivery from './components/Modals/ModalDelivery/modalDelivery';
 import ModalOptions from './components/Modals/ModalOptions/modalOptions';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const isPhone= !DeviceInfo.isLandscape()
 class CashScreen extends Component{
@@ -70,7 +70,6 @@ class CashScreen extends Component{
   addDelivery=(value)=>{
     const {delivery}=this.props
     delivery(value)
-    //alert(value)
     this.setState({
       modalDelivery:false,
     })
@@ -108,10 +107,11 @@ class CashScreen extends Component{
     return (
       <Drawer
           ref={(ref) => this._drawer2 = ref} type="overlay" side="left" tapToClose={true}
-          open={this.state.modalActive} openDrawerOffset={ isPhone?0.22:0.70} 
+          open={this.state.modalActive} openDrawerOffset={ isPhone?0.22:0.73} 
           onClose={()=>{this.setState({modalActive: false})}}
           content={
-            <SideBar handleOption={this.changeOption} active={this.state.modalActive} toggle={this.toggleSideBar} sideOption={sideOption}/>  
+            //LEFT SIDE BAR
+            <SideBar isLandscape={!isPhone} handleOption={this.changeOption} active={this.state.modalActive} toggle={this.toggleSideBar} sideOption={sideOption}/>  
           }
       >
       {
@@ -121,11 +121,15 @@ class CashScreen extends Component{
             open={this.state.modalRight} onClose={()=>{this.setState({modalRight: false})}}
             openDrawerOffset={0.1} 
             content={
+              //RIGHT SIDE BAR
                 <RightSideBar type={type} data={data} discount={totalDiscount} delivery={totalDelivery} 
                               subtotal={total_amount} actionClose={this.closeControlPanel} openDiscount={this.toggleModalDiscount}
                               openDelivery={this.toggleModalDelivery}/> 
             }
         >
+              {
+                //MAIN VIEW
+              }
           <View style={styles.container}>
             
             
@@ -144,8 +148,8 @@ class CashScreen extends Component{
             { this.state.modalOptions?
               <ModalOptions openDiscount={this.toggleModalDiscount} openDelivery={this.toggleModalDelivery}/>:null
             }
-            <ModalDiscount active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
-            <ModalDelivery active={this.state.modalDelivery} closeModal={this.toggleModalDelivery} addDelivery={this.addDelivery}/>
+            <ModalDiscount widthModal="40%" active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
+            <ModalDelivery widthModal="40%" active={this.state.modalDelivery} closeModal={this.toggleModalDelivery} addDelivery={this.addDelivery}/>
           </View>
         </Drawer>
         :<View style={styles.containerLandscape}>
@@ -161,8 +165,8 @@ class CashScreen extends Component{
             { this.state.modalOptions?
               <ModalOptions openDiscount={this.toggleModalDiscount} openDelivery={this.toggleModalDelivery}/>:null
             }
-            <ModalDiscount active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
-            <ModalDelivery active={this.state.modalDelivery} closeModal={this.toggleModalDelivery} addDelivery={this.addDelivery}/>
+            <ModalDiscount isLandscape={true} widthModal="50%" active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
+            <ModalDelivery isLandscape={true} widthModal="50%" active={this.state.modalDelivery} closeModal={this.toggleModalDelivery} addDelivery={this.addDelivery}/>
           </View>
           <RightSideBar isLandscape={true} type={type} data={data} discount={totalDiscount} delivery={totalDelivery} 
                               subtotal={total_amount} actionClose={this.closeControlPanel} openDiscount={this.toggleModalDiscount}

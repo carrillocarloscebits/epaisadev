@@ -18,7 +18,7 @@ const cashData = (state = initialState, action) => {
           name: "Custom product "+(state.data.length+1),
           quant: 1,
           total: state.amount,
-          discount: (0).toFixed(2),
+          discount: (10).toFixed(2),
           type: "%"
         }] ,
         amount:(0).toFixed(2),};

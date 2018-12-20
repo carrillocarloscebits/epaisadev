@@ -7,13 +7,9 @@ class Button extends Component {
         const {label, backgroundColor, width, color} = this.props
 
         return (
-            <TouchableOpacity
-                onPress={()=>{alert('Not implemented for this version.')}} >
-                <View style={[{backgroundColor},{width},styles.container]}>
+                <TouchableOpacity style={[{backgroundColor},{width},styles.container]} onPress={()=>{alert('Not implemented for this version.')}}>
                     <Text style={[{color},styles.labelButton]}>{label}</Text>
-                </View>
-            </TouchableOpacity>
-                    
+                </TouchableOpacity>
         );
     }
 }
@@ -21,7 +17,7 @@ class Button extends Component {
 const styles = StyleSheet.create({
     
     container:{
-        height:hp('6.1%'), 
+        height:hp('5.8%'), 
         borderRadius:hp('0.9%'), 
         justifyContent:'center', 
         alignItems:'center', 
@@ -29,7 +25,8 @@ const styles = StyleSheet.create({
     },
     labelButton:{
         fontFamily:'Montserrat-Bold', 
-        fontSize:hp('2.6%')
+        fontSize:hp('2.6%'),
+        textAlign:'center',
     }
 });
 

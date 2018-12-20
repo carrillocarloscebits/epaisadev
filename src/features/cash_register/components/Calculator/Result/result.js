@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,ImageBackground} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default class Result extends Component{
   render() {
@@ -30,18 +31,19 @@ const styles = EStyleSheet.create({
   },
   imgb:{
     justifyContent: 'center',
-    width: '100%',
+    width: '99%',
     alignItems:'center',
   },
   fieldResult:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 18,
+    paddingHorizontal: 18,
+    paddingVertical: hp('2.6%'),
     width: '100%',
     alignItems:'center',
   },
   textField:{
-    fontSize: 18,
+    fontSize: hp('2.6%'),
     fontWeight: '700',
   },
   '@media (min-width: 200) and (max-width: 400)': { // media queries

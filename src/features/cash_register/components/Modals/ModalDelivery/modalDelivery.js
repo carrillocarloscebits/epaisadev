@@ -23,7 +23,7 @@ class ModalDelivery extends Component {
         addDelivery(parseFloat(this.state.valueDelivery));                 
     }
     render() {
-        const {active, closeModal} = this.props
+        const {active, closeModal,widthModal, isLandscape} = this.props
         const wrongStyleLabel= this.state.wrong? {color:'#D0021B'}:null
         const wrongStyleBorders= this.state.wrong? {borderColor:'#D0021B'}:null
         const noFormat = parseFloat(this.state.valueDelivery) > 0? false: true
@@ -31,17 +31,17 @@ class ModalDelivery extends Component {
         return(
             <Modal visible={active} transparent={true} animationType="fade" onRequestClose={closeModal} >
             <View style={styles.container}>
-                <CardWithHeader customBodyStyle={{alignItems:'center',justifyContent:'center'}} headerTitle="Delivery Charge" closeButton={true} onPressCloseButton={closeModal} customCardStyle={{width: '65%',}}>
+                <CardWithHeader isLandscape={isLandscape} sizeHeaderLabel={isLandscape?"3.5%":"3%"} customBodyStyle={{alignItems:'center',justifyContent:'center'}} headerTitle="Delivery Charge" closeButton={true} onPressCloseButton={closeModal} customCardStyle={{width: hp(widthModal),}}>
                 <View style={styles.wrapper}>
                         <View style={[styles.rowForm,wrongStyleBorders]}>
                             <View style={styles.rightForm}>
-                                <Text style={[styles.textIcon,wrongStyleLabel]}>₹ </Text>
+                                <Text style={[styles.textIcon,wrongStyleLabel,isLandscape?{marginBottom: hp('4%'),fontSize:hp('3.4%'),marginLeft: hp('4%'),}:null]}>₹ </Text>
                                 <TextInput value={this.state.valueDelivery>'0' || this.state.valueDelivery?this.state.valueDelivery.toString():""} 
                                         onChangeText={(valueDelivery)=>{this.setState({valueDelivery})}} 
                                         onFocus={()=>{this.setState({inputFocus:true, optionsActive:false})}} 
-                                        style={[styles.textInput,wrongStyleLabel]}/>
+                                        style={[styles.textInput,wrongStyleLabel,isLandscape?{fontSize:hp('3.4%'),marginLeft: hp('4%'),paddingLeft: hp('6%')}:null]}/>
                                 <TouchableOpacity style={styles.icon} onPress={()=>{this.setState({valueDelivery: 0})}}>
-                                <IconMaterialIcons  name={"cancel"} size={20} color="#666"/>
+                                <IconMaterialIcons  name={"cancel"} size={isLandscape?hp('4.2%'):hp('2.5%')} color="#666"/>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat-Bold',
     },
     textIcon:{
-        width:wp('10%'),
+        width:hp('6%'),
         position:'absolute',
         top:2,
         left:0,
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
         color:'#174285',
         fontSize:wp('4.1%'),
         fontFamily: 'Montserrat-Bold',
-        marginBottom: 5,
+        marginBottom: hp('1%'),
     },
     textDiscountAddButtonPortrait:{
         fontFamily: 'Montserrat-SemiBold', 

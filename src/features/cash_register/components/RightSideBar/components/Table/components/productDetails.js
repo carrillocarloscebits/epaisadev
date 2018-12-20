@@ -16,17 +16,15 @@ class ProductDetail extends React.Component{
                 <Text style={[styles.textProductDefault, styles.TextGrayProductIndex]}>{id}.</Text>     
                 <Text style={[styles.textProductDefault, styles.TextGrayProduct]} numberOfLines={3}>{name}</Text>
                 <Text style={[styles.textProductDefault, styles.TextGray]}>{quant}</Text>    
-                <View style={styles.productAmount}>
-                    <Text style={[styles.textProductDefault, styles.TextBlueProduct]} numberOfLines={1} textAlign={'right'}>
-                        ₹ {total}
-                    </Text>
-                </View>  
+                <Text style={[styles.textProductDefault, styles.TextBlueProduct]} numberOfLines={1}>₹ {total}</Text> 
             </View>
             { discount > 0 ?
-                <View style={styles.productDetailDiscountContainer}>
-                <Text style={styles.productDetailDiscountLabel}>— Discount {type=="%"? `@ ${parseFloat(discount).toFixed(2)}%`:null}</Text>
-                <Text style={[styles.productDetailDiscountLabel,styles.productDetailDiscountValue]}>₹ {type=="%"? parseFloat(total*discount/100).toFixed(2):parseFloat(discount).toFixed(2)}</Text>
-                </View> : null
+            <View style={styles.container}>
+                <Text style={[styles.textProductDefault, styles.TextGrayProductIndex]}></Text>     
+                <Text style={styles.productDetailDiscountLabel}>̶— Discount {type=="%"? `@ ${parseFloat(discount)}%`:null}</Text>
+                <Text style={[styles.textProductDefault, styles.TextGray]}></Text>    
+                <Text style={styles.productDetailDiscountValue}>₹ {type=="%"? parseFloat(total*discount/100).toFixed(2):parseFloat(discount).toFixed(2)}</Text>
+            </View>: null
             }
           </View>
         </TouchableOpacity>
@@ -38,8 +36,8 @@ class ProductDetail extends React.Component{
     container:{
         width:'100%',
         flexDirection:'row',
-        paddingLeft:wp('2.1%'),
-        paddingTop:hp('0.5%'),
+        alignItems:'center', 
+        justifyContent: 'flex-start',
     },
     textProductDefault:{
         color:'#555555',
@@ -48,27 +46,27 @@ class ProductDetail extends React.Component{
     },
     TextGrayProductIndex:{
         textAlign:'center',
-        width:wp('10%'),
+        width:'15%',
     },
     TextGrayProduct:{
-        width:wp('41%'),
-        paddingLeft:wp('1.75%'),
-        paddingRight:wp('0.8%')
+        width:'38%',
+        textAlign:'left'
     },
     TextGray:{
-        width:wp('9%'),
+        width:'15%',
         textAlign:'center',
     },
     productAmount: {
-        width:wp('23.5%'),
+        width:'32%',
         flexDirection:'row',
         justifyContent:'flex-end'
     },
     TextBlueProduct:{
         color:'#174285',
-        width:wp('23.5%'),
+        width:'32%',
         textAlign:'right',
         fontFamily: "Montserrat-SemiBold",
+        paddingRight:hp('2.3%')
     },
     productDetailDiscountContainer:{
         flexDirection:'row', 
@@ -79,12 +77,17 @@ class ProductDetail extends React.Component{
     productDetailDiscountLabel:{  
         color:'#FD853D', 
         fontFamily:'Montserrat-SemiBold', 
-        fontSize:hp('1.72%'), 
-        width:wp('53.1%')
+        fontSize:hp('1.9%'), 
+        width:'38%',
+        textAlign:'left'
     },
     productDetailDiscountValue:{
-        textAlign:'right', 
-        width:wp('20%')
+        color:'#FD853D',
+        width:'32%',
+        textAlign:'right',
+        fontFamily: "Montserrat-SemiBold",
+        fontSize:hp('1.9%'),
+        paddingRight:hp('2.3%')
       },
 });
   export default ProductDetail;

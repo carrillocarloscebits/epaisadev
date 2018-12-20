@@ -25,20 +25,20 @@ class ModalDiscount extends Component {
         addDiscount({discount: parseFloat(this.state.valueDiscount) ,type:options[this.state.optionSelected-1]});                     
     }
     render() {
-        const {active, closeModal,addDiscount} = this.props
+        const {active, closeModal, widthModal, isLandscape} = this.props
         const wrongStyleLabel= this.state.wrong? {color:'#D0021B'}:null
         const wrongStyleBorders= this.state.wrong? {borderColor:'#D0021B'}:null
         const noFormat = this.state.optionSelected==1 ? ((parseFloat(this.state.valueDiscount) < 0.1 || parseFloat(this.state.valueDiscount) > 99.9)? 1 :0 ): parseFloat(this.state.valueDiscount) > 0? 0: 2
         return(
             <Modal visible={active} transparent={true} animationType="fade" onRequestClose={closeModal} >
             <View style={styles.container}>
-                <CardWithHeader customBodyStyle={{alignItems:'center',justifyContent:'center'}} headerTitle="Discount" closeButton={true} onPressCloseButton={closeModal} customCardStyle={{width: '65%',}}>
+                <CardWithHeader isLandscape={isLandscape} sizeHeaderLabel={isLandscape?"3.5%":"3%"} customBodyStyle={{alignItems:'center',justifyContent:'center'}} headerTitle="Discount" closeButton={true} onPressCloseButton={closeModal} customCardStyle={{width: hp(widthModal),}}>
                     <View style={styles.wrapper}>
                         <View style={[styles.rowForm,wrongStyleBorders]}>
                             <View style={styles.leftForm}>
-                                <Text style={[styles.select,wrongStyleLabel]}>{options[this.state.optionSelected-1]}</Text>
+                                <Text style={[styles.select,wrongStyleLabel,isLandscape?{fontSize:hp('3.4%'),}:null]}>{options[this.state.optionSelected-1]}</Text>
                                 <TouchableOpacity style={styles.drop} onPress={()=>{this.setState({optionsActive:true})}}>
-                                    <Icon  name={"angle-down"} size={20} />
+                                    <Icon  name={"angle-down"} size={isLandscape?hp('3.3%'):hp('2.5%')} />
                                 </TouchableOpacity>
                                 
                             </View>
@@ -49,9 +49,9 @@ class ModalDiscount extends Component {
                                 <TextInput value={this.state.valueDiscount>'0' || this.state.valueDiscount?this.state.valueDiscount.toString():""} 
                                         onChangeText={(valueDiscount)=>{this.setState({valueDiscount})}} 
                                         onFocus={()=>{this.setState({inputFocus:true, optionsActive:false})}} 
-                                        style={[styles.textInput,wrongStyleLabel]}/>
+                                        style={[styles.textInput,wrongStyleLabel,isLandscape?{fontSize:hp('3.4%'),paddingLeft: hp('4%'),}:null]}/>
                                 <TouchableOpacity style={styles.icon} onPress={()=>{this.setState({valueDiscount: 0})}}>
-                                <IconMaterialIcons  name={"cancel"} size={20} color="#666"/>
+                                <IconMaterialIcons  name={"cancel"} size={isLandscape?hp('4.2%'):hp('2.5%')} color="#666"/>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         width: '90%',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: 20,
+        paddingHorizontal: hp('6%'),
         marginTop: hp('5%')
     },
     rowForm:{
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     drop:{
-        marginRight:wp('2%')
+        marginRight:hp('0.6%')
     },
     select:{
         textAlign:'center',
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
         paddingVertical: 0,
         color:'#174285',
         paddingLeft: wp('6%'),
-        fontSize:wp('4.1%'),
+        fontSize:hp('2.8%'),
         width:'80%',
         marginBottom: 5,
         fontFamily: 'Montserrat-Bold',
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
         letterSpacing: 1.33
       },
       touchableModalDiscountAdd:{
-        width: wp('50%'),
+        width: '110%',
         height: hp('6.25%'),
         marginTop: hp('5%'),
         elevation: moderateScale(3),
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
       },
       option:{
           textAlign:'center',
-          fontSize: wp('4%'),
+          fontSize: hp('2.5%'),
           paddingVertical: hp('1.1%'),
           backgroundColor:"#FAFAFA",
           fontFamily: 'Montserrat-ExtraBold',

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,ImageBackground,TouchableOpacity} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default class HighButtonH extends Component{
   render() {
@@ -37,13 +38,13 @@ const styles = EStyleSheet.create({
     alignItems:'center',
   },
   textField:{
-    fontSize: 32,
+    fontSize: hp('5%'),
     fontWeight: '700',
   },
   '@media (min-width: 200) and (max-width: 400)': { // media queries
-    textField:{
+    /*textField:{
       fontSize: 26,
       fontWeight: '600',
-    },
+    },*/
   }
 });

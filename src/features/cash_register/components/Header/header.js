@@ -10,9 +10,9 @@ export default class Header extends Component{
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.iconLeft} onPress={toggleSide}>
-          <Image source={require('../../assets/img/sidelist.png')} resizeMode="stretch"/>
+          <Image source={require('../../assets/img/sidelist.png')} style={{width:hp('2.6%'),height:hp('2.6%')}}/>
         </TouchableOpacity>
-        <Text style={styles.titleCentral} >{label}</Text>
+        <Text style={[styles.titleCentral]} >{label}</Text>
         <View style={styles.iconRight}>
         { !isLandscape?
             <View style={styles.iconContainer}>
@@ -33,10 +33,10 @@ export default class Header extends Component{
               </TouchableOpacity>
               
             </View>:
-            <View style={styles.iconItem}>
-               <Image source={require('../../assets/img/Fill.png')} style={{width:hp('4%'),height:hp('4%')}} />
-                <View style={[styles.stack,{left: '28%',top: '-10%'}]}>
-                   <Text style={[styles.stackText,{fontSize:18}]}>5</Text>
+            <View style={[styles.iconItem,{width:hp('4.5%'),height:hp('4.5%')}]}>
+               <Image source={require('../../assets/img/Fill.png')} style={{width:hp('4.5%'),height:hp('4.5%')}} />
+                <View style={[styles.stack,{width:hp('3.7%'),height:hp('3.7%'),left: 0,top:0}]}>
+                   <Text style={[styles.stackText,{fontSize:hp('2.6%')}]}>5</Text>
                 </View>
            </View>
           }
@@ -53,7 +53,6 @@ const styles = EStyleSheet.create({
     alignItems:'center',
     backgroundColor: colors.darkBlue,
     padding: 22,
-    elevation: 100
   },
   iconLeft:{
     position: 'absolute',
@@ -85,12 +84,12 @@ const styles = EStyleSheet.create({
     top: '5%',
     alignItems:'center',
     justifyContent:'center',
-    borderRadius: 20,
   },
   stackText:{
     color: colors.white,
     fontSize:13,
-    fontWeight:'bold'
+    fontWeight:'bold',
+    
   },
   iconRight:{
     flexDirection: 'row',
@@ -114,7 +113,7 @@ const styles = EStyleSheet.create({
   },
   titleCentral:{
     color: colors.white,
-    fontSize: 18,
+    fontSize: hp('2.5%'),
     fontWeight: '700',
     letterSpacing: 2,
     textAlign:'center',

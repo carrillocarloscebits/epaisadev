@@ -6,10 +6,10 @@ class Headers extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={[styles.defaultHeader, {width:wp('10%')}]}>S No.</Text>
-                <Text style={[styles.defaultHeader,{width:wp('41%'), paddingLeft:wp('1.75%')}]}>Description</Text>
-                <Text style={[styles.defaultHeader,{width:wp('9%'), textAlign:'center'}]}>Qty</Text>
-                <Text style={[styles.defaultHeader,{width:wp('23.5%'), textAlign:'right'}]}>Price</Text>
+                <Text style={[styles.defaultHeader,{width:'15%', textAlign:'center'}]}>S No.</Text>
+                <Text style={[styles.defaultHeader,{width:'38%',textAlign:'left'}]}>Description</Text>
+                <Text style={[styles.defaultHeader,{width:'15%',textAlign:'center'}]}>Qty</Text>
+                <Text style={[styles.defaultHeader,{width:'32%',textAlign:'right', paddingRight:hp('2.3%')}]}>Price</Text>
             </View>    
         );
     }
@@ -20,9 +20,8 @@ const styles = StyleSheet.create({
     container: {
         flexDirection:'row', 
         height:hp('3.95%'), 
-        paddingLeft:wp('2.1%'), 
-        paddingRight:wp('4%'), 
         alignItems:'center', 
+        justifyContent: 'flex-start',
         borderBottomWidth:hp('0.15%'), 
         borderColor:'#D0D0D0'
     },
@@ -30,6 +29,7 @@ const styles = StyleSheet.create({
         fontFamily:'Montserrat-Bold', 
         fontSize:hp('1.8%'), 
         color:'#555555',
+        
     }
 });
 

@@ -8,9 +8,9 @@ class OptionsContainer extends Component {
     render() {
         const{actionClose,openDiscount,openDelivery}=this.props
         const options = [
-            {source: require('../../../assets/Delivery2.png'), extraStyle: {marginRight:wp('2.1%')},onpress:openDelivery},
-            {source: require('../../../assets/Discount2.png'), extraStyle: {marginRight:wp('2.1%')},onpress:openDiscount},
-            {source: require('../../../assets/Close2.png'), extraStyle: {marginRight:wp('3.2%')}, onpress:actionClose},
+            {source: require('../../../assets/Delivery2.png'),onpress:openDelivery},
+            {source: require('../../../assets/Discount2.png'),onpress:openDiscount},
+            {source: require('../../../assets/Close2.png'), onpress:actionClose},
         ]
         return (
             <View style={styles.container}>
@@ -44,26 +44,28 @@ const styles = StyleSheet.create({
         width:'50%',
         backgroundColor: '#5D6770',
         flexDirection:'column',  
+        alignItems: 'flex-end'
     },
     textContainer:{
         width:'100%', 
         height:hp('5.8%'), 
         alignItems:'flex-end', 
         justifyContent:'flex-end', 
-        paddingRight:wp('4%')
+        paddingRight:hp('2.3%')
     },
     drawerRightIcon:{
-        width:wp('9.5%'),
-        height:hp('6.5%'),
+        width:hp('5.5%'),
+        height:hp('5.5%'),
         resizeMode: 'contain',
         alignItems:'flex-start',
     },
     drawerRightTitleContainer:{
         height:hp('7.8%'),
         flexDirection:'row',
-        width:'100%',
+        width:hp('20%'),
+        marginRight:hp('1.7%'),
         paddingTop:hp('0.8%'),
-        justifyContent:'flex-end',
+        justifyContent:'space-between',
     },
     titlePoints:{
         fontSize:hp('2.7%'), 

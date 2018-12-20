@@ -7,7 +7,7 @@ import ModuleDiscounts from './components/moduleDiscounts';
 
 class Footer extends Component {
     render() {
-        const {subtotal,data, discount, delivery, type} = this.props
+        const {subtotal,data, discount, delivery, type,isLandscape} = this.props
         let totalDiscount = type=="%"?(subtotal*parseFloat(discount)/100):parseFloat(discount)
         data.map(item=>{
             if(item.type=="%"){
@@ -26,8 +26,8 @@ class Footer extends Component {
                 </View>
                 <ModuleDiscounts cgst={CGST} subTotal={subtotal} totalDiscount={totalDiscount} Total={Total} deliveryCharge={delivery} subTotalContainer={styles.subTotalContainer}/>
                 <View style={styles.buttonsContainer}>
-                    <Button label="HOLD" backgroundColor="#D8D8D8" width={wp('23.5%')} color="#47525D"/>
-                    <Button label={`PAY ₹ ${parseFloat(Total).toFixed(2)}`} backgroundColor="#09BA83" width={wp('60%')} color="white"/>
+                    <Button label="HOLD" backgroundColor="#D8D8D8" width={isLandscape?"100%":"30%"} color="#47525D"/>
+                    {!isLandscape?<Button label={`PAY ₹ ${parseFloat(Total).toFixed(2)}`} backgroundColor="#09BA83" width={"68%"} color="white" />:null}
                 </View>
 
             </View>
@@ -53,25 +53,25 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
       },
       textDark1:{
-        fontSize:hp('2.5%'),
+        fontSize:hp('2.4%'),
         color:'#47525D',
         fontFamily: "Montserrat-Bold",
-        paddingLeft: wp('2.65%')
+        paddingLeft: hp('2.1%'), 
       },
       TextBlue1:{
-        fontSize:hp('2.6%'),
+        fontSize:hp('2.4%'),
         color:'#174285',
         fontFamily: "Montserrat-Bold",
         letterSpacing:wp('0.03%'),
-        paddingRight: wp('4%')
+        paddingRight: hp('2.2%'), 
       },
       buttonsContainer:{
           flexDirection:'row', 
           height:hp('6.75'), 
           width:'100%', 
           justifyContent:'space-between', 
-          paddingLeft:wp('2.3%'), 
-          paddingRight:wp('2.3%')
+          paddingLeft:hp('2.3%'), 
+          paddingRight:hp('2.3%')
         }
 });
 

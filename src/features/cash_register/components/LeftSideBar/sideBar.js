@@ -7,10 +7,11 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 export default class SideBar extends Component{
     
     render() {
-        const {active,toggle, sideOption, handleOption}=this.props
+        const {isLandscape,active,toggle, sideOption, handleOption}=this.props
+        const paddingLandscape = isLandscape? {paddingHorizontal: wp('3%')}:null
         return (
                 <View style={styles.container}>
-                    <View style={styles.barContainer}>
+                    <View style={[styles.barContainer, paddingLandscape]}>
                         <View style={styles.header}>
                             <Image source={require('../../assets/img/coffeelogo.png')} style={{height: hp('7%'),width:hp('7%'), marginBottom: hp('1%')}}/>
                             <Text style={styles.headerTextTop}>Espresso Café</Text>
@@ -39,7 +40,7 @@ const styles = EStyleSheet.create({
     flex:1,
     width: '100%',
     backgroundColor: colors.lightBlack,
-    paddingHorizontal: 30,
+    paddingHorizontal: wp('8%'),
     elevation: 200
   },
   barOptions:{
@@ -52,13 +53,13 @@ const styles = EStyleSheet.create({
   },
   headerTextTop:{
    color: colors.white,
-   fontWeight: '500',
-   fontSize:18
+   fontFamily:'Montserrat-Bold',
+   fontSize:hp('2.7%'),
   },
   headerTextBottom:{
     color: colors.white,
-    fontWeight: '500',
-    fontSize:16
+    fontFamily:'Montserrat-SemiBold',
+    fontSize:hp('2.4%'),
    },
   iconItem:{
     height:'100%',
@@ -74,12 +75,12 @@ const styles = EStyleSheet.create({
     marginBottom: 2,
   },
   '@media (min-width: 200) and (max-width: 400)': { // media queries
-    headerTextTop:{
+    /*headerTextTop:{
         fontSize:14
     },
     headerTextBottom:{
         fontSize:13
-    },
+    },*/
     barContainer:{
         paddingHorizontal: 22,
     }

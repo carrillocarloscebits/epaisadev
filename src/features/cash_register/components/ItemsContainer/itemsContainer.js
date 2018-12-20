@@ -4,6 +4,7 @@ import Item from './Item/item'
 import colors from '../../styles/colors';
 import { Categories } from '../../constants/categories';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default class ItemsContainer extends Component{
   render() {
@@ -26,7 +27,7 @@ const styles = EStyleSheet.create({
     justifyContent: 'space-between',
     alignItems:'center',
     backgroundColor: colors.darkWhite,
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
     paddingVertical: 6,
   },
   title:{

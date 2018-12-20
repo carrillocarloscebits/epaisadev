@@ -18,7 +18,7 @@ class ModuleDiscounts extends Component {
                         right={swipeBtns}
                         autoClose={true}
                         backgroundColor={'transparent'}
-                        buttonWidth={wp('16%')}
+                        buttonWidth={hp('11%')}
                     >
                         <View style={subTotalContainer}>
                             <Text style={styles.subTextOrange}>Discount</Text>       
@@ -32,7 +32,7 @@ class ModuleDiscounts extends Component {
                           right={swipeBtns}
                           autoClose={true}
                           backgroundColor={'transparent'}
-                          buttonWidth={wp('16%')}
+                          buttonWidth={hp('11%')}
                         >
                           <View  style={subTotalContainer}>
                               <Text style={styles.subTextGray}>Delivery Charge</Text>       
@@ -40,7 +40,7 @@ class ModuleDiscounts extends Component {
                           </View> 
                         </Swipeout> : null
                     }
-                <View style={[subTotalContainer, {paddingTop:hp('0%')}]}>
+                <View style={[subTotalContainer, {paddingTop:hp('0.1%')}]}>
                     <Text style={styles.subTextGray}>CGST@9%</Text>       
                     <Text style={[styles.subTextGray,styles.subTextBlue]}>₹ {parseFloat(cgst).toFixed(2)}</Text>
                 </View>
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         fontFamily:'Montserrat-SemiBold', 
         fontSize:hp('2.09%'), 
         color:'#D0021B', 
-        width:wp('16%'), 
+        width:"100%", 
         height:'100%', 
         textAlign:'center', 
         textAlignVertical:'center'
@@ -74,34 +74,35 @@ const styles = StyleSheet.create({
     subTextOrange:{
         fontSize:hp('2.2%'),
         color:'#FF6000',
-        fontFamily: "Montserrat-SemiBold",
-        paddingLeft: wp('2.65%')
+        fontFamily: "Montserrat-Bold",
+        paddingLeft: hp('2.1%'), 
     },
     textOrange:{
-        paddingRight: wp('4%')
+        paddingRight: hp('2.2%'), 
     },
     subTextGray:{
         fontSize:hp('2.2%'),
         color:'#47525D',
-        fontFamily: "Montserrat-SemiBold",
-        paddingLeft: wp('2.65%')
+        fontFamily: "Montserrat-Bold",
+        paddingLeft: hp('2.1%'), 
     },
     subTextBlue:{
         color:'#174285',
-        paddingRight: wp('4%')
+        paddingRight: hp('2.2%'), 
     },
     textDark2:{
-        fontSize:hp('2.6%'),
-        letterSpacing:wp('0.2%'),
+        fontSize:hp('2.8%'),
+        letterSpacing:wp('0.03%'),
         color:'#47525D',
         fontFamily: "Montserrat-Bold",
         paddingBottom: hp('1%'),
-        paddingLeft: wp('2.65%')
+        paddingLeft: hp('2.1%'), 
       },
     TextBlue2:{
         color:'#174285',
-        letterSpacing:wp('0.22%'),
-        paddingRight: wp('4%')
+        fontSize:hp('2.8%'),
+        letterSpacing:wp('0.03%'),
+        paddingRight: hp('2.2%'), 
       },
 });
 const swipeBtns = [

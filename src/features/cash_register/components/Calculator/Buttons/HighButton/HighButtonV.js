@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,ImageBackground,Image,TouchableOpacity} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default class HighButtonV extends Component{
   render() {
@@ -14,7 +15,7 @@ export default class HighButtonV extends Component{
         >  
             {
               type==='icon'?
-              <Image source={icon} resizeMode="stretch"/>
+              <Image source={icon} style={styles.imgb2} />
               :<Text style={[{color},styles.textField]}>{label}</Text>
             }
                 
@@ -34,14 +35,19 @@ const styles = EStyleSheet.create({
     height:'100%',
     justifyContent: 'center',
     alignItems:'center',
-    
+  },
+  imgb2:{
+    width:hp('5.3%'),
+    height:hp('5.2%'),
+    justifyContent: 'center',
+    alignItems:'center',
   },
   fieldResult:{
     justifyContent: 'center',
     alignItems:'center',
   },
   textField:{
-    fontSize: 50,
+    fontSize: hp('10%'),
     fontWeight: '700',
   },
 });

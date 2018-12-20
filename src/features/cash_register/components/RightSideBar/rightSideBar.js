@@ -11,14 +11,14 @@ import Footer from './components/Footer/footer';
 class RightSideBar extends Component {
     render() {
         const {isLandscape, data, subtotal, discount, delivery,actionClose, type, openDiscount,openDelivery} = this.props
-        const width = isLandscape? '39%' : null
+        const width = isLandscape? '34%' : null
         return (
             
             <View style={[styles.drawerRightContainer,{width}]}>
                 <BackgroundImage source={require('./assets/side_nav_portrait_faded.png') }/>
                 <Header actionClose={actionClose} openDiscount={openDiscount} openDelivery={openDelivery}/>
                 <Table data={data} actionClose={actionClose}/>
-                <Footer data={data} discount={discount} delivery={delivery} subtotal={subtotal} type={type}/>
+                <Footer isLandscape={isLandscape} data={data} discount={discount} delivery={delivery} subtotal={subtotal} type={type}/>
             </View>
         );
     }

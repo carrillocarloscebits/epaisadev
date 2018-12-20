@@ -7,6 +7,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import EStyleSheet from 'react-native-extended-stylesheet';
 import ForgotPasswordForm from './containers/form_container';
 import OtpForgotPassword from './components/otp_forgot_password';
+
 class ForgotPassword extends Component {
     state={
         loading: false,
@@ -142,7 +143,7 @@ class ForgotPassword extends Component {
                 
                 { this.props.reset_password.alert && <Alert style={{height:hp('27.5%'), width:wp('85%')}} message={this.props.reset_password.alert} buttonTitle='OK' onPress={this.props.reset_password.dismissAlert}/> }
                 { this.props.reset_password.loading && <Loading /> }
-                { this.state.otp && <OtpForgotPassword message={otpMessage} buttonTitle='RESEND OTP' onClosePress={this.closeOtp} /> }
+                { this.props.reset_password.show_otp && <OtpForgotPassword message={otpMessage} buttonTitle='RESEND OTP' onClosePress={this.closeOtp} /> }
             </DoubleBackground>
         )
     }

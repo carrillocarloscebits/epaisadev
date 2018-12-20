@@ -7,6 +7,7 @@ import {ButtonGradient, ButtonOutline, ButtonClose} from './buttons';
 import {PopUp} from './popups';
 import {Loading} from './utilities/loading'; 
 import {Alert} from './utilities/alert_message';
+import Timer from './utilities/timer';
 
 export { 
     DoubleBackground,
@@ -20,5 +21,6 @@ export {
     PopUp,
     Loading,
     Alert,
-    ButtonClose
+    ButtonClose,
+    Timer
 }

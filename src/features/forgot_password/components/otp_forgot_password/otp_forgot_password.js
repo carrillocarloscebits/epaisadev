@@ -1,45 +1,11 @@
 import React, {Component} from 'react';
 import { View, Dimensions, ScrollView } from 'react-native';
-import { PopUp, TextMontserrat, ButtonGradient, OtpInputs, ButtonClose, FloatingTextInput } from 'components';
+import { PopUp, TextMontserrat, ButtonGradient, ButtonClose, FloatingTextInput, Timer } from 'components';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import EStyleSheet from 'react-native-extended-stylesheet'; 
-
+import OtpInputs from './components/otp_inputs';
 class OtpForgotPassword extends Component {
-    state = {
-        counter:'01:00',
-        seconds: 60,
-        colorGradient:['#BDC1CD','#BDC1CD']
-    }
 
-    componentWillMount() {
-        this.countDown()
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.clockCall)
-    }
-
-    secondWithZero = (second) => {
-        return second < 10 ? '0'+second:''+second
-    }
-
-    countDown = () => {
-        this.clockCall = setInterval(() => {
-            this.decrementClock();
-        }, 1000);
-    }
-
-    decrementClock = () => {      
-        this.setState(
-            (prevstate) => ({ 
-                seconds: prevstate.seconds-1,
-                counter: '00:'+this.secondWithZero(prevstate.seconds-1)
-            }));
-        if(this.state.seconds == 0){
-            clearInterval(this.clockCall);
-            this.setState({ colorGradient: ['#174285','#0079AA'] })
-        }
-    };
     renderTopMessages = () => {
         const textStyle = {
             fontSize: hp('2.4%'),
@@ -54,7 +20,7 @@ class OtpForgotPassword extends Component {
     }
 
     render() {
-
+        console.log(this.props)
         const {style, buttonTitle, onClosePress} = this.props;
 
         const popupContainer = EStyleSheet.create({  
@@ -137,16 +103,13 @@ class OtpForgotPassword extends Component {
                             </TextMontserrat> */}
                         </View>
                         <View style={containerTimer}>
-                            <TextMontserrat style={timerText}>
-                                {this.state.counter}
-                            </TextMontserrat>
+                            <Timer textStyle={timerText}/>
                         </View>
                         <View style={resendContainer}>
                             <View style={{width: '70%'}}>
                                 <ButtonGradient 
                                     title={buttonTitle}
-                                    onPress={this.state.seconds != 0 ? null :onPress}
-                                    colorLinearGradient={this.state.colorGradient}
+                                    // onPress={this.state.seconds != 0 ? null :onPress}
                                 />
                             </View>
                         </View>
@@ -180,4 +143,4 @@ class OtpForgotPassword extends Component {
     }
 }
 
-export {OtpForgotPassword}
+export default OtpForgotPassword

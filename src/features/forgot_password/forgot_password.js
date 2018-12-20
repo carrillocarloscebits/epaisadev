@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {View, Dimensions} from 'react-native';
 import {Colors} from 'api';
-import { DoubleBackground, Card, Loading, Alert, OtpForgotPassword, TextMontserrat, BackHeader, ButtonGradient} from 'components';
+import { DoubleBackground, Card, Loading, Alert, TextMontserrat, BackHeader, ButtonGradient} from 'components';
 import Logo from 'components/utilities/logo';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import ForgotPasswordForm from './containers/form_container';
-
+import OtpForgotPassword from './components/otp_forgot_password';
 class ForgotPassword extends Component {
     state={
         loading: false,
@@ -134,14 +134,15 @@ class ForgotPassword extends Component {
                             />
                         </Card>
                         <View style={styles.resetPasswordButton}>
-                            <ButtonGradient disabled={!this.state.canResetPassword} title={'RESET PASSWORD'} onPress={() => this.setState({otp: true})}/>
+                        {/* disabled={!this.state.canResetPassword} */}
+                            <ButtonGradient  title={'RESET PASSWORD'} onPress={() => this.setState({otp: true})}/>
                         </View>
                     </View>
                 </View>
                 
                 { this.props.reset_password.alert && <Alert style={{height:hp('27.5%'), width:wp('85%')}} message={this.props.reset_password.alert} buttonTitle='OK' onPress={this.props.reset_password.dismissAlert}/> }
                 { this.props.reset_password.loading && <Loading /> }
-                { this.state.otp && <OtpForgotPassword message={otpMessage} buttonTitle='RESEND OTP' onPress={this.closeOtp} /> }
+                { this.state.otp && <OtpForgotPassword message={otpMessage} buttonTitle='RESEND OTP' onClosePress={this.closeOtp} /> }
             </DoubleBackground>
         )
     }

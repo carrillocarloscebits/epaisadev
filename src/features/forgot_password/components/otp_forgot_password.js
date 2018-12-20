@@ -55,7 +55,7 @@ class OtpForgotPassword extends Component {
 
     render() {
 
-        const {style, buttonTitle, onPress} = this.props;
+        const {style, buttonTitle, onClosePress} = this.props;
 
         const popupContainer = EStyleSheet.create({  
             ...style,
@@ -118,7 +118,7 @@ class OtpForgotPassword extends Component {
             <PopUp style={popupContainer}>
                 <ScrollView contentContainerStyle={mainContainer}>
                     <View style={closeContainer}>
-                        <ButtonClose onPress={onPress}/>
+                        <ButtonClose onPress={onClosePress}/>
                     </View>
                     <View style={containerTopMessages}>
                         {this.renderTopMessages()}
@@ -171,7 +171,7 @@ class OtpForgotPassword extends Component {
                         <View style={{
                             marginTop: 20
                         }}>
-                            <ButtonGradient title={'RESET PASSWORD'} onPress={onPress} />
+                            <ButtonGradient title={'RESET PASSWORD'} onPress={() => alert('Reset')} />
                         </View>
                     </View>
                 </ScrollView>

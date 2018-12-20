@@ -18,7 +18,7 @@ import ModalDiscount from './components/Modals/ModalDiscount/modalDiscount';
 import ModalDelivery from './components/Modals/ModalDelivery/modalDelivery';
 import ModalOptions from './components/Modals/ModalOptions/modalOptions';
 
-const isPhone= !DeviceInfo.isTablet()
+const isPhone= !DeviceInfo.isLandscape()
 class CashScreen extends Component{
   static navigationOptions = {
     header: null

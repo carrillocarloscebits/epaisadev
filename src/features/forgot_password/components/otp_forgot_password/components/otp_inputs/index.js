@@ -7,83 +7,88 @@ class OtpInputs extends Component {
     focusTheField = (id) => {
         this.inputs[id].focus();
     }
-    render() {
+    state = {
+        otp: {}
+    }
+
+    _handle_change = (value, i) => {
+        this.setState((prevState) => ({
+            otp: {
+                ...prevState.otp,
+                [i]: value
+            }
+        }))
+    }
+
+    _handle_complete = () => {
+        let string_val = '';
+        for (const key in this.state.otp) {
+            string_val = `${string_val}${this.state.otp[key]}`;
+        }
+        
+        this.props.onComplete(parseInt(string_val));
+    }
+
+    _get_color_status = () => {
+        if(this.props.invalid && !this.props.valid) {
+            return '#D0021B'
+        }else {
+            if(this.props.valid) {
+                return '#09BA83'
+            }
+            return '#174285';
+        }
+    }
+
+    renderInputs = () => {
         const border = 5;
+        const inputsArr = this.props.data;
+        return inputsArr.map((x, i) => {
+            const isFirst = i === 0;
+            const isLast = i === inputsArr.length - 1;
+
+            const firstViewStyle = isFirst ? {
+                borderTopLeftRadius: border, 
+                borderBottomLeftRadius: border
+            } : {}
+
+            const lastViewStyle = isLast ? {
+                borderTopRightRadius: border, 
+                borderBottomRightRadius: border,
+                borderRightWidth: 1.5
+            } : {}
+
+            const viewStyle = {
+                ...styles.container,
+                borderColor: this._get_color_status(),
+                ...firstViewStyle,
+                ...lastViewStyle
+            }
+
+            return (
+                <View key={`input_${i}`} style={viewStyle}>
+                    <TextInput
+                        ref={input => { this.inputs[x] = input }}
+                        returnKeyType={isLast ? 'done' : 'next'}
+                        onSubmitEditing={() => { 
+                            isLast ? this._handle_complete() : this.focusTheField(inputsArr[i+1])
+                        }}
+                        onChangeText={(value) => this._handle_change(value, i)}
+                        style= {styles.input}
+                        keyboardType='numeric'
+                        maxLength={1}
+                        blurOnSubmit={isLast ? true : false}
+                        underlineColorAndroid='transparent'
+                    />
+                </View>
+            )
+        })
+    }
+
+    render() {
         return (
             <View style={{flexDirection:'row'}}>
-                <View style={{...styles.container, borderTopLeftRadius: border, borderBottomLeftRadius: border}}>
-                    <TextInput
-                        returnKeyType={'next'}
-                        onSubmitEditing={() => { this.focusTheField('second'); }}
-                        style= {styles.input}
-                        keyboardType='numeric'
-                        maxLength={1}
-                        blurOnSubmit={false}
-                        underlineColorAndroid='transparent'
-                    />
-                </View>
-                
-                <View style={styles.container}>
-                    <TextInput
-                        ref={input => { this.inputs['second'] = input }}
-                        returnKeyType={'next'}
-                        onSubmitEditing={() => { this.focusTheField('third'); }}
-                        style= {styles.input}
-                        keyboardType='numeric'
-                        maxLength={1}
-                        blurOnSubmit={false}
-                        underlineColorAndroid='transparent'
-
-                    />
-                </View>
-                <View style={styles.container}>
-                    <TextInput
-                        ref={input => { this.inputs['third'] = input }}
-                        returnKeyType={'next'}
-                        onSubmitEditing={() => { this.focusTheField('fourth'); }}
-                        style= {styles.input}
-                        keyboardType='numeric'
-                        maxLength={1}
-                        blurOnSubmit={false}
-                        underlineColorAndroid='transparent'
-                    />
-                </View>
-                
-                <View style={styles.container}>
-                    <TextInput
-                        ref={input => { this.inputs['fourth'] = input }}
-                        returnKeyType={'next'}
-                        onSubmitEditing={() => { this.focusTheField('fifth'); }}
-                        style= {styles.input}
-                        keyboardType='numeric'
-                        maxLength={1}
-                        blurOnSubmit={false}                    
-                        underlineColorAndroid='transparent'
-                    />
-                </View>
-                <View style={styles.container}>
-                    <TextInput
-                        ref={input => { this.inputs['fifth'] = input }}
-                        returnKeyType={'next'}
-                        onSubmitEditing={() => { this.focusTheField('sixth'); }}
-                        style= {styles.input}
-                        keyboardType='numeric'
-                        maxLength={1}
-                        blurOnSubmit={false}                    
-                        underlineColorAndroid='transparent'
-                    />
-                </View>
-                <View style={{...styles.container, borderRightWidth: 1.5, borderTopRightRadius: border, borderBottomRightRadius: border}}>
-                    <TextInput
-                        ref={input => { this.inputs['sixth'] = input }}
-                        returnKeyType={'done'}
-                        onSubmitEditing={() => alert('done')}
-                        style= {styles.input}
-                        keyboardType='numeric'
-                        maxLength={1}                 
-                        underlineColorAndroid='transparent'
-                    />
-                </View>
+                {this.renderInputs()}
             </View>
         )
     }
@@ -98,7 +103,6 @@ const styles = EStyleSheet.create({
         alignItems: 'center',
         borderWidth: 1.5, 
         borderRightWidth: 0,
-        borderColor:'#174285',
     },
     input: {
         width:'4rem',

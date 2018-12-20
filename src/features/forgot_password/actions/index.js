@@ -60,7 +60,7 @@ export function check_mobile(mobile) {
                 .then(res => {
                     console.log(res)
                     if(res.success) {
-                        dispatch(sendOptSuccess({mobile}))
+                        dispatch(sendOptSuccess({mobile_number: mobile, show_otp: true}))
                     }
                 })
             } else {

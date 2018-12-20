@@ -4,14 +4,16 @@ import { PopUp, TextMontserrat, ButtonGradient, ButtonClose, FloatingTextInput, 
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import EStyleSheet from 'react-native-extended-stylesheet'; 
 import OtpInputs from './components/otp_inputs';
-class OtpForgotPassword extends Component {
 
+class OtpForgotPassword extends Component {
+    state = {
+        can_resend_otp: false
+    }
     renderTopMessages = () => {
         const textStyle = {
             fontSize: hp('2.4%'),
             textAlign: 'center',
             fontWeight: '700',
-            //color:'#47525D',
             color:'#4e5965',
             width: '100%',
         }
@@ -19,8 +21,9 @@ class OtpForgotPassword extends Component {
             .map((element, i) => (<TextMontserrat key={i} style={textStyle}>{element}</TextMontserrat>))
     }
 
+    timer = null;
+
     render() {
-        console.log(this.props)
         const {style, buttonTitle, onClosePress} = this.props;
 
         const popupContainer = EStyleSheet.create({  
@@ -90,26 +93,41 @@ class OtpForgotPassword extends Component {
                         {this.renderTopMessages()}
                     </View>
                     <View style={containerPhoneNumber}>
-                        <TextMontserrat style={numberText}>+91 9876543210</TextMontserrat>
+                        <TextMontserrat style={numberText}>{this.props.reset_password.mobile_number}</TextMontserrat>
                     </View>
                     
 
                     <View style={{flex: 1, flexGrow: 1, justifyContent: "space-between"}}>
                         <View style={containerOtpFields}>
                             <TextMontserrat style={labelOtp}> Insert OTP </TextMontserrat>
-                            <OtpInputs />
-                            {/* <TextMontserrat style={{fontWeight:'600', fontSize:hp('1.9%'), color:'#D0021B'}}>
+                            <OtpInputs
+                            valid={this.props.reset_password.otp_valid}
+                            invalid={this.props.reset_password.otp_invalid}
+                            data={['first', 'second', 'third', 'fourth', 'fifth', 'sixth']}
+                            onComplete={(otp) => {
+                                this.props.validate_otp(this.props.reset_password.mobile_number, otp);
+                            }} />
+                            {this.props.reset_password.otp_invalid && <TextMontserrat style={{fontWeight:'600', fontSize:hp('1.9%'), color:'#D0021B'}}>
                                 Incorrect Code - Re-insert or resend
-                            </TextMontserrat> */}
+                            </TextMontserrat>}
                         </View>
                         <View style={containerTimer}>
-                            <Timer textStyle={timerText}/>
+                            <Timer
+                                ref={(timer => this.timer = timer)}
+                                textStyle={timerText}
+                                onStart={() => this.setState({can_resend_otp: false})}
+                                onFinished={() => this.setState({can_resend_otp: true})}
+                            />
                         </View>
                         <View style={resendContainer}>
                             <View style={{width: '70%'}}>
                                 <ButtonGradient 
                                     title={buttonTitle}
-                                    // onPress={this.state.seconds != 0 ? null :onPress}
+                                    disabled={!this.state.can_resend_otp}
+                                    onPress={() => {
+                                        this.timer.restart()
+                                        this.props.resend_otp(this.props.reset_password.mobile_number)
+                                    }}
                                 />
                             </View>
                         </View>
@@ -134,7 +152,7 @@ class OtpForgotPassword extends Component {
                         <View style={{
                             marginTop: 20
                         }}>
-                            <ButtonGradient title={'RESET PASSWORD'} onPress={() => alert('Reset')} />
+                            <ButtonGradient disabled={(!this.props.reset_password.otp_valid && !this.props.reset_password.auth_key)} title={'RESET PASSWORD'} onPress={() => alert('Reset')} />
                         </View>
                     </View>
                 </ScrollView>

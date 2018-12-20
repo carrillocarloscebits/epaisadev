@@ -3,36 +3,46 @@ import {TextMontserrat} from 'components';
 
 export default class Timer extends Component {
 
-    state = {
-        counter:'01:00',
+    initial_state = {
+        counter: '01:00',
         seconds: 60,
     }
 
-    componentWillMount() {
-        this.countDown()
+    state = this.initial_state;
+
+    start = () => {
+        this.clockCall = setInterval(() => this.decrementClock(), 1000);
     }
 
-    countDown = () => {
-        this.clockCall = setInterval(() => {
-            this.decrementClock();
-        }, 1000);
+    restart = () => {
+        clearInterval(this.clockCall);
+        this.setState(this.initial_state);
+        this.start();
+    }
+
+    componentWillMount() {
+        this.start()
+        if(this.props.onStart) this.props.onStart();
     }
 
     decrementClock = () => {      
-        this.setState(
-            (prevstate) => ({ 
-                seconds: prevstate.seconds--,
-                counter: '00:'+this.secondWithZero(prevstate.seconds--)
-            }));
+        this.setState((prevstate) => ({ 
+            seconds: prevstate.seconds - 1,
+            counter: `00:${this.secondWithZero(prevstate.seconds - 1)}`
+        }));
         if(this.state.seconds == 0){
             // on 00:00
             clearInterval(this.clockCall);
+            if(this.props.onFinished) this.props.onFinished();
+
         }
     };
 
     secondWithZero = (second) => {
-        return second < 10 ? '0'+second:''+second
+        return `${second < 10 ? 0 : '' }${second}`;
     }
+
+    
 
     componentWillUnmount() {
         clearInterval(this.clockCall)

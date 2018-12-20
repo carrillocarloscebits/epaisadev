@@ -43,8 +43,11 @@ const resetPass = (state = initialState, action) => {
             };
         case userConstants.OTP_MOBILE_REQUEST: 
             return {
+                ...state,
                 loading: true,
-                ...state
+                otp_invalid: false,
+                otp_valid: false,
+
             }
         case userConstants.OTP_MOBILE_SUCCESS: 
             return {
@@ -65,7 +68,29 @@ const resetPass = (state = initialState, action) => {
             }
         case userConstants.OTP_EMAIL_ALERT_DISMISS:
             const {alert, alertDismiss, ...newState} = state;
-            return newState
+            return newState;
+
+        // OTP VALIDATION
+        case userConstants.OTP_VALIDATION_REQUEST: 
+            return {
+                ...state,
+                loading: true,
+            }
+        case userConstants.OTP_VALIDATION_SUCCESS: 
+            return {
+                ...state,
+                ...action.payload,
+                otp_invalid: false,
+                otp_valid: true,
+                loading: false,
+            }
+        case userConstants.OTP_VALIDATION_FAILURE: 
+            return {
+                ...state,
+                ...action.payload,
+                otp_valid: false,
+                loading: false,
+            }
         default:
             return state
     }

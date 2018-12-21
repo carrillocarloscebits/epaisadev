@@ -178,7 +178,7 @@ class FloatingTextInput extends Component {
     const leftPadding = this.props.lineLeft ? 10 : 0;
 
     const { isFocused, value, secureTextEntry } = this.state;
-    const { label, underline, inputStyle, keyboardType, returnKeyType, onSubmitEditing } = this.props;
+    const { label, underline, inputStyle, keyboardType, returnKeyType, onSubmitEditing, refTo } = this.props;
 
     const inputActiveColor = this._hasError() ? Colors.danger : Colors.primary;
     const inputInActiveColor = this._hasError() ? Colors.danger : "#6b6b6b";

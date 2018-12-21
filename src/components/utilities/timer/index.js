@@ -12,6 +12,7 @@ export default class Timer extends Component {
 
     start = () => {
         this.clockCall = setInterval(() => this.decrementClock(), 1000);
+        if(this.props.onStart) this.props.onStart();
     }
 
     restart = () => {
@@ -22,7 +23,6 @@ export default class Timer extends Component {
 
     componentWillMount() {
         this.start()
-        if(this.props.onStart) this.props.onStart();
     }
 
     decrementClock = () => {      

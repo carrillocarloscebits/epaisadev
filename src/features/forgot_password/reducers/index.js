@@ -91,6 +91,26 @@ const resetPass = (state = initialState, action) => {
                 otp_valid: false,
                 loading: false,
             }
+
+        // RESET PASSWORD
+        case userConstants.RESET_PASSWORD_REQUEST: 
+            return {
+                ...state,
+                loading: true,
+            }
+        case userConstants.RESET_PASSWORD_SUCCESS: 
+            return {
+                ...state,
+                ...action.payload,
+                loading: false,
+            }
+        case userConstants.RESET_PASSWORD_FAILURE: 
+            return {
+                ...state,
+                ...action.payload,
+                loading: false,
+            }
+        
         default:
             return state
     }

@@ -60,10 +60,10 @@ export function validate_otp(mobile, otp) {
     return sendRequest(returnEncrypt, direction);
 }
 
-export function resetPassword(mobile, otp, password, auth_key) {
+export function reset_password(mobile, otp, password, auth_key) {
     
     var returnEncrypt = encryptResetPassword(mobile, otp, password, auth_key);
     var direction = "/user/forgotpassword";
 
-    sendRequest(returnEncrypt, direction)
-  }
+    return sendRequest(returnEncrypt, direction)
+}

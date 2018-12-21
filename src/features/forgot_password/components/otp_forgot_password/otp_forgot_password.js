@@ -22,6 +22,40 @@ class OtpForgotPassword extends Component {
     }
 
     timer = null;
+    inputs = {};
+    
+    _password_validations = () => {
+        return {
+            title: 'Password must contain',
+            validations: [
+                {
+                    name: '8 Characters',
+                    validateInput: (val) => {
+                        return val.length > 8;
+                    }
+                },
+                {
+                    name: '1 Number',
+                    validateInput: (val) => {
+                        return /\d/.test(val);
+                    }
+                },
+                {
+                    name: '1 Special Character',
+                    validateInput: (val) => {
+                        return /\W+/.test(val);
+                    }
+                }
+            ]
+        }
+    }
+
+    _password_match = () => {
+        if(this.state.password !== this.state.password_confirm) {
+            return ['Passwords do not match!'];
+        }
+        return [];
+    }
 
     render() {
         const {style, buttonTitle, onClosePress} = this.props;
@@ -107,7 +141,8 @@ class OtpForgotPassword extends Component {
                             onComplete={(otp) => {
                                 this.props.validate_otp(this.props.reset_password.mobile_number, otp);
                             }} />
-                            {this.props.reset_password.otp_invalid && <TextMontserrat style={{fontWeight:'600', fontSize:hp('1.9%'), color:'#D0021B'}}>
+                            {this.props.reset_password.otp_invalid && 
+                            <TextMontserrat style={{fontWeight:'600', fontSize:hp('1.9%'), color:'#D0021B'}}>
                                 Incorrect Code - Re-insert or resend
                             </TextMontserrat>}
                         </View>
@@ -143,16 +178,24 @@ class OtpForgotPassword extends Component {
                             label={'Password'}
                             secureTextEntry={true}
                             editable={false}
+                            validate={this._password_validations()}
+                            onChangeText={(password) => this.setState({password})}
                             />
                         <FloatingTextInput
                             label={'Re-type Password'}
                             secureTextEntry={true}
                             editable={false}
+                            errors={this._password_match()}
+                            onChangeText={(password_confirm) => this.setState({password_confirm})}
                             />
-                        <View style={{
-                            marginTop: 20
-                        }}>
-                            <ButtonGradient disabled={(!this.props.reset_password.otp_valid && !this.props.reset_password.auth_key)} title={'RESET PASSWORD'} onPress={() => alert('Reset')} />
+                        <View style={{marginTop: 20}}>
+                            <ButtonGradient disabled={(!this.props.reset_password.otp_valid && !this.props.reset_password.auth_key)} title={'RESET PASSWORD'} onPress={() => {
+                                if(this._password_match().length === 0) {
+                                    const {mobile_number, otp_code, auth_key} = this.props.reset_password;
+                                    const {password} = this.state
+                                    this.props.reset_pass(mobile_number, otp_code, password, auth_key)
+                                }
+                            }} />
                         </View>
                     </View>
                 </ScrollView>

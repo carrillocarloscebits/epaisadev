@@ -41,7 +41,7 @@ class ForgotPasswordForm extends Component {
                         onChangeText={(val) => this._textChange('email', val)}
                         onBlur={this._changeForm}
                         returnKeyType={'done'}
-                        onSubmitEditing={()=> {Keyboard.dismiss; this._checkField('email')}}
+                        onSubmitEditing={() => {Keyboard.dismiss; this._checkField('email')}}
                         errors={email.errors}
                     />
                 </View>

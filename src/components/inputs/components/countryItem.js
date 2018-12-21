@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Image, Text, TouchableWithoutFeedback} from 'react-native';
-import {colors} from '@api/constants';
+import {Colors} from 'api';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class CountryItem extends Component {
@@ -8,10 +8,14 @@ export default class CountryItem extends Component {
         if(this.props.selected) {
             return (
                 <View style={{flex: 1, alignItems: 'flex-end', marginRight: 25}}>
-                    <Icon name={'check'} size={25} color={colors.primary} />
+                    <Icon name={'check'} size={25} color={Colors.primary} />
                 </View>
             )
         }
+    }
+
+    shouldComponentUpdate() {
+        return false
     }
     render() {
         const {name, callingCode, flag, selected, onPress} = this.props
@@ -27,7 +31,7 @@ export default class CountryItem extends Component {
                     <View>
                         <Text style={{
                             fontWeight: 'bold',
-                            color: selected ? colors.primary : '#5d6770',
+                            color: selected ? Colors.primary : '#5d6770',
                             fontSize: 16
                         }}>{name} (+{callingCode})</Text>
                     </View>

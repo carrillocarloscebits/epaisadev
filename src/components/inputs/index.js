@@ -1,11 +1,11 @@
 import FloatingTextInput from "./FloatingTextInput";
-//import PhoneInput from "./PhoneInput";
+import PhoneInput from "./PhoneInput";
 import Select from "./select";
 import SelectWithTextInput from "./selectWithTextInput";
 
 export { 
     FloatingTextInput, 
-    // PhoneInput, 
+    PhoneInput, 
     Select, 
     SelectWithTextInput,
 };

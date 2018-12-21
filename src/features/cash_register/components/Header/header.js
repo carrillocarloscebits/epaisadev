@@ -19,10 +19,10 @@ export default class Header extends Component{
         
         { !isLandscape?
           <View style={styles.iconRight}>
-              <View style={[styles.iconItem,{width:hp('4.5%'),height:hp('4.5%')}]}>
-               <Image source={require('../../assets/img/Fill.png')} style={{width:hp('4.5%'),height:hp('4.5%')}} />
+              <View style={[styles.iconItem,{width:hp('4.3%'),height:hp('4.3%')}]}>
+               <Image source={require('../../assets/img/Fill.png')} style={{width:hp('4.3%'),height:hp('4.3%')}} />
                 <View style={[styles.stack,{width:hp('3.7%'),height:hp('3.7%'),left: 0,top:0}]}>
-                   <Text style={[styles.stackText,{fontSize:hp('2.6%')}]}>5</Text>
+                   <Text style={[styles.stackText,{fontSize:hp('2.0%')}]}>5</Text>
                 </View>
               </View>
               <TouchableOpacity style={[styles.iconItem,{width:hp('4.5%'),height:hp('4.5%')}]} onPress={toggleRight}>
@@ -40,7 +40,7 @@ export default class Header extends Component{
             <View style={[styles.iconItem,{width:hp('4.5%'),height:hp('4.5%'), marginRight:hp('3%')}]}>
                <Image source={require('../../assets/img/Fill.png')} style={{width:hp('4.5%'),height:hp('4.5%')}} />
                 <View style={[styles.stack,{width:hp('3.7%'),height:hp('3.7%'),left: 0,top:0}]}>
-                   <Text style={[styles.stackText,{fontSize:hp('2.6%')}]}>5</Text>
+                   <Text style={[styles.stackText,{fontSize:hp('2.3%')}]}>5</Text>
                 </View>
            </View>
            </View>
@@ -95,8 +95,7 @@ const styles = EStyleSheet.create({
   stackText:{
     color: colors.white,
     fontSize:13,
-    fontWeight:'bold',
-    
+    fontFamily:'Montserrat-Bold'
   },
   iconRight:{
     flexDirection: 'row',
@@ -109,7 +108,7 @@ const styles = EStyleSheet.create({
   iconItem:{
     height:'100%',
     justifyContent:'center',
-    marginHorizontal: hp('0.6%'),
+    marginHorizontal: hp('0.3%'),
     alignItems:'center'
   },
   marginExtra:{
@@ -123,10 +122,9 @@ const styles = EStyleSheet.create({
   titleCentral:{
     color: colors.white,
     fontSize: hp('2.5%'),
-    fontWeight: '700',
     letterSpacing: 2,
     textAlign:'center',
-    fontFamily:'Montserrat-Regular'
+    fontFamily:'Montserrat-Bold'
   },
   '@media (min-width: 200) and (max-width: 400)': { // media queries
     badge:{

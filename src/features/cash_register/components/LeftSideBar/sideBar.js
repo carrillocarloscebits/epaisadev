@@ -56,12 +56,12 @@ const styles = EStyleSheet.create({
   headerTextTop:{
    color: colors.white,
    fontFamily:'Montserrat-Bold',
-   fontSize:hp('2.7%'),
+   fontSize:hp('2.6%'),
   },
   headerTextBottom:{
     color: colors.white,
     fontFamily:'Montserrat-SemiBold',
-    fontSize:hp('2.4%'),
+    fontSize:hp('2.3%'),
    },
   iconItem:{
     height:'100%',

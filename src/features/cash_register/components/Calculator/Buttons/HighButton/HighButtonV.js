@@ -47,7 +47,7 @@ const styles = EStyleSheet.create({
     alignItems:'center',
   },
   textField:{
-    fontSize: hp('10%'),
-    fontWeight: '700',
+    fontSize: hp('8%'),
+    fontFamily:'Montserrat-Bold'
   },
 });

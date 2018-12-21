@@ -33,14 +33,8 @@ const styles = EStyleSheet.create({
   },
   title:{
     color: colors.slateGray,
-    fontSize: hp('1.8%'),
-    fontWeight: '500',
+    fontSize: hp('1.5%'),
+    fontFamily:'Montserrat-Bold'
   },
-  '@media (min-width: 200) and (max-width: 400)': { // media queries
-    icon:{
-      width:50,
-      height:50,
-      
-    },
-  }
+  
 });

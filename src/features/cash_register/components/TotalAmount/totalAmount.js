@@ -29,8 +29,8 @@ const styles = EStyleSheet.create({
   title:{
     color: colors.white,
     fontSize: 13,
-    fontWeight: '700',
-    letterSpacing: 2
+    letterSpacing: 2,
+    fontFamily: 'Montserrat-SemiBold'
   },
   '@media (min-width: 200) and (max-width: 400)': { // media queries
     title:{

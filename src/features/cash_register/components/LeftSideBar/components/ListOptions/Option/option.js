@@ -32,8 +32,7 @@ const styles = EStyleSheet.create({
       },
       optionText:{
         fontSize: hp('3%'),
-        fontWeight: '300',
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Montserrat-SemiBold',
       },
       img:{
         height: hp('4%'),

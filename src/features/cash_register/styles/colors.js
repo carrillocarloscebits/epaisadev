@@ -2,7 +2,7 @@ export default {
   darkWhite: '#F5F5F5',
   lightWhite:'#F5FCFF',
   white:'#FFFFFF',
-  darkBlue:'#164386',
+  darkBlue:'#174285',
   slateGray:'#5E676E',
   gray:'#666666',
   darkRed:'#D0021B',

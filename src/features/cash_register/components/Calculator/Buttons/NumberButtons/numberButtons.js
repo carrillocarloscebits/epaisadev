@@ -42,14 +42,8 @@ const styles = EStyleSheet.create({
     alignItems:'center',
   },
   textField:{
-    fontSize: hp('5%'),
-    fontWeight: '700',
+    fontSize: hp('4.5%'),
+    fontFamily:'Montserrat-Bold'
   },
-  '@media (min-width: 200) and (max-width: 400)': { // media queries
-    /*textField:{
-      fontSize: 26,
-      fontWeight: '600',
-    },*/
-  }
 
 });

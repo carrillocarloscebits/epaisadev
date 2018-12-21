@@ -28,8 +28,12 @@ class ForgotPasswordForm extends Component {
         }
     }
 
+    getErrors = (key) => {
+        return this.props[key] ? this.props[key].error : [];
+    }
+
     render() {
-        const {email, mobile} = this.props;
+        
         return (
             <View style={styles.formContainer}>
                 <TextMontserrat style={styles.instructions}>Enter your mobile number or e-mail</TextMontserrat>
@@ -42,7 +46,7 @@ class ForgotPasswordForm extends Component {
                         onBlur={this._changeForm}
                         returnKeyType={'done'}
                         onSubmitEditing={() => {Keyboard.dismiss; this._checkField('email')}}
-                        errors={email.errors}
+                        errors={this.getErrors('email')}
                     />
                 </View>
                 <TextMontserrat style={styles.or}>OR</TextMontserrat>
@@ -54,7 +58,7 @@ class ForgotPasswordForm extends Component {
                         onBlur={this._changeForm}
                         returnKeyType={'done'}
                         onSubmitEditing={()=> {Keyboard.dismiss; this._checkField('mobile')}}
-                        errors={mobile.errors}
+                        errors={this.getErrors('mobile')}
                     />
                 </View>
             </View>

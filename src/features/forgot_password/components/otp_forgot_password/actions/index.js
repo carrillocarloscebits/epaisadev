@@ -62,9 +62,21 @@ export const reset_password = (mobile, otp, password, auth_key) => {
         user_service.reset_password(mobile, otp, password, auth_key)
         .then((res) => {
             if(res.success) {
-                dispatch(successReset())
+                dispatch(successReset({
+                    show_otp: false,
+                    alert: ['Password reset successfully.'],
+                    dismissAlert: () => {
+                        dispatch(dismissAlert())
+                        NavigationService.navigate(LOGIN)
+                    }
+                }))
             } else {
-                dispatch(failureReset())
+                dispatch(failureReset({
+                    alert: [res.message],
+                    dismissAlert: () => {
+                        dispatch(dismissAlert())
+                    }
+                }))
             }
         })
         .catch(() => {

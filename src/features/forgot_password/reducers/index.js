@@ -67,8 +67,11 @@ const resetPass = (state = initialState, action) => {
                 loading: false,
             }
         case userConstants.OTP_EMAIL_ALERT_DISMISS:
-            const {alert, alertDismiss, ...newState} = state;
-            return newState;
+            
+            return () => {
+                const {alert, alertDismiss, ...newState} = state;
+                return newState;
+            };
 
         // OTP VALIDATION
         case userConstants.OTP_VALIDATION_REQUEST: 
@@ -110,6 +113,13 @@ const resetPass = (state = initialState, action) => {
                 ...action.payload,
                 loading: false,
             }
+
+        case userConstants.RESET_PASSWORD_ALERT_DISMISS:
+            const newState = () => {
+                const {alert, alertDismiss, ...newState} = state;
+                return newState;
+            }
+        return newState();
         
         default:
             return state

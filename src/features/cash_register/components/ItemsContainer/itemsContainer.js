@@ -2,19 +2,30 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import Item from './Item/item'
 import colors from '../../styles/colors';
-import { Categories } from '../../constants/categories';
+import { Categories, CategoriesLarge } from '../../constants/categories';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { isTablet } from '../../constants/isLandscape';
 
 export default class ItemsContainer extends Component{
   render() {
+    const isLandscape= isTablet
     return (
-      <View style={styles.container}>
-        <Item item={Categories.cash}/>
-        <Item item={Categories.card}/>
-        <Item item={Categories.wallet}/>
-        <Item item={Categories.cashPOS}/>
-        <Item item={Categories.more}/>
+      <View style={[styles.container, isLandscape?{paddingHorizontal: 15}:null]}>
+      {
+        isLandscape?
+        CategoriesLarge.map((item,i)=>{
+          return(
+            <Item key={i} item={item}/>
+          )
+        })
+        :
+        Categories.map((item,i)=>{
+          return(
+            <Item key={i} item={item}/>
+          )
+        })
+      }
       </View>
     );
   }
@@ -23,12 +34,11 @@ export default class ItemsContainer extends Component{
 const styles = EStyleSheet.create({
   container: {
     width: '100%',
+    height:hp('14%'),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems:'center',
-    backgroundColor: colors.darkWhite,
     paddingHorizontal: 10,
-    paddingVertical: 6,
   },
   title:{
     color: colors.white,

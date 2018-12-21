@@ -4,27 +4,30 @@ import { Dimensions,View, Text, StyleSheet, ImageBackground,TouchableOpacity,Ima
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Button from './components/button';
 import ModuleDiscounts from './components/moduleDiscounts';
+import { isTablet } from '../../../../constants/isLandscape';
 
 class Footer extends Component {
     render() {
-        const {subtotal,data, discount, delivery, type,isLandscape} = this.props
-        let totalDiscount = type=="%"?(subtotal*parseFloat(discount)/100):parseFloat(discount)
-        data.map(item=>{
+        const {subtotal,products, discount, delivery, type,removeDiscount,removeDelivery} = this.props
+        const isLandscape= isTablet
+        let subTotalDiscount = subtotal
+        products.map(item=>{
             if(item.type=="%"){
-                totalDiscount=parseFloat(parseFloat(totalDiscount)+(parseFloat(item.discount/100)*parseFloat(item.total)))
+                subTotalDiscount=parseFloat(parseFloat(subTotalDiscount)-(parseFloat(item.discount/100)*parseFloat(item.total)))
             }else{
-                totalDiscount=parseFloat(parseFloat(totalDiscount)+parseFloat(item.discount))
+                subTotalDiscount=parseFloat(parseFloat(subTotalDiscount)-parseFloat(item.discount))
             }
         })
+        let totalDiscount = type=="%"?(subTotalDiscount*parseFloat(discount)/100):parseFloat(discount)
         let CGST= subtotal*0.09
-        let Total= parseFloat(subtotal)-parseFloat(totalDiscount)+parseFloat(delivery)+parseFloat(CGST)
+        let Total= parseFloat(subTotalDiscount)-parseFloat(totalDiscount)+parseFloat(delivery)+parseFloat(CGST)
         return (
             <View style={styles.container}>
                 <View  style={[styles.subTotalContainer,{paddingTop:hp('0.9%')}]}>
                     <Text style={styles.textDark1}>Sub Total</Text>    
-                    <Text style={styles.TextBlue1}>₹ {subtotal}</Text>
+                    <Text style={styles.TextBlue1}>₹ {parseFloat(subTotalDiscount).toFixed(2)}</Text>
                 </View>
-                <ModuleDiscounts cgst={CGST} subTotal={subtotal} totalDiscount={totalDiscount} Total={Total} deliveryCharge={delivery} subTotalContainer={styles.subTotalContainer}/>
+                <ModuleDiscounts cgst={CGST} subTotal={subtotal} totalDiscount={totalDiscount} Total={Total} deliveryCharge={delivery} subTotalContainer={styles.subTotalContainer} removeDiscount={removeDiscount} removeDelivery={removeDelivery}/>
                 <View style={styles.buttonsContainer}>
                     <Button label="HOLD" backgroundColor="#D8D8D8" width={isLandscape?"100%":"30%"} color="#47525D"/>
                     {!isLandscape?<Button label={`PAY ₹ ${parseFloat(Total).toFixed(2)}`} backgroundColor="#09BA83" width={"68%"} color="white" />:null}

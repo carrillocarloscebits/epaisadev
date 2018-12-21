@@ -3,44 +3,49 @@ import {Platform, StyleSheet, Text, View, Image, Dimensions, TouchableOpacity} f
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import colors from '../../styles/colors'
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { isTablet } from '../../constants/isLandscape';
 export default class Header extends Component{
   
   render() {
-    const {isLandscape,label, cant, toggleSide, toggleRight, toggleOptions}=this.props
+    const {label, cant, toggleSide, toggleRight, toggleOptions}=this.props
+    const isLandscape= isTablet
     return (
       <View style={styles.container}>
+        
         <TouchableOpacity style={styles.iconLeft} onPress={toggleSide}>
           <Image source={require('../../assets/img/sidelist.png')} style={{width:hp('2.6%'),height:hp('2.6%')}}/>
         </TouchableOpacity>
         <Text style={[styles.titleCentral]} >{label}</Text>
-        <View style={styles.iconRight}>
+        
         { !isLandscape?
-            <View style={styles.iconContainer}>
-              <View style={styles.iconItem}>
-                <Image source={require('../../assets/img/Fill.png')} resizeMode="contain" />
-                <View style={styles.stack}>
-                  <Text style={styles.stackText}>5</Text>
+          <View style={styles.iconRight}>
+              <View style={[styles.iconItem,{width:hp('4.5%'),height:hp('4.5%')}]}>
+               <Image source={require('../../assets/img/Fill.png')} style={{width:hp('4.5%'),height:hp('4.5%')}} />
+                <View style={[styles.stack,{width:hp('3.7%'),height:hp('3.7%'),left: 0,top:0}]}>
+                   <Text style={[styles.stackText,{fontSize:hp('2.6%')}]}>5</Text>
                 </View>
               </View>
-              <TouchableOpacity style={styles.iconItem} onPress={toggleRight}>
-                <Image source={require('../../assets/img/Cart.png')} resizeMode="contain" />
+              <TouchableOpacity style={[styles.iconItem,{width:hp('4.5%'),height:hp('4.5%')}]} onPress={toggleRight}>
+                <Image source={require('../../assets/img/Cart.png')}/>
                 <View style={styles.badge}>
                   <Text style={styles.badgeText}>{cant}</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.iconItem,styles.marginExtra]} onPress={toggleOptions}>
-                <Image  source={require('../../assets/img/MoreDot.png')} resizeMode="contain" />
+              <TouchableOpacity style={[styles.iconItem,{width:hp('4.5%'),height:hp('4.5%')}]} onPress={toggleOptions}>
+                <Image  source={require('../../assets/img/MoreDot.png')} />
               </TouchableOpacity>
-              
-            </View>:
-            <View style={[styles.iconItem,{width:hp('4.5%'),height:hp('4.5%')}]}>
+          </View>
+          :
+            <View style={styles.iconRight}>
+            <View style={[styles.iconItem,{width:hp('4.5%'),height:hp('4.5%'), marginRight:hp('3%')}]}>
                <Image source={require('../../assets/img/Fill.png')} style={{width:hp('4.5%'),height:hp('4.5%')}} />
                 <View style={[styles.stack,{width:hp('3.7%'),height:hp('3.7%'),left: 0,top:0}]}>
                    <Text style={[styles.stackText,{fontSize:hp('2.6%')}]}>5</Text>
                 </View>
            </View>
+           </View>
           }
-        </View>
+        
       </View>
     );
   }
@@ -50,9 +55,11 @@ const styles = EStyleSheet.create({
   container: {
     width: '100%',
     justifyContent: 'center',
+    height:hp('10%'),
     alignItems:'center',
     backgroundColor: colors.darkBlue,
-    padding: 22,
+    paddingHorizontal: 22,
+    elevation:0
   },
   iconLeft:{
     position: 'absolute',
@@ -65,13 +72,13 @@ const styles = EStyleSheet.create({
   },
   badge:{
     position: 'absolute',
-    right:-8,
-    top:-7,
+    right:-hp('0.6%'),
+    top:-hp('0.6%'),
     backgroundColor: colors.gray,
     alignItems:'center',
     justifyContent:'center',
     borderRadius: 20,
-    paddingHorizontal: 4,
+    paddingHorizontal: hp('0.5'),
   },
   badgeText:{
     color: colors.white,
@@ -95,13 +102,15 @@ const styles = EStyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     height:'100%',
-    right:10,
-    alignItems:'center'
+    right:0,
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   iconItem:{
     height:'100%',
     justifyContent:'center',
-    marginHorizontal: 8,
+    marginHorizontal: hp('0.6%'),
+    alignItems:'center'
   },
   marginExtra:{
     marginLeft: 12,
@@ -120,24 +129,10 @@ const styles = EStyleSheet.create({
     fontFamily:'Montserrat-Regular'
   },
   '@media (min-width: 200) and (max-width: 400)': { // media queries
-    titleCentral: {
-      fontSize: 14,
-      letterSpacing: 1,
-    },
-    iconRight:{
-      right:8,
-    },
-    iconLeft:{
-      left:14,
-    },
-    iconItem:{
-      marginHorizontal: 5,
-    },
-    stack:{
-      top: -2
-    },
-    marginExtra:{
-      marginLeft: 7,
+    badge:{
+      
+      right:-hp('1.3%'),
+      top:-hp('1.3%'),
     },
   }
 

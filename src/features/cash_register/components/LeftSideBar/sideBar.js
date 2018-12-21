@@ -4,10 +4,12 @@ import colors from '../../styles/colors'
 import EStyleSheet from 'react-native-extended-stylesheet';
 import ListOptions from './components/ListOptions/listOptions';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { isTablet } from '../../constants/isLandscape';
 export default class SideBar extends Component{
     
     render() {
-        const {isLandscape,active,toggle, sideOption, handleOption}=this.props
+        const {active,toggle, sideOption, handleOption}=this.props
+        const isLandscape= isTablet
         const paddingLandscape = isLandscape? {paddingHorizontal: wp('3%')}:null
         return (
                 <View style={styles.container}>

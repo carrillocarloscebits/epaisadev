@@ -6,19 +6,21 @@ import Header from './components/Header/header';
 import BackgroundImage from './components/BackgroundImage/backgroundImage';
 import Table from './components/Table/table';
 import Footer from './components/Footer/footer';
+import { isTablet } from '../../constants/isLandscape';
 
 // create a component
 class RightSideBar extends Component {
     render() {
-        const {isLandscape, data, subtotal, discount, delivery,actionClose, type, openDiscount,openDelivery} = this.props
+        const {products, subtotal, discount, delivery,actionClose, type, openDiscount,openDelivery,removeDiscount,removeDelivery} = this.props
+        const isLandscape= isTablet
         const width = isLandscape? '34%' : null
         return (
             
             <View style={[styles.drawerRightContainer,{width}]}>
                 <BackgroundImage source={require('./assets/side_nav_portrait_faded.png') }/>
                 <Header actionClose={actionClose} openDiscount={openDiscount} openDelivery={openDelivery}/>
-                <Table data={data} actionClose={actionClose}/>
-                <Footer isLandscape={isLandscape} data={data} discount={discount} delivery={delivery} subtotal={subtotal} type={type}/>
+                <Table products={products} actionClose={actionClose}/>
+                <Footer products={products} discount={discount} delivery={delivery} subtotal={subtotal} type={type} removeDiscount={removeDiscount} removeDelivery={removeDelivery}/>
             </View>
         );
     }

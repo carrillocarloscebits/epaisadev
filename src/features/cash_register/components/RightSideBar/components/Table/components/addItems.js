@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Dimensions,View, Text, StyleSheet, ImageBackground,TouchableOpacity,Image} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { isTablet } from '../../../../../constants/isLandscape';
 class AddItems extends Component {
     render() {
         const {actionClose} = this.props
@@ -9,7 +10,7 @@ class AddItems extends Component {
                 <View  style={styles.container} >
                 
                     <Text style={styles.carEmpty}>Your Cart is empty</Text>
-                    <TouchableOpacity onPress={actionClose}>
+                    <TouchableOpacity onPress={isTablet?null:actionClose}>
                         <Text style={styles.addMore}>Add Items</Text>
                     </TouchableOpacity>
                 </View>

@@ -17,8 +17,10 @@ import ModalDiscount from './components/Modals/ModalDiscount/modalDiscount';
 import ModalDelivery from './components/Modals/ModalDelivery/modalDelivery';
 import ModalOptions from './components/Modals/ModalOptions/modalOptions';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import ShadowBox from './components/ShadowBox/shadowBox';
+import { isTablet } from './constants/isLandscape';
 
-const isPhone= !DeviceInfo.isLandscape()
+const isPhone= !isTablet
 class CashScreen extends Component{
   static navigationOptions = {
     header: null
@@ -35,30 +37,49 @@ class CashScreen extends Component{
   }
   closeControlPanel  = () => {
     this._drawer.close()
+    this.setState({
+      modalOptions: false,
+    })
   };
   openControlPanel = () => {
     this._drawer.open()
+    this.setState({
+      modalOptions: false,
+    })
   };
   toggleRight=()=>{
     this.setState({
-      modalRight: !this.state.modalRight
+      modalRight: !this.state.modalRight,
+      modalOptions: false,
     })
   }
   sumAmount=(value)=>{
       const {sum_amo}=this.props
       sum_amo(value)
+      this.setState({
+        modalOptions: false,
+      })
   }
   sumTotal=()=>{
       const {sum_tot, amount}=this.props
       sum_tot()
+      this.setState({
+        modalOptions: false,
+      })
   }
   cleanTotal=()=>{
       const {clear}=this.props
       clear()
+      this.setState({
+        modalOptions: false,
+      })
   }
   backAmount=()=>{
       const {back}=this.props
       back()
+      this.setState({
+        modalOptions: false,
+      })
   }
   addDiscount=(value)=>{
     const {discount}=this.props
@@ -74,10 +95,20 @@ class CashScreen extends Component{
       modalDelivery:false,
     })
   }
+  removeDiscount=()=>{
+    const {remove_discount}=this.props
+    remove_discount()
+  }
+  removeDelivery=()=>{
+    const {remove_delivery}=this.props
+    remove_delivery()
+  }
   toggleSideBar=()=>{
     this.setState({
-      modalActive: !this.state.modalActive
+      modalActive: !this.state.modalActive,
+      modalOptions: false,
     })
+    
   }
   changeOption=(value)=>{
     const {change}=this.props
@@ -101,7 +132,7 @@ class CashScreen extends Component{
     })
   }
   render() {
-    const {amount, total_amount,data, sideOption,totalDiscount,totalDelivery, type} = this.props.state
+    const {amount, total_amount,products, sideOption,totalDiscount,totalDelivery, type} = this.props.state
     const opa= this.state.modalActive || this.state.modalRight? true: false
     
     return (
@@ -111,7 +142,7 @@ class CashScreen extends Component{
           onClose={()=>{this.setState({modalActive: false})}}
           content={
             //LEFT SIDE BAR
-            <SideBar isLandscape={!isPhone} handleOption={this.changeOption} active={this.state.modalActive} toggle={this.toggleSideBar} sideOption={sideOption}/>  
+            <SideBar handleOption={this.changeOption} active={this.state.modalActive} toggle={this.toggleSideBar} sideOption={sideOption}/>  
           }
       >
       {
@@ -122,9 +153,9 @@ class CashScreen extends Component{
             openDrawerOffset={0.1} 
             content={
               //RIGHT SIDE BAR
-                <RightSideBar type={type} data={data} discount={totalDiscount} delivery={totalDelivery} 
+                <RightSideBar type={type} products={products} discount={totalDiscount} delivery={totalDelivery} 
                               subtotal={total_amount} actionClose={this.closeControlPanel} openDiscount={this.toggleModalDiscount}
-                              openDelivery={this.toggleModalDelivery}/> 
+                              openDelivery={this.toggleModalDelivery} removeDiscount={this.removeDiscount} removeDelivery={this.removeDelivery}/> 
             }
         >
               {
@@ -133,7 +164,8 @@ class CashScreen extends Component{
           <View style={styles.container}>
             
             
-            <Header label="CASH REGISTER" cant={data.length} toggleSide={this.toggleSideBar} toggleRight={this.toggleRight} toggleOptions= {this.toggleModalOptions}/>
+            <Header label="CASH REGISTER" cant={products.length} toggleSide={this.toggleSideBar} toggleRight={this.toggleRight} toggleOptions= {this.toggleModalOptions}/>
+            
             <TotalAmount value={total_amount}/>
             <ItemsContainer/>
             <Calculator amount={amount} sumAmount={this.sumAmount} sumTotal={this.sumTotal} cleanTotal={this.cleanTotal} backAmount={this.backAmount}/>
@@ -156,21 +188,17 @@ class CashScreen extends Component{
             <View style={styles.container}>
             
             
-            <Header label="CASH REGISTER" isLandscape={true} cant={data.length} toggleSide={this.toggleSideBar} toggleRight={this.toggleRight} toggleOptions= {this.toggleModalOptions}/>
+            <Header label="CASH REGISTER" cant={products.length} toggleSide={this.toggleSideBar} toggleRight={this.toggleRight} toggleOptions= {this.toggleModalOptions}/>
             
-            <ItemsContainer/>
+            <ItemsContainer />
             <Calculator amount={amount} sumAmount={this.sumAmount} sumTotal={this.sumTotal} cleanTotal={this.cleanTotal} backAmount={this.backAmount}/>
             
-            
-            { this.state.modalOptions?
-              <ModalOptions openDiscount={this.toggleModalDiscount} openDelivery={this.toggleModalDelivery}/>:null
-            }
             <ModalDiscount isLandscape={true} widthModal="50%" active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
             <ModalDelivery isLandscape={true} widthModal="50%" active={this.state.modalDelivery} closeModal={this.toggleModalDelivery} addDelivery={this.addDelivery}/>
           </View>
-          <RightSideBar isLandscape={true} type={type} data={data} discount={totalDiscount} delivery={totalDelivery} 
-                              subtotal={total_amount} actionClose={this.closeControlPanel} openDiscount={this.toggleModalDiscount}
-                              openDelivery={this.toggleModalDelivery}/> 
+          <RightSideBar type={type} products={products} discount={totalDiscount} delivery={totalDelivery} 
+                        subtotal={total_amount} actionClose={this.closeControlPanel} openDiscount={this.toggleModalDiscount}
+                        openDelivery={this.toggleModalDelivery} removeDiscount={this.removeDiscount} removeDelivery={this.removeDelivery}/> 
                               {
               opa?
               <View style={styles.opacity}>
@@ -245,6 +273,12 @@ const mapDispatchToProps = (dispatch) =>({
   },
   delivery: (val) => {
     return dispatch(cashActions.add_delivery(val))
+  },
+  remove_discount: () => {
+    return dispatch(cashActions.remove_discount())
+  },
+  remove_delivery: () => {
+    return dispatch(cashActions.remove_delivery())
   }
 })
 

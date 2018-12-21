@@ -6,12 +6,14 @@ import HighButtonV from './Buttons/HighButton/HighButtonV'
 import HighButtonH from './Buttons/HighButton/HighButtonH';
 import colors from '../../styles/colors';
 import EStyleSheet from 'react-native-extended-stylesheet';
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { isTablet } from '../../constants/isLandscape';
 export default class Calculator extends Component{
   render() {
     const {amount, sumAmount, sumTotal, cleanTotal,backAmount} = this.props
+    const isLandscape= isTablet
     return (
-      <View style={styles.container}>
+      <View style={[styles.container,isLandscape?{paddingHorizontal:10, flex:0, flexGrow:1, flexWrap: 'wrap'}:null]}>
         <Result amount={amount}/>
         <View style={styles.calcontainer}>
             <View style={styles.calcolumn}>
@@ -56,8 +58,8 @@ const styles = EStyleSheet.create({
   container: {
     width: '100%',
     alignItems:'center',
-    flex:1,
-    padding: 5,
+    paddingHorizontal: 5,
+    height:hp('68%')-hp('6%'),
   },
   calcontainer:{
     paddingVertical: 3,

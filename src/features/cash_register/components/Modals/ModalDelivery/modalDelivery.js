@@ -35,7 +35,7 @@ class ModalDelivery extends Component {
                 <View style={styles.wrapper}>
                         <View style={[styles.rowForm,wrongStyleBorders]}>
                             <View style={styles.rightForm}>
-                                <Text style={[styles.textIcon,wrongStyleLabel,isLandscape?{marginBottom: hp('4%'),fontSize:hp('3.4%'),marginLeft: hp('4%'),}:null]}>₹ </Text>
+                                <Text style={[styles.textIcon,wrongStyleLabel,isLandscape?{fontSize:hp('3.4%'),width:hp('8%'),}:null]}>₹ </Text>
                                 <TextInput value={this.state.valueDelivery>'0' || this.state.valueDelivery?this.state.valueDelivery.toString():""} 
                                         onChangeText={(valueDelivery)=>{this.setState({valueDelivery})}} 
                                         onFocus={()=>{this.setState({inputFocus:true, optionsActive:false})}} 
@@ -45,7 +45,7 @@ class ModalDelivery extends Component {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <View style={{width:'100%', justifyContent:'flex-start'}}>
+                        <View style={{width:'130%', justifyContent:'flex-start'}}>
                         <View style={{width:'100%', alignItems:'center'}}>
                         <TouchableOpacity
                             onPress={()=>{
@@ -59,7 +59,8 @@ class ModalDelivery extends Component {
                                 colors={['#174285', '#0079AA']} 
                                 start={{ x: 0, y: 1 }}
                                 end={{ x: 1, y: 1 }}
-                                style={ { borderRadius: 50 } }>        
+                                style={ { borderRadius: 50 , alignItems: 'center', width: '70%',
+                                elevation: moderateScale(3),} }>           
                                 <View style= {{width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'}} >
                                 <Text style= { styles.textDiscountAddButtonPortrait}>ADD</Text>                
                                 </View>
@@ -70,8 +71,8 @@ class ModalDelivery extends Component {
                             this.state.wrong?
                             <View style={styles.messageWrong}>
                                 <View style={{flexDirection:'row',width:'125%', justifyContent:'center', alignItems:'center'}}>
-                                <Image source={require('../../../../../assets/icons/error.png')} style={{width: wp('2.8'),height:wp('2.8'),marginTop:2}}/>
-                                    <Text style={styles.messageWrongLabel}>
+                                <Image source={require('../../../../../assets/icons/error.png')} style={{width: hp('1.8'),height:hp('1.8'),marginTop:hp('0.3')}}/>
+                                    <Text style={[styles.messageWrongLabel, isLandscape?{fontSize: hp('2.0')}:null]}>
                                 {" Enter a valid delivery charge from > 0.0"}
                                 </Text></View>
                             </View>
@@ -101,10 +102,11 @@ const styles = StyleSheet.create({
         width: '90%',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: 20,
+        paddingHorizontal: hp('6%'),
         marginTop: hp('5%')
     },
     rowForm:{
+        width: '130%',
         flexDirection:'row',
         alignItems:'center',
         borderColor: '#174285',
@@ -145,8 +147,8 @@ const styles = StyleSheet.create({
     textInput:{
         paddingVertical: 0,
         color:'#174285',
-        marginLeft: wp('10%'),
-        fontSize:wp('4.1%'),
+        marginLeft: hp('5.5%'),
+        fontSize:hp('2.8%'),
         width:'60%',
         marginBottom: 5,
         fontFamily: 'Montserrat-Bold',
@@ -158,23 +160,23 @@ const styles = StyleSheet.create({
         left:0,
         textAlign: 'right',
         color:'#174285',
-        fontSize:wp('4.1%'),
+        fontSize:hp('2.8%'),
         fontFamily: 'Montserrat-Bold',
-        marginBottom: hp('1%'),
     },
     textDiscountAddButtonPortrait:{
         fontFamily: 'Montserrat-SemiBold', 
         color:'white', 
         fontSize: hp('1.95%'), 
-        letterSpacing: 1.33
+        letterSpacing: 1.33,
+        textAlign:'center',
       },
       touchableModalDiscountAdd:{
-        width: wp('50%'),
+        width: '130%',
         height: hp('6.25%'),
         marginTop: hp('5%'),
-        elevation: moderateScale(3),
         borderRadius: 50,
-        marginBottom: hp('3%')
+        marginBottom: hp('3%'),
+        alignItems:'center'
       },
       dropdown:{
         position: 'absolute',
@@ -202,12 +204,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
       },
       messageWrongLabel:{
-        fontSize: wp('2.4'),
+        fontSize: hp('1.5'),
         color: '#D0021B',
         flexWrap: 'wrap',
         fontFamily: 'Montserrat-Bold',
         textAlign:'center',
-        marginTop:2,
+        justifyContent: 'center',
+        marginTop:hp('0.2%'),
       }
 });
 

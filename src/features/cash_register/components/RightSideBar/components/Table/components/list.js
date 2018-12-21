@@ -5,13 +5,13 @@ import ProductDetail from './productDetails';
 
 class List extends Component {
     render() {
-        const {data} = this.props
+        const {products} = this.props
         return (
             <FlatList
                   style={{flexGrow: 0}}
                   keyboardShouldPersistTaps={'handled'}
                   keyExtractor={(item, index) => item + index}
-                  data={data}
+                  data={products}
                   scrollEnabled={true} 
                   renderItem={({item,index}) =>     
                     <ProductDetail

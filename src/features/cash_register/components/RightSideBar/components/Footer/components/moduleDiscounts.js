@@ -4,9 +4,21 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import Swipeout from 'react-native-swipeout';
 
 class ModuleDiscounts extends Component {
+    state={
+        indexDelete: 0
+    }
     render() {
-        const {cgst,totalDiscount, subTotal,deliveryCharge, Total, subTotalContainer} = this.props
+        const {cgst,totalDiscount, subTotal,deliveryCharge, Total, subTotalContainer,removeDiscount,removeDelivery} = this.props
         
+        const swipeBtns = [
+            {
+              component: (
+                <Text style={styles.swipeBtns}>Delete</Text>
+              ),
+              backgroundColor: '#FFACB6',
+              onPress: this.state.indexDelete==1? removeDiscount: this.state.indexDelete==2? removeDelivery : null
+            },
+          ];
         return (
             <View style={styles.container}>
             {
@@ -19,6 +31,8 @@ class ModuleDiscounts extends Component {
                         autoClose={true}
                         backgroundColor={'transparent'}
                         buttonWidth={hp('11%')}
+                        onOpen={()=>{this.setState({indexDelete: 1})}}
+                        onClose={()=>{this.setState({indexDelete: 0})}}
                     >
                         <View style={subTotalContainer}>
                             <Text style={styles.subTextOrange}>Discount</Text>       
@@ -33,6 +47,8 @@ class ModuleDiscounts extends Component {
                           autoClose={true}
                           backgroundColor={'transparent'}
                           buttonWidth={hp('11%')}
+                          onOpen={()=>{this.setState({indexDelete: 2})}}
+                          onClose={()=>{this.setState({indexDelete: 0})}}
                         >
                           <View  style={subTotalContainer}>
                               <Text style={styles.subTextGray}>Delivery Charge</Text>       
@@ -105,12 +121,5 @@ const styles = StyleSheet.create({
         paddingRight: hp('2.2%'), 
       },
 });
-const swipeBtns = [
-    {
-      component: (
-        <Text style={styles.swipeBtns}>Delete</Text>
-      ),
-      backgroundColor: '#FFACB6',
-    },
-  ];
+
 export default ModuleDiscounts;

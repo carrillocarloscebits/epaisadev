@@ -8,13 +8,13 @@ import AddItems from './components/addItems';
 
 class Table extends Component {
     render() {
-        const {data, actionClose} = this.props
+        const {products, actionClose} = this.props
         return (
             <View style={styles.container}>
                 <Headers/>
                 {
-                    data.length > 0?
-                    <List data={data}/>:
+                    products.length > 0?
+                    <List products={products}/>:
                     <AddItems actionClose={actionClose}/>
                 }
             </View>      

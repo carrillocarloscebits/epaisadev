@@ -2,15 +2,21 @@
 import React, { Component } from 'react';
 import { Dimensions,View, Text, StyleSheet, ImageBackground,TouchableOpacity,Image} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { isTablet } from '../../../../../constants/isLandscape';
 
 
 class OptionsContainer extends Component {
     render() {
         const{actionClose,openDiscount,openDelivery}=this.props
-        const options = [
+        const isLandscape= isTablet
+        const options = !isLandscape?[
             {source: require('../../../assets/Delivery2.png'),onpress:openDelivery},
             {source: require('../../../assets/Discount2.png'),onpress:openDiscount},
-            {source: require('../../../assets/Close2.png'), onpress:actionClose},
+            {source: require('../../../assets/Close2.png'),onpress:actionClose},
+        ]:[
+            {source: require('../../../assets/Delivery2.png'),onpress:openDelivery},
+            {source: require('../../../assets/Discount2.png'),onpress:openDiscount},
+            {source: require('../../../assets/Close2.png')},
         ]
         return (
             <View style={styles.container}>

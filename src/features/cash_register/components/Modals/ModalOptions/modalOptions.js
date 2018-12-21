@@ -27,11 +27,14 @@ const styles = StyleSheet.create({
     container:{
         position: "absolute",
         justifyContent:'center',
-        padding: 5,
-        top:49,
-        right:11,
+        padding: hp('0.6%'),
+        top:hp('7%'),
+        right:hp('2.6%'),
         backgroundColor:colors.white,
-        elevation: 10
+        elevation: 30,
+        borderRadius: 3,
+        borderColor: colors.opacityDin(0.2),
+        borderWidth: 1,
     },
     rowOption:{
         flexDirection:'row',
@@ -39,14 +42,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 4,
     },
     icon:{
-        height:30,
-        width:30
+        height:hp('4.6%'),
+        width:hp('4.6%'),
     },
     label:{
         color: colors.lightBlack,
         fontFamily: "Montserrat-SemiBold",
         paddingHorizontal: 6,
-        fontSize: wp('4.0'),
+        fontSize: hp('2.4%'),
     }
 });
 

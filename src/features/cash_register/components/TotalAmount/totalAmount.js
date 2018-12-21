@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import colors from '../../styles/colors';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import EStyleSheet from 'react-native-extended-stylesheet';
 export default class TotalAmount extends Component{
   render() {
@@ -17,12 +18,13 @@ export default class TotalAmount extends Component{
 const styles = EStyleSheet.create({
   container: {
     width: '100%',
+    height:hp('4%'),
     flexDirection:'row',
     justifyContent:'space-between',
     alignItems: 'center',
     backgroundColor: colors.slateGray,
     paddingHorizontal: 20,
-    paddingVertical: 5,
+    elevation:-3
   },
   title:{
     color: colors.white,

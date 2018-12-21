@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View} from 'react-native';
 import {TextMontserrat, FloatingTextInput,} from 'components';
+import { PhoneInput } from 'components';
 
 class CreateAccountForm extends Component {
     state = {
@@ -9,7 +10,7 @@ class CreateAccountForm extends Component {
         UserFirstName: 'Test 2',
         UserLastName: 'Tester',
         UserMobileNumber: '123456789',
-        CountryCode: 'PE',
+        CountryCode: 'AF',
         registeredReferralCode: '',
         otpType: 1,
         BusinessName: 'TestCompany',
@@ -17,14 +18,27 @@ class CreateAccountForm extends Component {
 
     _textChange(key, value) {
         this.setState({[key]: value})
-        this._changeForm();
+        this._changeForm(
+            ...this.state,
+            ...{[key]: value}
+        );
     }
 
-    _changeForm = () => {
+    _changeForm = (payload) => {
         if(this.props.onChangeForm) {
-            this.props.onChangeForm(this.state)
+            this.props.onChangeForm(payload)
         }
     }
+
+    _changePhone = (value) => {
+        this.setState({CountryCode: value.alpha2Code, UserMobileNumber: value.phone})
+        this._changeForm({
+            ...this.state,
+            CountryCode: value.alpha2Code, 
+            UserMobileNumber: value.phone,
+        });
+    }
+
     componentDidMount() {
         this.props.onChangeForm(this.state)
     }
@@ -100,12 +114,7 @@ class CreateAccountForm extends Component {
                     />
                 </View>
                 <View>
-                    <FloatingTextInput
-                        label={'Mobile Number'}
-                        value={UserMobileNumber}
-                        onChangeText={(val) => this._textChange('UserMobileNumber', val)}
-
-                    />
+                    <PhoneInput onChange={this._changePhone}/>
                 </View>
                 <View>
                     <FloatingTextInput
@@ -118,7 +127,7 @@ class CreateAccountForm extends Component {
                 </View>
                 <View>
                     <FloatingTextInput
-                        label={'Refferal Code'}
+                        label={'Referral Code'}
                         labelOptional={'(Optional)'}
                         value={registeredReferralCode}
                         onChangeText={(val) => this._textChange('registeredReferralCode', val)}

@@ -105,10 +105,12 @@ class CreateAccount extends Component {
     }
 
     _setUserData = (data) => {
+        console.log(data)
         this.setState({userData: data})
     }
 
     _handleCreateAccount = () => {
+        console.log(this.state.userData);
         this.props.create_account(this.state.userData)
     }
 
@@ -125,7 +127,7 @@ class CreateAccount extends Component {
                 <View style={{width: 50, position: 'absolute', height: 50}}>
                     <BackHeader {...this.props} />
                 </View>
-                <ScrollView contentContainerStyle={styles.scroll}>
+                <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.scroll}>
                 <View style={{width: '100%', height: 50}}/>
                     <View style={styles.logoContainer}>
                         <Logo/>

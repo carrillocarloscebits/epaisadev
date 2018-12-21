@@ -173,10 +173,22 @@ class FloatingTextInput extends Component {
     return false
   }
 
+  showFlag = () => {
+    if(this.state.value !== '') {
+      return true
+    }
+
+    if(this.props.children && this.state.isFocused){
+      return true
+    }
+
+    return false;
+  }
+
   render() {
 
     const leftPadding = this.props.lineLeft ? 10 : 0;
-
+    const paddingLeftFlags = this.props.children ? 10: 0;
     const { isFocused, value, secureTextEntry } = this.state;
     const { label, underline, inputStyle, keyboardType, returnKeyType, onSubmitEditing, refTo } = this.props;
 
@@ -273,14 +285,14 @@ class FloatingTextInput extends Component {
     }
 
     return (
-      <View>
+      <View style={{width: '100%'}}>
         <Animated.Text style={labelStyle}>
           {label}{" "}{this._hasError() && <IconMaterialCommunityIcons size={18} name="alert-circle" color={inputActiveColor}/>}
           <Animated.Text style={optionalLabelStyle}>
             {this.props.labelOptional ? this.props.labelOptional : ""}
           </Animated.Text>
         </Animated.Text>
-        <View>
+        <View style={{flexDirection: "row"}}>
           {this.renderIcon()}
           {this.props.lineLeft && <View style={{
             width: 1, 
@@ -289,8 +301,14 @@ class FloatingTextInput extends Component {
             position: "absolute",
             bottom: 0
             }}/>}
+          {this.showFlag() && <View style={{
+            alignSelf: "flex-end",
+            marginBottom: 8
+            }}>
+            {this.props.children}
+          </View>}
           <TextInput
-            style={[textInputStyle, inputStyle, {paddingLeft: leftPadding }]}
+            style={[textInputStyle, inputStyle, {paddingLeft: leftPadding + paddingLeftFlags }]}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
             value={value}
@@ -314,6 +332,7 @@ const styles = {
     position: "absolute",
     right: 5,
     top: "50%",
+    
     zIndex: 50
   }
 };

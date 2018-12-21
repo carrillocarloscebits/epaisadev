@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Keyboard} from 'react-native';
-import {TextMontserrat, FloatingTextInput,} from 'components';
+import {TextMontserrat, FloatingTextInput, PhoneInput} from 'components';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 class ForgotPasswordForm extends Component {

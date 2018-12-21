@@ -16,7 +16,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { FloatingTextInput } from "./index";
 import { CountryItem } from "./components";
 import sectionListGetItemLayout from "react-native-section-list-get-item-layout";
-import ExtraDimensions from "react-native-extra-dimensions-android";
+// import ExtraDimensions from "react-native-extra-dimensions-android";
 import { countries } from "./api/countries";
 
 class PhoneInput extends Component {
@@ -46,7 +46,6 @@ class PhoneInput extends Component {
       }
     });
 
-    console.log(JSON.stringify(countries));
     let letterI = 0;
     const sections = letters.map(({ letter, start, end }) => {
       letterIndexes[letter] = {
@@ -142,6 +141,32 @@ class PhoneInput extends Component {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
+  _selectCountryCode = (item) => {
+    this.setState({ 
+      selectedCountry: item,
+    }, this.onChange({
+      alpha2Code: item.alpha2Code,
+      callingCode: item.callingCodes[0],
+      phone: this.state.phone,
+    }))
+    
+  }
+
+  _changeText = (v) => {
+    this.setState({ phone: v })
+    this.onChange({
+      alpha2Code: this.state.selectedCountry.alpha2Code,
+      callingCode: this.state.selectedCountry.callingCodes[0],
+      phone: v
+    });
+  }
+
+  onChange = (payload) => {
+    if(this.props.onChange) {
+      this.props.onChange(payload)
+    }
+  }
+
   render() {
     const { callingCodes, flag, name } = this.state.selectedCountry;
     const { phone } = this.state;
@@ -157,35 +182,36 @@ class PhoneInput extends Component {
     return (
       <View>
         <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity onPress={this._toggleModal}>
-            <View style={countryCodeContainer}>
-              <View>
-                <Image
-                  source={{ uri: flag }}
-                  style={{ width: 30, height: 25, margin: 5 }}
-                />
-              </View>
-              <View style={{ paddingHorizontal: 5 }}>
-                <Text
-                  style={{
-                    fontSize: 17,
-                    fontWeight: "bold",
-                    color: "#6b6b6b",
-                    bottom: 2
-                  }}
-                >{`+${callingCodes[0]}`}</Text>
-              </View>
-              <View>
-                <Icon name={"angle-down"} size={25} />
-              </View>
-            </View>
-          </TouchableOpacity>
-          <View style={{ flex: 3 }}>
             <FloatingTextInput
+              label="Mobile"
               value={phone}
-              onChangeText={v => this.setState({ phone: v })}
-            />
-          </View>
+              onChangeText={this._changeText}
+              {...this.props}
+            >
+              <TouchableOpacity onPress={this._toggleModal}>
+                <View style={countryCodeContainer}>
+                  <View>
+                    <Image
+                      source={{ uri: flag }}
+                      style={{ width: 30, height: 25 }}
+                    />
+                  </View>
+                  <View style={{ paddingHorizontal: 5 }}>
+                    <Text
+                      style={{
+                        fontSize: 17,
+                        fontWeight: "bold",
+                        color: "#6b6b6b",
+                        bottom: 2
+                      }}
+                    >{`+${callingCodes[0]}`}</Text>
+                  </View>
+                  <View>
+                    <Icon name={"angle-down"} size={25} />
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </FloatingTextInput>
         </View>
 
         <Modal
@@ -261,7 +287,7 @@ class PhoneInput extends Component {
                 marginLeft: 20,
                 flex: 1,
                 height: "100%",
-                marginBottom: ExtraDimensions.get("SOFT_MENU_BAR_HEIGHT") || 48
+                marginBottom: 48
               }}
             >
               <CountryItem
@@ -298,7 +324,7 @@ class PhoneInput extends Component {
                       flag={flag}
                       name={name}
                       callingCode={callingCodes[0]}
-                      onPress={() => this.setState({ selectedCountry: item })}
+                      onPress={() => this._selectCountryCode(item)}
                     />
                   )}
                   getItemLayout={this.getItemLayout}
@@ -378,13 +404,10 @@ const styles = {
     fontWeight: "bold"
   },
   countryCodeContainer: {
-    flex: 1,
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    height: 50,
-    marginTop: 20,
-    paddingHorizontal: 5
+    flex: 1,
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
   }
 };
 

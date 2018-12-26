@@ -6,11 +6,17 @@ const authData = (state = initialState, action) => {
     switch (action.type) {
         case userConstants.REGISTER_REQUEST:
             return {
-                registering: true
+                registering: true,
+                ...action.payload
             };
         case userConstants.REGISTER_SUCCESS:
             return {
-                otp: true
+                ...state,
+                ...action.payload,
+                show_otp: true,
+                registering: false,
+                otp_valid: false,
+                otp_invalid: false,
             };
         case userConstants.REGISTER_FAILURE:
             return {};

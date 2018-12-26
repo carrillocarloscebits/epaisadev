@@ -2,10 +2,9 @@
 import React, { Component } from 'react';
 import { Dimensions,View, Text, StyleSheet, ImageBackground,TouchableOpacity,TouchableHighlight,Image, Modal, TextInput} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {CardWithHeader} from "../../../../../components/cards"
+import { CardWithHeader } from '../../cards';
 import Icon from "react-native-vector-icons/FontAwesome";
 import colors from '../../../styles/colors';
-import { SelectWithTextInput } from '../../../../../components/inputs';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { moderateScale } from '../../../constants/util/scaling';
@@ -96,7 +95,7 @@ class ModalDiscount extends Component {
                             this.state.wrong?
                             <View style={styles.messageWrong}>
                                 <View style={{flexDirection:'row',width:'125%', justifyContent:'center', alignItems:'center'}}>
-                                <Image source={require('../../../../../assets/icons/error.png')} style={{width: hp('1.8'),height:hp('1.8'),marginTop:hp('0.3')}}/>
+                                <Image source={require('../../../assets/icons/error.png')} style={{width: hp('1.8'),height:hp('1.8'),marginTop:hp('0.3')}}/>
                                     <Text style={[styles.messageWrongLabel, isLandscape?{fontSize: hp('2.0')}:null]}>
                                 {noFormat==1 ? " Enter a valid discount from 0.1% - 99.9%": " Enter a valid discount from > 0.0"}
                                 </Text></View>

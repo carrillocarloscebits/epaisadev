@@ -1,16 +1,12 @@
-import {userConstants} from 'api/auth/constants';
-import * as userService from '../../../services/user_service';
-import NavigationService from './../../../services/navigation';
-import {APP} from './../../../navigation/screen_names';
+import {userConstants} from '../api/auth/constants';
+import * as userService from '../services/user_service';
+import NavigationService from '../../../services/navigation';
+import {APP} from './../api/screen_names';
 
 export function login(email, password) {
     return dispatch => {
         dispatch(request({ email }));
 
-        // setTimeout(() => {
-        //     dispatch(successLogin({email, password}));
-        //     NavigationService.navigate(APP)
-        // }, 1000)
         userService.login(email, password)
             .then((res) => {
                 const {success} = res;
@@ -26,15 +22,6 @@ export function login(email, password) {
                 console.log(err)
                 dispatch(failureLogin('Network error, try again!'));
             })
-
-            // user => { 
-            //     dispatch(success(user));
-            //     history.push('/');
-            // },
-            // error => {
-            //     dispatch(failure(error.toString()));
-            //     dispatch(alertActions.error(error.toString()));
-            // }
     };
 
     function request(user) { 

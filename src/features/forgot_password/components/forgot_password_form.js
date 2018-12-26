@@ -50,8 +50,7 @@ class ForgotPasswordForm extends Component {
                     />
                 </View>
                 <TextMontserrat style={styles.or}>OR</TextMontserrat>
-                <View>
-                    <FloatingTextInput
+                    {/* <FloatingTextInput
                         label={'Mobile Number'}
                         keyboardType='numeric'
                         onChangeText={(val) => this._textChange('mobile', val)}
@@ -59,8 +58,16 @@ class ForgotPasswordForm extends Component {
                         returnKeyType={'done'}
                         onSubmitEditing={()=> {Keyboard.dismiss; this._checkField('mobile')}}
                         errors={this.getErrors('mobile')}
+                    /> */}
+                    <PhoneInput 
+                        onChange={(val) => {
+                            const phone = `+${val.callingCode}${val.phone}`;
+                            this._textChange('mobile', phone)
+                        }}
+                        onBlur={this._changeForm}
+                        returnKeyType={'done'}
+                        onSubmitEditing={()=> {Keyboard.dismiss; this._checkField('mobile')}}
                     />
-                </View>
             </View>
         )
     }

@@ -1,15 +1,8 @@
 import React, {Component} from 'react';
-import {View, ScrollView, Platform, Image, ActivityIndicator, Dimensions} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
+import {View, ScrollView, Platform, Dimensions} from 'react-native';
 import {CREATE_ACCOUNT, FORGOT_PASSWORD} from 'navigation/screen_names';
-import {DoubleBackground, Loading} from 'components';
-import {FloatingTextInput} from 'components/inputs';
-import { TextMontserrat } from 'components';
-import Logo from 'components/utilities/logo';
-import TouchableText from '../../components/texts/TextTouchable';
 import {Colors} from 'api';
-import { ButtonGradient, ButtonOutline, Card } from 'components';
-import * as responsive from './api/responsiveHelper';
+import { ButtonGradient, ButtonOutline, Card, TouchableText, FloatingTextInput, DoubleBackground, Loading, Logo } from 'components-login';
 import EStyleSheet from 'react-native-extended-stylesheet';
 class Login extends Component {
 

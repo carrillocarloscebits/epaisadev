@@ -17,7 +17,6 @@ import ModalDiscount from './components/Modals/ModalDiscount/modalDiscount';
 import ModalDelivery from './components/Modals/ModalDelivery/modalDelivery';
 import ModalOptions from './components/Modals/ModalOptions/modalOptions';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import ShadowBox from './components/ShadowBox/shadowBox';
 import { isTablet } from './constants/isLandscape';
 
 const isPhone= !isTablet

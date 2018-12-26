@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import {View, ScrollView, Dimensions} from 'react-native';
-import {Colors} from 'api';
-import { DoubleBackground, Card, TextMontserrat, BackHeader, ButtonGradient, Loading} from 'components';
-import Logo from 'components/utilities/logo';
-import TouchableText from '../../components/texts/TextTouchable';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import CreateAccountForm from './components/create_account_form';
 import EStyleSheet from 'react-native-extended-stylesheet';
+
+import {Colors} from 'api';
+import { DoubleBackground, Card, TextMontserrat, BackHeader, ButtonGradient, Loading, TouchableText, Logo} from 'components';
+import CreateAccountForm from './components/create_account_form';
 import TermsModal from './components/terms_modal';
 import ESignModal from './components/esign_modal';
 import Checkmark from './components/checkmark';
@@ -51,7 +49,7 @@ class CreateAccount extends Component {
                 paddingBottom: '2rem'
             },
             termsContainer: {
-                marginVertical: hp('2%'),
+                marginVertical: "2rem",
                 flexDirection: 'row',
                 justifyContent: 'center'
             },

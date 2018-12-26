@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {View, Dimensions} from 'react-native';
 import {Colors} from 'api';
-import { DoubleBackground, Card, Loading, Alert, TextMontserrat, BackHeader, ButtonGradient} from 'components';
-import Logo from 'components/utilities/logo';
+import { DoubleBackground, Card, Loading, Alert, BackHeader, ButtonGradient, Logo} from 'components';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import ForgotPasswordForm from './containers/form_container';

@@ -18,10 +18,10 @@ class CreateAccountForm extends Component {
 
     _textChange(key, value) {
         this.setState({[key]: value})
-        this._changeForm(
+        this._changeForm({
             ...this.state,
             ...{[key]: value}
-        );
+        });
     }
 
     _changeForm = (payload) => {

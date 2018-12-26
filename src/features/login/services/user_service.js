@@ -1,11 +1,13 @@
 import { 
     sendRequest,
+    sendRequestPut,
     encryptJson,
     encryptJsonCreateUser,
     encryptJsonCredentials,
     encryptForgotPassword,
     encryptOtpVerify,
-    encryptResetPassword
+    encryptResetPassword,
+    encryptJsonVerifyPut
 } from './server-api';
 
 export function login(email, password) {
@@ -67,3 +69,9 @@ export function reset_password(mobile, otp, password, auth_key) {
 
     return sendRequest(returnEncrypt, direction)
 }
+
+export function verify_otp(authKey, otp) {
+    var returnEncrypt = encryptJsonVerifyPut(authKey, otp);
+    var direction = "/user/verify";
+    sendRequestPut(returnEncrypt, direction)
+  }

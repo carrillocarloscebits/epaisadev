@@ -3,12 +3,12 @@ import {View, ScrollView, Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 import {Colors} from 'api';
-import { DoubleBackground, Card, TextMontserrat, BackHeader, ButtonGradient, Loading, TouchableText, Logo} from 'components';
+import { DoubleBackground, Timer, ButtonClose, Card, TextMontserrat, BackHeader, ButtonGradient, Loading, TouchableText, Logo, PopUp} from 'components';
 import CreateAccountForm from './components/create_account_form';
 import TermsModal from './components/terms_modal';
 import ESignModal from './components/esign_modal';
 import Checkmark from './components/checkmark';
-
+import OtpInputs from './components/otp_inputs'
 class CreateAccount extends Component {
 
     static navigationOptions = {
@@ -19,6 +19,7 @@ class CreateAccount extends Component {
         modalTerms: false,
         modalESign: false,
         termsAccepted: false,
+        can_resend_otp: false
     }
 
     _toggleModal = (key) => {
@@ -69,6 +70,9 @@ class CreateAccount extends Component {
                 alignItems: 'center',
                 marginBottom: 20
             },
+            opt_container: {
+                width: '85%'
+            },
             '@media (min-width: 500)': {
                 $scale: 1.5,
                 $width: 320,
@@ -103,13 +107,12 @@ class CreateAccount extends Component {
     }
 
     _setUserData = (data) => {
-        console.log(data)
         this.setState({userData: data})
     }
 
     _handleCreateAccount = () => {
-        console.log(this.state.userData);
-        this.props.create_account(this.state.userData)
+        this.props.create_account(this.state.userData);
+        this.setState({show_otp: true})
     }
 
     componentDidMount() {
@@ -117,7 +120,48 @@ class CreateAccount extends Component {
     }
 
     render() {
-        
+        const otpStyles = EStyleSheet.create({
+            textInstructions: {
+                fontSize: '1.8rem',
+                fontWeight: '600',
+                color: '#444',
+            },
+            textPhoneNumber: {
+                fontSize: '2rem',
+                fontWeight: '700',
+                color: Colors.primary
+            },
+            timerContainer: {
+                alignItems: 'center',
+                marginVertical: '2rem'
+            },
+            timerText: {
+                fontSize: '2.5rem',
+                fontWeight: '700'
+            },
+            containerOtpFields: {
+                alignItems:'center'
+            },
+            labelOtp:{
+                fontWeight: '600',
+                fontSize: '1.6rem',
+                marginVertical: '.4rem'
+            },
+            textError: {
+                fontWeight:'600',
+                fontSize: '1.4rem',
+                color:'#D0021B',
+                marginVertical: '.4rem',
+            },
+            resendContainer: {
+                alignItems: 'center'
+            },
+            resendButton: {
+                width: '70%',
+                marginTop: '2.5rem',
+                marginBottom: '1rem'
+            }
+        })
         const styles = this.getStyles();
         const {termsAccepted} = this.state;
         return (
@@ -152,6 +196,50 @@ class CreateAccount extends Component {
 
                 <TermsModal visible={this.state.modalTerms} closeModal={() => this._toggleModal('modalTerms')}/>
                 <ESignModal visible={this.state.modalESign} closeModal={() => this._toggleModal('modalESign')}/>
+                {this.props.register.show_otp && <PopUp style={styles.opt_container}>
+                    <View style={{alignItems: "flex-end"}}>
+                        <ButtonClose onPress={() => this.setState({show_otp: false})}/>
+                    </View>
+                    <View style={{alignItems: "center"}}>
+                        <TextMontserrat style={otpStyles.textInstructions}>We have sent a</TextMontserrat>                      
+                        <TextMontserrat style={otpStyles.textInstructions}>confirmation code to</TextMontserrat>
+                        <TextMontserrat style={otpStyles.textPhoneNumber}>+51 917 324 872</TextMontserrat>
+                    </View>
+                    <View style={otpStyles.timerContainer}>
+                        <Timer
+                            textStyle={otpStyles.timerText}
+                            onStart={() => this.setState({can_resend_otp: false})}
+                            onFinished={() => this.setState({can_resend_otp: true})}
+                        />
+                    </View>
+                    <View style={otpStyles.containerOtpFields}>
+                        <TextMontserrat style={otpStyles.labelOtp}> Insert Confirmation Code </TextMontserrat>
+                        <OtpInputs
+                        valid={this.props.register.otp_valid}
+                        invalid={this.props.register.otp_invalid}
+                        data={['first', 'second', 'third', 'fourth']}
+                        onComplete={(otp) => {
+                            this.props.validate_otp(this.props.register.mobile_number, otp);
+                        }} />
+                        
+                        {this.props.register.otp_invalid && 
+                        <TextMontserrat style={otpStyles.textError}>
+                            Incorrect OTP - Re-insert or resend
+                        </TextMontserrat>}
+                    </View>
+                    <View style={otpStyles.resendContainer}>
+                        <View style={otpStyles.resendButton}>
+                            <ButtonGradient 
+                                title="RESEND OTP"
+                                disabled={!this.state.can_resend_otp}
+                                onPress={() => {
+                                    this.timer.restart()
+                                    this.props.resend_otp(this.props.register.mobile_number)
+                                }}
+                            />
+                        </View>
+                    </View>
+                </PopUp>}
             </DoubleBackground>
         )
     }

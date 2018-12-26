@@ -7,7 +7,6 @@ import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
 import org.wonday.orientation.OrientationPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
-import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
@@ -33,7 +32,6 @@ public class MainApplication extends Application implements ReactApplication {
             new SvgPackage(),
             new OrientationPackage(),
             new LinearGradientPackage(),
-            new ExtraDimensionsPackage(),
             new RNDeviceInfo(),
             new RNGestureHandlerPackage()
       );

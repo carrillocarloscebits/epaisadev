@@ -5,13 +5,13 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Option from './Option/option';
 const listOptions = [
-    {label:"Cash Register",icon:require('../../../../../../assets/icons/cash.png'), size:"large"},
+    {label:"Cash Register",icon:require('../../../../assets/icons/cash.png'), size:"large"},
     {label:"Customers",icon:"", size:"default"},
-    {label:"Notifications",icon:require('../../../../../../assets/icons/notification.png'), size:"large"},
-    {label:"Transactions",icon:require('../../../../../../assets/icons/transactions.png'), size:"medium"},
+    {label:"Notifications",icon:require('../../../../assets/icons/notification.png'), size:"large"},
+    {label:"Transactions",icon:require('../../../../assets/icons/transactions.png'), size:"medium"},
     {label:"Settings",icon:require('../../../../assets/img/Settings.png'), size:"default"},
-    {label:"My Account",icon:require('../../../../../../assets/icons/myaccount.png'), size:"medium"},
-    {label:"Help",icon:require('../../../../../../assets/icons/help.png'), size:"medium"},
+    {label:"My Account",icon:require('../../../../assets/icons/myaccount.png'), size:"medium"},
+    {label:"Help",icon:require('../../../../assets/icons/help.png'), size:"medium"},
 ]
 export default class ListOptions extends Component{
 

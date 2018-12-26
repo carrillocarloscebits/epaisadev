@@ -16,9 +16,8 @@ import Drawer from 'react-native-drawer'
 import ModalDiscount from './components/Modals/ModalDiscount/modalDiscount';
 import ModalDelivery from './components/Modals/ModalDelivery/modalDelivery';
 import ModalOptions from './components/Modals/ModalOptions/modalOptions';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import ShadowBox from './components/ShadowBox/shadowBox';
 import { isTablet } from './constants/isLandscape';
+import ModalCustomer from './components/Modals/ModalCustomer/modalCustomer';
 
 const isPhone= !isTablet
 class CashScreen extends Component{
@@ -182,6 +181,7 @@ class CashScreen extends Component{
             }
             <ModalDiscount widthModal="40%" active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
             <ModalDelivery widthModal="40%" active={this.state.modalDelivery} closeModal={this.toggleModalDelivery} addDelivery={this.addDelivery}/>
+            <ModalCustomer widthModal="50%"/>
           </View>
         </Drawer>
         :<View style={styles.containerLandscape}>
@@ -195,6 +195,7 @@ class CashScreen extends Component{
             
             <ModalDiscount isLandscape={true} widthModal="50%" active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
             <ModalDelivery isLandscape={true} widthModal="50%" active={this.state.modalDelivery} closeModal={this.toggleModalDelivery} addDelivery={this.addDelivery}/>
+            <ModalCustomer widthModal="60%"/>
           </View>
           <RightSideBar type={type} products={products} discount={totalDiscount} delivery={totalDelivery} 
                         subtotal={total_amount} actionClose={this.closeControlPanel} openDiscount={this.toggleModalDiscount}

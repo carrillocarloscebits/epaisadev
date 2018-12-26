@@ -5,8 +5,10 @@ import Footer from './components/Footer/footer';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import FingerContainer from './components/FingerContainer/fingerContainer';
 import ModalFinger from './components/Modal/modalFinger';
+import { isTablet } from '../cash_register/constants/isLandscape';
 
 const status=['normal','success','warning']
+
 class FingerPrint extends Component{
   static navigationOptions = {
     header: null
@@ -29,16 +31,22 @@ class FingerPrint extends Component{
         this.setState({
             modalActive:!this.state.modalActive,
         }) 
-        
   }
   render() {
     return(
         <View style={styles.container}>
             <BackgroundImage source={require("./assets/img/side_nav_portrait_faded.png")} />
-            <View style={styles.wrapper}>
-                <Text style={styles.textDown}>All of the fingerprints stores on this device can be used to</Text>
-                <Text style={styles.textDown}>log into your ePaisa account.</Text>
-            </View>
+                {
+                    isTablet?
+                    <View style={styles.wrapper}>
+                        <Text style={[styles.textDown,{fontSize: hp('2%'),fontFamily:"Montserrat-SemiBold"}]}>All of the fingerprints stores on this device can be used to log into your ePaisa account.</Text>
+                    </View>
+                    :
+                    <View style={styles.wrapper}>
+                        <Text style={styles.textDown}>All of the fingerprints stores on this device can be used to</Text>
+                        <Text style={styles.textDown}>log into your ePaisa account.</Text>
+                    </View>
+                }
             <Footer openModal={this.toggleModalFinger}/>
             <FingerContainer/>
             <ModalFinger action={this.changeStatus} status={status[this.state.status]} active={this.state.modalActive} toggleModal={this.toggleModalFinger}/>

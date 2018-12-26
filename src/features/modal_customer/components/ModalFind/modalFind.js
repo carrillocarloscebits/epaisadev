@@ -24,10 +24,10 @@ class ModalFind extends Component {
     renderResultsBox = () => {
         let value=this.state.searchStr;
         console.log(this.state.valuesResults.length)
-        this.state.valuesResults.map((item,i)=>{
+        return this.state.valuesResults.map((item,i)=>{
             let index = item.toLowerCase().indexOf(value.toString().toLowerCase())
             let valLen= value.length
-            return(<Text key={i}>{item.slice(0,index)}<Text style={{backgroundColor:'blue'}}>{value}</Text>{item.slice(index+valLen,item.length)}</Text>)
+            return(<Text key={i}>{item.slice(0,index)}<Text style={{backgroundColor:'blue'}}>{item.slice(index,index+valLen)}</Text>{item.slice(index+valLen,item.length)}</Text>)
         })
     }
     render() {
@@ -41,15 +41,19 @@ class ModalFind extends Component {
                 headerTitle="Customer Information" closeButton={true} customCardStyle={{width: hp(widthModal),}}>
                     <View style={styles.wrapper}>
                         <View style={[styles.fieldBox,{height:hp("5.3%"),width: (hp(widthModal)-hp('6%'))}]}>
-                            <Image source={require('../../assets/icons/rectangleLarge.png')} resizeMethod="scale" resizeMode="stretch" style={{position:'absolute', top:hp("0.3%"),height:hp("4.9%"), width: (hp(widthModal)-hp('6%'))}}/>
-                            <TextInput onChangeText={s=>this.searchCountry(s)} placeholder="Search Name/Mobile Number/Email" style={[styles.field,{width: ((hp(widthModal)-hp('6%'))*0.8),}]}/>
+                            <Image source={require('../../assets/icons/rectangleLarge.png')} resizeMethod="scale" resizeMode="stretch" 
+                            style={{position:'absolute', top:hp("0.3%"),height:hp("4.9%"), width: (hp(widthModal)-hp('6%'))}}/>
+                            <TextInput placeholderTextColor="#808080" onChangeText={s=>this.searchCountry(s)} placeholder="Search Name/Mobile Number/Email" 
+                            style={[styles.field,{width: ((hp(widthModal)-hp('6%'))*0.8),},this.state.searchStr!=''? {fontSize: hp('1.8%')}:null]}/>
                             <Image source={require('../../assets/icons/Shape.png')} style={{position:'absolute', right:hp("2%"),height:hp("2%"), width: hp("2%")}}/>
                         </View>
+                        { this.state.valuesResults.length>0?
                         <View style={[styles.helpBox,{width: (hp(widthModal)-hp('6%'))}]}>
                             {
                                 this.renderResultsBox()
                             }
-                        </View>
+                        </View>:null
+                        }
                     </View>
                 </CardWithHeader>
             </View>
@@ -83,7 +87,8 @@ const styles = StyleSheet.create({
         paddingLeft: hp('2%'),
         paddingVertical: 0,
         fontFamily: 'Montserrat-Bold',
-        marginTop:hp("0.3%")
+        marginTop:hp("0.3%"),
+        color:"#52565F"
     },
     helpBox:{
         position:'absolute',

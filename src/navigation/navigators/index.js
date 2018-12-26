@@ -9,7 +9,8 @@ import Inside from "../../features/inside";
 import AuthLoading from "../../features/auth_loading";
 import cashScreen from "../../features/cash_register/cashScreen";
 import CashRegister from "../../features/cash_register/cashScreen";
-  
+import Fingerprint from "../../features/fingerprint/fingerprint";
+
 const AuthStack = createStackNavigator({
   [screenNames.LOGIN]: {
     screen: LoginContainer
@@ -20,8 +21,11 @@ const AuthStack = createStackNavigator({
   [screenNames.FORGOT_PASSWORD]: {
     screen: ForgotPassword,
   },
+  [screenNames.FINGERPRINT]: {
+    screen: Fingerprint,
+  },
 }, {
-  initialRouteName: screenNames.LOGIN
+  initialRouteName: screenNames.FINGERPRINT
 });
 
 const AppStack = createStackNavigator({

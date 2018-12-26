@@ -4,5 +4,6 @@ export const FORGOT_PASSWORD = "ForgotPassword";
 export const INSIDE_APP = "InsideApp";
 export const AUTH_LOADING = "AuthLoading";
 export const CASH_REGISTER = "CashRegister";
+export const FINGERPRINT = "Fingerprint";
 export const AUTH = "Auth";
 export const APP = "App";

@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import {StyleSheet, Modal,Text} from 'react-native';
-import colors from '../../../../styles/colors';
+import colors from '../../styles/colors';
 
 class ModalAdd extends Component {
     

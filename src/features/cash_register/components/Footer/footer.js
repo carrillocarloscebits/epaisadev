@@ -5,8 +5,9 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 export default class Footer extends Component{
   render() {
+    const {toggleModal} = this.props
     return (
-      <TouchableOpacity style={styles.container}>
+      <TouchableOpacity style={styles.container} onPress={toggleModal}>
       <Image source={require('../../assets/img/Group.png')} style={styles.img}/>
         <Text style={styles.title} > ADD CUSTOMER</Text>
       </TouchableOpacity>

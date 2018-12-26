@@ -11,7 +11,7 @@ const cashData = (state = initialState, action) => {
         amount: ((state.amount*10)+(action.payload/100)).toFixed(2),
         };
     case cashConstants.SUM_TOTAL:
-      return {...state,
+      return state.amount!=0?{...state,
         total_amount:(parseFloat(state.total_amount)+parseFloat(state.amount)).toFixed(2), 
         products: [...state.products,{
           id:(state.products.length+1),
@@ -21,7 +21,7 @@ const cashData = (state = initialState, action) => {
           discount: (0).toFixed(2),
           type: "%"
         }] ,
-        amount:(0).toFixed(2),};
+        amount:(0).toFixed(2),}:{...state};
     case cashConstants.BACK_AMOUNT:
       return {...state,amount: (Math.floor(state.amount*10)/100).toFixed(2) };
     case cashConstants.CLEAR_AMOUNT:

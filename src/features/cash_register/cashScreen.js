@@ -7,17 +7,16 @@ import Calculator from './components/Calculator/Calculator'
 import Footer from './components/Footer/footer';
 import colors from './styles/colors'
 import Orientation from 'react-native-orientation-locker';
-import DeviceInfo from 'react-native-device-info';
 import { connect } from 'react-redux';
 import { cashActions } from './actions';
-import SideBar from './components/LeftSideBar/sideBar'
-import RightSideBar from './components/RightSideBar/rightSideBar'
-import Drawer from 'react-native-drawer'
-import ModalDiscount from './components/Modals/ModalDiscount/modalDiscount';
-import ModalDelivery from './components/Modals/ModalDelivery/modalDelivery';
+import SideBar from '../left_sidebar/sideBar'
+import RightSideBar from './components/RightSideBar/rightSideBar';
+import Drawer from 'react-native-drawer';
+import ModalDiscount from '../modal_discount/modalDiscount';
+import ModalDelivery from '../modal_delivery/modalDelivery';
 import ModalOptions from './components/Modals/ModalOptions/modalOptions';
 import { isTablet } from './constants/isLandscape';
-import ModalCustomer from './components/Modals/ModalCustomer/modalCustomer';
+import ModalCustomer from '../modal_customer/modalCustomer';
 
 const isPhone= !isTablet
 class CashScreen extends Component{
@@ -30,28 +29,12 @@ class CashScreen extends Component{
     modalRight: false,
     modalDiscount:false,
     modalDelivery:false,
+    modalCustomer:false,
   }
   componentWillMount(){
     isPhone? Orientation.lockToPortrait() :Orientation.lockToLandscape()
   }
-  closeControlPanel  = () => {
-    this._drawer.close()
-    this.setState({
-      modalOptions: false,
-    })
-  };
-  openControlPanel = () => {
-    this._drawer.open()
-    this.setState({
-      modalOptions: false,
-    })
-  };
-  toggleRight=()=>{
-    this.setState({
-      modalRight: !this.state.modalRight,
-      modalOptions: false,
-    })
-  }
+  // ACTIONS REDUX
   sumAmount=(value)=>{
       const {sum_amo}=this.props
       sum_amo(value)
@@ -102,6 +85,25 @@ class CashScreen extends Component{
     const {remove_delivery}=this.props
     remove_delivery()
   }
+  //MODALS AND DRAWERS
+  closeControlPanel  = () => {
+    this._drawer.close()
+    this.setState({
+      modalOptions: false,
+    })
+  };
+  openControlPanel = () => {
+    this._drawer.open()
+    this.setState({
+      modalOptions: false,
+    })
+  };
+  toggleRight=()=>{
+    this.setState({
+      modalRight: !this.state.modalRight,
+      modalOptions: false,
+    })
+  }
   toggleSideBar=()=>{
     this.setState({
       modalActive: !this.state.modalActive,
@@ -128,6 +130,12 @@ class CashScreen extends Component{
     this.setState({
       modalOptions: false,
       modalDelivery:!this.state.modalDelivery,
+    })
+  }
+  toggleModalCustomer=()=>{
+    this.setState({
+      modalOptions: false,
+      modalCustomer:!this.state.modalCustomer,
     })
   }
   render() {
@@ -168,7 +176,7 @@ class CashScreen extends Component{
             <TotalAmount value={total_amount}/>
             <ItemsContainer/>
             <Calculator amount={amount} sumAmount={this.sumAmount} sumTotal={this.sumTotal} cleanTotal={this.cleanTotal} backAmount={this.backAmount}/>
-            <Footer />
+            <Footer toggleModal={this.toggleModalCustomer}/>
             {
               opa?
               <View style={styles.opacity}>
@@ -181,7 +189,7 @@ class CashScreen extends Component{
             }
             <ModalDiscount widthModal="40%" active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
             <ModalDelivery widthModal="40%" active={this.state.modalDelivery} closeModal={this.toggleModalDelivery} addDelivery={this.addDelivery}/>
-            <ModalCustomer widthModal="50%"/>
+            <ModalCustomer widthModal="50%" active={this.state.modalCustomer} closeModal={this.toggleModalCustomer}/>
           </View>
         </Drawer>
         :<View style={styles.containerLandscape}>

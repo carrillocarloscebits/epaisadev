@@ -30,7 +30,7 @@ class Footer extends Component {
                 <ModuleDiscounts cgst={CGST} subTotal={subtotal} totalDiscount={totalDiscount} Total={Total} deliveryCharge={delivery} subTotalContainer={styles.subTotalContainer} removeDiscount={removeDiscount} removeDelivery={removeDelivery}/>
                 <View style={styles.buttonsContainer}>
                     <Button label="HOLD" backgroundColor="#D8D8D8" width={isLandscape?"100%":"30%"} color="#47525D"/>
-                    {!isLandscape?<Button label={`PAY ₹ ${parseFloat(Total).toFixed(2)}`} backgroundColor="#09BA83" width={"68%"} color="white" />:null}
+                    {!isLandscape?<Button label={`PAY ₹ ${formatNumberCommasDecimal(parseFloat(Total).toFixed(2))}`} backgroundColor="#09BA83" width={"68%"} color="white" />:null}
                 </View>
 
             </View>

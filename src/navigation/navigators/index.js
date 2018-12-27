@@ -32,7 +32,7 @@ const AuthStack = createStackNavigator({
     screen: AccountCreated,
   },
 }, {
-  initialRouteName: screenNames.CASH_REGISTER
+  initialRouteName: screenNames.LOGIN
 });
 
 const AppStack = createStackNavigator({

@@ -32,9 +32,9 @@ class ModalFind extends Component {
             let nameLen=name.length
             let number=item.substring(item.indexOf('/')+1,item.length);
             let numberLen=number.length
-            const nameMatch = (<Text>{name.slice(0,index)}<Text style={{backgroundColor:'blue'}}>{name.slice(index,index+valLen)}</Text>{name.slice(index+valLen,nameLen)}</Text>)
-            const numberMatch = (<Text>{number.slice(0,index-nameLen)}<Text style={{backgroundColor:'blue'}}>{number.slice(index-nameLen,index+valLen-nameLen)}</Text>{number.slice(index-nameLen+valLen,numberLen)}</Text>)
-            return(<View> key={i}>{index<nameLen?({nameMatch}):(<Text>{name}</Text>)}/{index>nameLen?({numberMatch}):(<Text>{number}</Text>)}</View>)
+            const nameMatch = (<View style={{flexDirection:'row', alignItems:'center'}}><Text style={{fontFamily:"Montserrat-Bold", fontSize:hp('1.3%'),letterSpacing:hp('0.2%')}}>{name.slice(0,index)}</Text><Text style={{backgroundColor:'blue',fontFamily:"Montserrat-Bold", fontSize:hp('1.3%'),letterSpacing:hp('0.2%')}}>{name.slice(index,index+valLen)}</Text><Text style={{fontFamily:"Montserrat-Bold", fontSize:hp('1.3%'),letterSpacing:hp('0.2%')}}>{name.slice(index+valLen,nameLen)}</Text></View>)
+            const numberMatch = (<View style={{flexDirection:'row', alignItems:'center'}}><Text>{number.slice(0,index-1-nameLen)}</Text><Text style={{backgroundColor:'blue'}}>{number.slice(index-1-nameLen,index+valLen-1-nameLen)}</Text><Text>{number.slice(index-1-nameLen+valLen,numberLen)}</Text></View>)
+            return(<View style={{flexDirection:'row', alignItems:'center'}} key={i}>{index<nameLen?nameMatch:(<Text>{name}</Text>)}<Text>/</Text>{index>nameLen?numberMatch:(<Text>{number}</Text>)}</View>)
             //return(<Text key={i}><Text key={i} style={{color:'blue'}}>{name.slice(0,index<nameLen?index:nameLen)}<Text style={{backgroundColor:'blue'}}>{index<nameLen?name.slice(index,index+valLen):null}</Text>{name.slice(index+valLen,nameLen)}/</Text><Text key={i} style={{color:'red'}}>{number.slice(0,index>nameLen?index+1:numberLen)}<Text style={{backgroundColor:'blue'}}>{index>nameLen?number.slice(index,index+1+valLen):null}</Text>{number.slice(index+valLen,nameLen)}</Text></Text>)
             //return(<Text key={i}>{item.slice(0,index)}<Text style={{backgroundColor:'blue'}}>{item.slice(index,index+valLen)}</Text>{item.slice(index+valLen,item.length)}</Text>)
         })

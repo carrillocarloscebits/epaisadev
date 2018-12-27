@@ -81,7 +81,7 @@ class ProductDetail extends React.Component{
                         <Text style={[styles.textProductDefault, styles.TextGrayProductIndex]}>{id}.</Text>     
                         <Text style={[styles.textProductDefault, styles.TextGrayProduct]} numberOfLines={3}>{name}</Text>
                         <Text style={[styles.textProductDefault, styles.TextGray]}>{quant}</Text>    
-                        <Text style={[styles.textProductDefault, styles.TextBlueProduct]} numberOfLines={1}>₹ {total}</Text> 
+                        <Text style={[styles.textProductDefault, styles.TextBlueProduct]} numberOfLines={1}>₹ {parseFloat(total).toFixed(2)}</Text> 
                     </View>
                     { discount > 0 ?
                     <View style={styles.container}>

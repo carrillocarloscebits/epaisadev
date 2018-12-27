@@ -19,7 +19,7 @@ class Footer extends Component {
             }
         })
         let totalDiscount = type=="%"?(subTotalDiscount*parseFloat(discount)/100):parseFloat(discount)
-        let CGST= subtotal*0.09
+        let CGST= subTotalDiscount*0.09
         let Total= parseFloat(subTotalDiscount)-parseFloat(totalDiscount)+parseFloat(delivery)+parseFloat(CGST)
         return (
             <View style={styles.container}>

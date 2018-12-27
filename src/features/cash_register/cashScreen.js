@@ -173,7 +173,7 @@ class CashScreen extends Component{
             
             <Header label="CASH REGISTER" cant={products.length} toggleSide={this.toggleSideBar} toggleRight={this.toggleRight} toggleOptions= {this.toggleModalOptions}/>
             
-            <TotalAmount value={total_amount}/>
+            <TotalAmount value={total_amount} products={products}/>
             <ItemsContainer/>
             <Calculator amount={amount} sumAmount={this.sumAmount} sumTotal={this.sumTotal} cleanTotal={this.cleanTotal} backAmount={this.backAmount}/>
             <Footer toggleModal={this.toggleModalCustomer}/>

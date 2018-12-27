@@ -5,6 +5,7 @@ import {Colors} from 'api';
 import {FingerprintModal} from 'components';
 import { ButtonGradient, ButtonOutline, Card, TouchableText, FloatingTextInput, DoubleBackground, Loading, Logo } from 'components-login';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import Biometrics from 'react-native-biometrics';
 
 class Login extends Component {
 
@@ -129,10 +130,18 @@ class Login extends Component {
         AsyncStorage.getItem('@UsersLogged:Fingerprint')
         .then(item => {
             if(JSON.parse(item)) {
+                
                 this.setState({
                     fingerprintLogin: true,
                     fingerprintStatus: 'normal'
+                }, () => {
+                    Biometrics.createSignature('Login with Fingerprint', 'keyToEncript')
+                    .then((signature) => {
+                        this.props.login_fingerprint(signature);
+                    })
                 })
+
+                
             }
         })
     }

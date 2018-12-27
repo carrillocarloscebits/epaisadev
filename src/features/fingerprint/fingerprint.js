@@ -1,38 +1,95 @@
 import React, {Component} from 'react';
-import {View, StyleSheet,Text} from 'react-native';
+import {View, StyleSheet,Text, AsyncStorage} from 'react-native';
 import BackgroundImage from './components/BackgroundImage/backgroundImage';
 import Footer from './components/Footer/footer';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import FingerContainer from './components/FingerContainer/fingerContainer';
-import ModalFinger from './components/Modal/modalFinger';
+import {FingerprintModal} from 'components';
 import { isTablet } from '../cash_register/constants/isLandscape';
-
-const status=['normal','success','warning']
+import {CASH_REGISTER} from 'navigation/screen_names';
+import {connect} from 'react-redux';
+import Biometrics from 'react-native-biometrics';
 
 class FingerPrint extends Component{
-  static navigationOptions = {
-    header: null
-  }
-  state={
-      modalActive:false,
-      status:0
-  }
-  toggleModalFinger=()=>{
-      this.setState({
-          modalActive:!this.state.modalActive,
-          status:0
-      })
-  }
-  changeStatus =()=>{
-      this.state.status<2?
+    static navigationOptions = {
+        header: null
+    }
+    state={
+        modalActive: false,
+        status: 'normal'
+    }
+    toggleModalFinger = (status, callback) => {
         this.setState({
-            status:this.state.status+1
-        }):
-        this.setState({
-            modalActive:!this.state.modalActive,
-        }) 
-  }
+            modalActive: !this.state.modalActive,
+            status: status || 'normal'
+        }, () => {
+            if(callback) callback();
+            console.log(this.state)
+        })
+    }
+
+    _rejectLinkFingerprint = () => {
+        const userId = this.props.user.response.id;
+
+        AsyncStorage.getItem(`@UsersLogged`).then((item) => {
+            let value = JSON.parse(item)
+            prevData = value[userId] ? value[userId] : {};
+            value[userId] = {
+                fingerprintLinkRejected: true,
+                ...prevData
+            }
+            this.props.navigation.replace(CASH_REGISTER)
+            AsyncStorage.setItem('@UsersLogged', JSON.stringify(value))
+        })
+        .catch((err) => {
+            // Error saving data
+            console.log(err)
+            this.props.navigation.replace(CASH_REGISTER)
+        })
+    }
+
+    _acceptLinkFingerprint = () => {
+        Biometrics.isSensorAvailable()
+        .then((biometryType) => {
+            if(biometryType === Biometrics.TouchID) {
+                this.toggleModalFinger('normal', () => {
+                    Biometrics.createSignature('Register Fingerprint', 'keyToEncript')
+                    .then((signature) => {
+                        this.setState({status: 'success'})
+                        const userId = this.props.user.response.id;
+                        AsyncStorage.getItem('@UsersLogged:Fingerprint').then(item => {
+                            const users = JSON.parse(item);
+                            let exists;
+                            if(Array.isArray(users)) {
+                                exists = users.find((user) => user === userId)
+                            }
+                            AsyncStorage.setItem(`@UsersLogged:Fingerprint`, JSON.stringify(
+                                exists ? [...users, userId] : [userId]
+                            ));
+                        })
+                        setTimeout(() => {
+                            this.props.navigation.replace(CASH_REGISTER)
+                        }, 1000)
+                        console.log(signature)
+                    })
+                });
+            }else{
+                this.fingerprintError('no fingerprint scanner');
+            }
+        })
+        .catch((err) => {
+            this.fingerprintError(err);
+        })
+    }
+
+    fingerprintError = (err) => {
+        this.toggleModalFinger('error')
+        console.log(err)
+    }
+
+
   render() {
+
     return(
         <View style={styles.container}>
             <BackgroundImage source={require("./assets/img/side_nav_portrait_faded.png")} />
@@ -47,9 +104,16 @@ class FingerPrint extends Component{
                         <Text style={styles.textDown}>log into your ePaisa account.</Text>
                     </View>
                 }
-            <Footer openModal={this.toggleModalFinger}/>
+            <Footer 
+                linkFingerprint={this._acceptLinkFingerprint}
+                onReject={this._rejectLinkFingerprint}
+            />
             <FingerContainer/>
-            <ModalFinger action={this.changeStatus} status={status[this.state.status]} active={this.state.modalActive} toggleModal={this.toggleModalFinger}/>
+            {this.state.modalActive && <FingerprintModal 
+                action={this.changeStatus}
+                status={this.state.status}
+                cancel={() => this.setState({modalActive: false})}
+            />}
         </View>
     )
   }
@@ -76,5 +140,11 @@ const styles = StyleSheet.create({
   }
   
 });
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        user: state.login.user
+    }
+};
 
-export default FingerPrint
+export default connect(mapStateToProps)(FingerPrint)

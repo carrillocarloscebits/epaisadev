@@ -30,8 +30,8 @@ class ModalMessage extends Component {
                                     start={{ x: 0, y: 1 }}
                                     end={{ x: 1, y: 1 }}
                                     style={ {borderRadius:30, alignItems: 'center',justifyContent:'center'} }>           
-                                    <View style= {{paddingVertical: hp('2.3%'),paddingHorizontal: hp('7.5%'), alignItems: 'center', justifyContent: 'center'}} >
-                                        <Text style={{ opacity:0.9,color:'#FFFFFF',fontSize: hp('1.8%'),fontFamily:'Montserrat-Bold', letterSpacing:2}}>LOGIN TO YOUR ACCOUNT</Text>  
+                                    <View style= {{paddingVertical: hp('2.3%'),width: isLandscape?hp('45%'):wp('70.5%'), alignItems: 'center', justifyContent: 'center'}} >
+                                        <Text style={{ opacity:0.9,color:'#FFFFFF',fontSize: hp('1.8%'),fontFamily:'Montserrat-Bold', letterSpacing:hp('0.2%')}}>LOGIN TO YOUR ACCOUNT</Text>  
                                     </View>
                                 </LinearGradient>
                             </TouchableOpacity>

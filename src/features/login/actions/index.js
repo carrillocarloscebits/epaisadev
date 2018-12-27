@@ -1,7 +1,8 @@
 import {userConstants} from '../api/auth/constants';
+import {AsyncStorage} from 'react-native';
 import * as userService from '../services/user_service';
 import NavigationService from '../../../services/navigation';
-import {APP} from './../api/screen_names';
+import {FINGERPRINT, CASH_REGISTER} from './../api/screen_names';
 
 export function login(email, password) {
     return dispatch => {
@@ -13,7 +14,43 @@ export function login(email, password) {
                 if(success) {
                     const {success, ...user} = res;
                     dispatch(successLogin(user));
-                    NavigationService.navigate(APP)
+                    
+                    const userId = user.response.id;
+                    AsyncStorage.getItem(`@UsersLogged`)
+                    .then((res) => {
+                        const value = JSON.parse(res);
+                        console.log(value)
+                        if(!value) {
+                            AsyncStorage.setItem(`@UsersLogged`, JSON.stringify({
+                                [userId]: {
+                                    firstLogin: new Date(),
+                                }
+                            }))
+                            return NavigationService.navigate(FINGERPRINT)
+                        }
+                        if (value[userId]) {
+                            console.log(value[userId])
+                            // We have data!!
+                            if(value[userId].fingerprintLinkRejected){
+                                // NavigationService.navigate(CASH_REGISTER)
+                                NavigationService.navigate(FINGERPRINT)
+                            }else {
+                                NavigationService.navigate(FINGERPRINT)
+                            }
+                        } else {
+                            AsyncStorage.setItem(`@UsersLogged`, JSON.stringify({
+                                [userId]: {
+                                    firstLogin: new Date(),
+                                }
+                            }))
+                            NavigationService.navigate(FINGERPRINT)
+                        }
+                    })
+                    .catch((error) => {
+                        // Error retrieving data
+                        console.log(error)
+                        NavigationService.navigate(FINGERPRINT)
+                    })
                 } else {
                     const {message} = res;
                     dispatch(failureLogin(message));

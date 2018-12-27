@@ -8,7 +8,8 @@ import {
     encryptResetPassword,
     sendRequestPut,
     encryptJsonVerifyPut,
-    encryptJsonVerifyPost
+    encryptJsonVerifyPost,
+    encryptMerchantFingerPrintToken
 } from '../services/server-api';
 
 export function login(email, password) {
@@ -79,9 +80,15 @@ export function verify_otp(auth_key, otp) {
     return sendRequestPut(returnEncrypt, direction)
 }
 
-export function resend_register_otp(authKey) {
-    var returnEncrypt = encryptJsonVerifyPost(authKey);
+export function resend_register_otp(auth_key) {
+    var returnEncrypt = encryptJsonVerifyPost(auth_key);
     var direction = "/user/verify";
     
     return sendRequest(returnEncrypt, direction)
+}
+
+export function register_fingerprint_token(user_id, token, auth_key) {
+        var returnEncrypt = encryptMerchantFingerPrintToken(user_id, token, auth_key);
+        
+        return sendRequest(returnEncrypt, '/fingerprint/register')
 }

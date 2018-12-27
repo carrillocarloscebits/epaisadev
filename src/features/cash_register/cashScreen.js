@@ -17,7 +17,7 @@ import ModalDelivery from '../modal_delivery/modalDelivery';
 import ModalOptions from './components/Modals/ModalOptions/modalOptions';
 import { isTablet } from './constants/isLandscape';
 import ModalCustomer from '../modal_customer/modalCustomer';
-
+import {LOGIN} from '../../navigation/screen_names'
 const isPhone= !isTablet
 class CashScreen extends Component{
   static navigationOptions = {
@@ -138,6 +138,10 @@ class CashScreen extends Component{
       modalCustomer:!this.state.modalCustomer,
     })
   }
+  logout=()=>{
+    this.props.navigation.navigate(LOGIN);
+    
+  }
   render() {
     const {amount, total_amount,products, sideOption,totalDiscount,totalDelivery, type} = this.props.state
     const opa= this.state.modalActive || this.state.modalRight? true: false
@@ -149,7 +153,7 @@ class CashScreen extends Component{
           onClose={()=>{this.setState({modalActive: false})}}
           content={
             //LEFT SIDE BAR
-            <SideBar handleOption={this.changeOption} active={this.state.modalActive} toggle={this.toggleSideBar} sideOption={sideOption}/>  
+            <SideBar logoutAction={this.logout} handleOption={this.changeOption} active={this.state.modalActive} toggle={this.toggleSideBar} sideOption={sideOption}/>  
           }
       >
       {
@@ -173,7 +177,7 @@ class CashScreen extends Component{
             
             <Header label="CASH REGISTER" cant={products.length} toggleSide={this.toggleSideBar} toggleRight={this.toggleRight} toggleOptions= {this.toggleModalOptions}/>
             
-            <TotalAmount value={total_amount}/>
+            <TotalAmount value={total_amount} products={products}/>
             <ItemsContainer/>
             <Calculator amount={amount} sumAmount={this.sumAmount} sumTotal={this.sumTotal} cleanTotal={this.cleanTotal} backAmount={this.backAmount}/>
             <Footer toggleModal={this.toggleModalCustomer}/>
@@ -203,7 +207,7 @@ class CashScreen extends Component{
             
             <ModalDiscount isLandscape={true} widthModal="50%" active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
             <ModalDelivery isLandscape={true} widthModal="50%" active={this.state.modalDelivery} closeModal={this.toggleModalDelivery} addDelivery={this.addDelivery}/>
-            <ModalCustomer widthModal="60%"/>
+            <ModalCustomer widthModal="60%" active={this.state.modalCustomer} closeModal={this.toggleModalCustomer}/>
           </View>
           <RightSideBar type={type} products={products} discount={totalDiscount} delivery={totalDelivery} 
                         subtotal={total_amount} actionClose={this.closeControlPanel} openDiscount={this.toggleModalDiscount}

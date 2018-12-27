@@ -33,7 +33,7 @@ const styles = EStyleSheet.create({
         shadowOpacity: .5,
       },
       android: {
-        elevation: 3,
+       // elevation: 3,
       }
     })
   },
@@ -48,17 +48,12 @@ const styles = EStyleSheet.create({
         shadowOpacity: .5,
       },
       android: {
-        elevation: 3,
+        //elevation: 3,
       }
     })
   },
   buttonText: {
-    fontSize: '1.2rem',
-    letterSpacing: 1.33,
-    fontWeight: "bold",
-    textAlign: "center",
-    margin: '1.8rem',
-    color: "#ffffff"
+    
   },
   
 });

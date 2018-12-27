@@ -4,6 +4,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import EditProduct from '../../../../EditProduct';
 import {editProductPortrait} from '../../../../EditProduct/styles/editProductPortrait';
 import {editProductLandscape} from '../../../../EditProduct/styles/editProductLandscape';
+import {formatNumberCommasDecimal} from 'api';
 
 import ImagePicker from 'react-native-image-picker';
 
@@ -59,7 +60,17 @@ class ProductDetail extends React.Component{
             }
         })
     }
-    
+
+    closeModal = () => {
+        this.setState({
+            detailVisible: false},
+            ()=>{
+                this.setState({
+                    heightCard: 0,
+                    marginTopCard: 0,
+                    marginBottomCard: 0,
+                    })})
+    }    
 
     render() {
     
@@ -81,20 +92,20 @@ class ProductDetail extends React.Component{
                         <Text style={[styles.textProductDefault, styles.TextGrayProductIndex]}>{id}.</Text>     
                         <Text style={[styles.textProductDefault, styles.TextGrayProduct]} numberOfLines={3}>{name}</Text>
                         <Text style={[styles.textProductDefault, styles.TextGray]}>{quant}</Text>    
-                        <Text style={[styles.textProductDefault, styles.TextBlueProduct]} numberOfLines={1}>₹ {total}</Text> 
+                        <Text style={[styles.textProductDefault, styles.TextBlueProduct]} numberOfLines={1}>₹ {formatNumberCommasDecimal(parseFloat(total).toFixed(2))}</Text> 
                     </View>
                     { discount > 0 ?
                     <View style={styles.container}>
                         <Text style={[styles.textProductDefault, styles.TextGrayProductIndex]}></Text>     
                         <Text style={styles.productDetailDiscountLabel}>̶— Discount {type=="%"? `@ ${parseFloat(discount)}%`:null}</Text>
                         <Text style={[styles.textProductDefault, styles.TextGray]}></Text>    
-                        <Text style={styles.productDetailDiscountValue}>₹ {type=="%"? parseFloat(total*discount/100).toFixed(2):parseFloat(discount).toFixed(2)}</Text>
+                        <Text style={styles.productDetailDiscountValue}>₹ {type=="%"? formatNumberCommasDecimal(parseFloat(total*discount/100).toFixed(2)):formatNumberCommasDecimalparseFloat((discount).toFixed(2))}</Text>
                     </View>: null
                     }
                 </View>
             </TouchableOpacity>
-            {//this.state.detailVisible && 
-            <View style={{height:this.state.heightCard, alignItems:'center',  marginTop:this.state.marginCard, marginBottom:this.state.marginBottomCard, width:'100%'}}>
+            {//this.state.detailVisible ? 
+            <View style={{height:this.state.heightCard, alignItems:'center',  marginTop:this.state.marginTopCard, marginBottom:this.state.marginBottomCard, width:'100%'}}>
                 <ScrollView
                     style={{borderRadius:10, elevation:hp('2%'),}}
                     scrollEnabled={true}
@@ -114,11 +125,19 @@ class ProductDetail extends React.Component{
                         cancelButtonStyle={this.state.orientation ? editProductPortrait.cancelButtonStyle : editProductLandscape.cancelButtonStyle}
                         saveButtonStyle={this.state.orientation ? editProductPortrait.saveButtonStyle : editProductLandscape.saveButtonStyle}
                         cameraButtonAction={this.openImagePicker.bind(this)}//{()=>alert('Camera not implemented.')}
-                        cancelButtonAction={()=>this.setState({detailVisible: false})}
+                        cancelButtonAction={this.closeModal}
                         saveButtonAction={()=>{}}
                         item={this.props.item}
                         imageSource={this.state.imagePath === '' ? null : this.state.imagePath}
-                        //itemProduct={}
+                        closeModal={()=>{ 
+                            this.setState({
+                                detailVisible: !this.state.detailVisible},
+                                ()=>{
+                                    this.setState({
+                                        heightCard: this.state.detailVisible ? hp('44%'): 0,
+                                        marginTopCard: this.state.detailVisible ? hp('1%'): 0,
+                                        marginBottomCard: this.state.detailVisible ? hp('2.5%'): 0,
+                                        })}) }}
                         />
     
                 </ScrollView>

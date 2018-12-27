@@ -73,16 +73,17 @@ class EditProduct extends Component {
                 quant: this.quantity.state.value,
                 unitPrice: parseFloat(this.price.state.value).toFixed(2),
                 type: this.discount.state.discountSign,
-                discount: parseFloat(this.discount.state.discount).toFixed(2),
+                discount: this.discount.state.discount !== '' ? parseFloat(this.discount.state.discount).toFixed(2) : 0,
                 total: parseFloat(parseFloat(this.quantity.state.value).toFixed(2) * parseFloat(this.price.state.value).toFixed(2)).toFixed(2),
                 image: imageSource ? imageSource : ''
             }
 
             const {edit_product} = this.props;
             edit_product(product); 
-
+            
             saveEditingState();
-            this.props.closeModal;
+            const {closeModal} = this.props;
+            closeModal();
         }
 
         saveEditingState = () => {

@@ -5,7 +5,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import Button from './components/button';
 import ModuleDiscounts from './components/moduleDiscounts';
 import { isTablet } from '../../../../constants/isLandscape';
-
+import {formatNumberCommasDecimal} from 'api';
 class Footer extends Component {
     render() {
         const {subtotal,products, discount, delivery, type,removeDiscount,removeDelivery} = this.props
@@ -19,18 +19,18 @@ class Footer extends Component {
             }
         })
         let totalDiscount = type=="%"?(subTotalDiscount*parseFloat(discount)/100):parseFloat(discount)
-        let CGST= subtotal*0.09
+        let CGST= subTotalDiscount*0.09
         let Total= parseFloat(subTotalDiscount)-parseFloat(totalDiscount)+parseFloat(delivery)+parseFloat(CGST)
         return (
             <View style={styles.container}>
                 <View  style={[styles.subTotalContainer,{paddingTop:hp('0.9%')}]}>
                     <Text style={styles.textDark1}>Sub Total</Text>    
-                    <Text style={styles.TextBlue1}>₹ {parseFloat(subTotalDiscount).toFixed(2)}</Text>
+                    <Text style={styles.TextBlue1}>₹ {formatNumberCommasDecimal(parseFloat(subTotalDiscount).toFixed(2))}</Text>
                 </View>
                 <ModuleDiscounts cgst={CGST} subTotal={subtotal} totalDiscount={totalDiscount} Total={Total} deliveryCharge={delivery} subTotalContainer={styles.subTotalContainer} removeDiscount={removeDiscount} removeDelivery={removeDelivery}/>
                 <View style={styles.buttonsContainer}>
                     <Button label="HOLD" backgroundColor="#D8D8D8" width={isLandscape?"100%":"30%"} color="#47525D"/>
-                    {!isLandscape?<Button label={`PAY ₹ ${parseFloat(Total).toFixed(2)}`} backgroundColor="#09BA83" width={"68%"} color="white" />:null}
+                    {!isLandscape?<Button label={`PAY ₹ ${formatNumberCommasDecimal(parseFloat(Total).toFixed(2))}`} backgroundColor="#09BA83" width={"68%"} color="white" />:null}
                 </View>
 
             </View>

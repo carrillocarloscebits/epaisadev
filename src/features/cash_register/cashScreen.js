@@ -203,7 +203,7 @@ class CashScreen extends Component{
             
             <ModalDiscount isLandscape={true} widthModal="50%" active={this.state.modalDiscount} closeModal={this.toggleModalDiscount} addDiscount={this.addDiscount}/>
             <ModalDelivery isLandscape={true} widthModal="50%" active={this.state.modalDelivery} closeModal={this.toggleModalDelivery} addDelivery={this.addDelivery}/>
-            <ModalCustomer widthModal="60%"/>
+            <ModalCustomer widthModal="60%" active={this.state.modalCustomer} closeModal={this.toggleModalCustomer}/>
           </View>
           <RightSideBar type={type} products={products} discount={totalDiscount} delivery={totalDelivery} 
                         subtotal={total_amount} actionClose={this.closeControlPanel} openDiscount={this.toggleModalDiscount}

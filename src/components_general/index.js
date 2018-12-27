@@ -9,6 +9,7 @@ import {Loading} from './utilities/loading';
 import {Alert} from './utilities/alert_message';
 import Timer from './utilities/timer';
 import Logo from './utilities/logo/logo';
+import FingerprintModal from './popups/FingerprintModal/FingerprintModal';
 export { 
     DoubleBackground,
     TextMontserrat,
@@ -25,5 +26,6 @@ export {
     ButtonClose,
     Timer,
     PhoneInput,
-    Logo
+    Logo,
+    FingerprintModal
 }

@@ -9,7 +9,8 @@ export const cashActions = {
     add_discount,
     add_delivery,
     remove_delivery,
-    remove_discount
+    remove_discount,
+    edit_product
 };
 
 function sum_amount(value) {
@@ -45,5 +46,9 @@ function remove_discount() {
 }
 function remove_delivery() {
     return { type: cashConstants.REMOVE_DELIVERY};
+}
+
+function edit_product(product) {
+    return { type: cashConstants.EDIT_PRODUCT, payload: product};
 }
 

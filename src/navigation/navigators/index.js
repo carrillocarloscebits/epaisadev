@@ -20,8 +20,13 @@ const AuthStack = createStackNavigator({
   [screenNames.FORGOT_PASSWORD]: {
     screen: ForgotPassword,
   },
+  //added for quick navigation
+  [screenNames.CASH_REGISTER]: {
+    screen: CashRegister,
+  },
 }, {
-  initialRouteName: screenNames.LOGIN
+  //initialRouteName: screenNames.LOGIN
+  initialRouteName: screenNames.CASH_REGISTER
 });
 
 const AppStack = createStackNavigator({

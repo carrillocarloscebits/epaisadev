@@ -4,6 +4,10 @@ const initialState = {total_amount:(0).toFixed(2),amount:(0).toFixed(2), product
 //dummy content
 const cashData = (state = initialState, action) => {
   
+  console.log('ACTIONS')
+  
+  console.log(action)
+
   switch (action.type) {
     case cashConstants.SUM_AMOUNT:
       return {
@@ -17,9 +21,11 @@ const cashData = (state = initialState, action) => {
           id:(state.products.length+1),
           name: "Custom product "+(state.products.length+1),
           quant: 1,
+          unitPrice: state.amount,
           total: state.amount,
           discount: (0).toFixed(2),
-          type: "%"
+          type: "%",
+          image: ''
         }] ,
         amount:(0).toFixed(2),}:{...state};
     case cashConstants.BACK_AMOUNT:
@@ -36,6 +42,15 @@ const cashData = (state = initialState, action) => {
       return {...state,totalDiscount: parseFloat(0)};
     case cashConstants.REMOVE_DELIVERY:
       return {...state,totalDelivery: parseFloat(0)};
+      
+    case cashConstants.EDIT_PRODUCT:
+    console.log('EN EDIT_PRODUCT')
+    console.log(state)
+    return {
+      ...state, 
+      products: state.products.map(product => (product.id === action.payload.id) ? action.payload : product),
+    }
+
     default:
         return state
   }

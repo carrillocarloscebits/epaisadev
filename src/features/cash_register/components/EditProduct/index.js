@@ -80,9 +80,10 @@ class EditProduct extends Component {
 
             const {edit_product} = this.props;
             edit_product(product); 
-
+            
             saveEditingState();
-            this.props.closeModal;
+            const {closeModal} = this.props;
+            closeModal();
         }
 
         saveEditingState = () => {

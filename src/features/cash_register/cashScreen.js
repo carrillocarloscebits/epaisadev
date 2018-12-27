@@ -17,7 +17,7 @@ import ModalDelivery from '../modal_delivery/modalDelivery';
 import ModalOptions from './components/Modals/ModalOptions/modalOptions';
 import { isTablet } from './constants/isLandscape';
 import ModalCustomer from '../modal_customer/modalCustomer';
-
+import {LOGIN} from '../../navigation/screen_names'
 const isPhone= !isTablet
 class CashScreen extends Component{
   static navigationOptions = {
@@ -138,6 +138,10 @@ class CashScreen extends Component{
       modalCustomer:!this.state.modalCustomer,
     })
   }
+  logout=()=>{
+    this.props.navigation.navigate(LOGIN);
+    
+  }
   render() {
     const {amount, total_amount,products, sideOption,totalDiscount,totalDelivery, type} = this.props.state
     const opa= this.state.modalActive || this.state.modalRight? true: false
@@ -149,7 +153,7 @@ class CashScreen extends Component{
           onClose={()=>{this.setState({modalActive: false})}}
           content={
             //LEFT SIDE BAR
-            <SideBar handleOption={this.changeOption} active={this.state.modalActive} toggle={this.toggleSideBar} sideOption={sideOption}/>  
+            <SideBar logoutAction={this.logout} handleOption={this.changeOption} active={this.state.modalActive} toggle={this.toggleSideBar} sideOption={sideOption}/>  
           }
       >
       {

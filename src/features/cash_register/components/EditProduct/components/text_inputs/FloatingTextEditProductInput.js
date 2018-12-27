@@ -1,177 +1,183 @@
-import React, { Component } from 'react';
-import { Dimensions,View, Text, StyleSheet, ImageBackground,TouchableOpacity,Image,Keyboard, ScrollView} from 'react-native';
+import React, {Component} from 'react';
+import {Platform, StyleSheet, Text, View, StatusBar, TextInput, Animated, TouchableOpacity } from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import EditProduct from '../../../../EditProduct';
-import {editProductPortrait} from '../../../../EditProduct/styles/editProductPortrait';
-import {editProductLandscape} from '../../../../EditProduct/styles/editProductLandscape';
-
-import ImagePicker from 'react-native-image-picker';
-
-const isPortrait = () => {
-    const dim = Dimensions.get('window');
-    if(dim.height >= dim.width){
-      return true;
-    }else {
-      return false;
-    }
-};
-
-class ProductDetail extends React.Component{
+import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
+  
+class FloatingLabelInput extends Component {
     constructor(props){
-        super(props)
-
-        this.state = {           
-            orientation: isPortrait(),
-            detailVisible: false,
-
-            imagePath: '',
-            imageHeight: '',
-            imageWidth: '',
-        }
+      super(props)
+      this.state = {
+        isFocused: false,
+        rupeeSign:'₹ ',
+        orientation:this.props.orientation
+      };
     }
-
-    openImagePicker() {
-        const options = {
-            title: 'Select your option',
-            storageOptions: {
-                skipBackup: true,
-                path: 'images'
-            }
-        }
-        ImagePicker.showImagePicker(options, (response) => {
-            if(response.didCancel){
-                console.log('Canceled')
-            } else if (response.error) {
-                alert('Something went wrong with this option. Try again later.')
-                console.log(response.error)
-            } else if (response.customButton) {
-                alert('Custom button tapped : '+response.customButton)
-            } else {
-                this.setState({
-                imagePath: response.uri,
-                imageHeight: response.height,
-                imageWidth: response.width
-                })
-            }
-        })
+  
+    componentWillMount() {
+      this._animatedIsFocused = new Animated.Value(this.props.value === '' ? 0 : 1);
     }
-    
-
+  
+    handleFocus = () => this.setState({ isFocused: true });
+    handleBlur = () => this.setState({ isFocused: false });
+  
+    componentDidUpdate() {
+      Animated.timing(this._animatedIsFocused, {
+        toValue: (this.state.isFocused || this.props.value !== '') ? 1 : 0,
+        duration: 200,
+      }).start();
+    }
+  
     render() {
-    
-        const { id, name, quant, total,discount,type} = this.props.item
-        return(
-        <View>
-            <TouchableOpacity onPress={()=>{ this.setState({detailVisible:!this.state.detailVisible}) }}>
-                <View>
-                    <View style={styles.container}>
-                        <Text style={[styles.textProductDefault, styles.TextGrayProductIndex]}>{id}.</Text>     
-                        <Text style={[styles.textProductDefault, styles.TextGrayProduct]} numberOfLines={3}>{name}</Text>
-                        <Text style={[styles.textProductDefault, styles.TextGray]}>{quant}</Text>    
-                        <Text style={[styles.textProductDefault, styles.TextBlueProduct]} numberOfLines={1}>₹ {total}</Text> 
-                    </View>
-                    { discount > 0 ?
-                    <View style={styles.container}>
-                        <Text style={[styles.textProductDefault, styles.TextGrayProductIndex]}></Text>     
-                        <Text style={styles.productDetailDiscountLabel}>̶— Discount {type=="%"? `@ ${parseFloat(discount)}%`:null}</Text>
-                        <Text style={[styles.textProductDefault, styles.TextGray]}></Text>    
-                        <Text style={styles.productDetailDiscountValue}>₹ {type=="%"? parseFloat(total*discount/100).toFixed(2):parseFloat(discount).toFixed(2)}</Text>
-                    </View>: null
-                    }
-                </View>
-            </TouchableOpacity>
-            {this.state.detailVisible && 
-            <View style={{height:hp('44%'), alignItems:'center',  marginTop:hp('1%'), marginBottom:hp('2.5%'), width:'100%'}}>
-                <ScrollView
-                    style={{borderRadius:10, elevation:hp('2%'),}}
-                    scrollEnabled={true}
-                    keyboardShouldPersistTaps={'handled'}>
-    
-                    <EditProduct 
-                        ref={(editComponent)=>{this.editComponent=editComponent}} 
-                        orientation={this.state.orientation}
-                        containerStyle={this.state.orientation ? editProductPortrait.containerStyle : editProductLandscape.containerStyle }
-                        contentWidth={this.state.orientation ? editProductPortrait.contentWidth : editProductLandscape.contentWidth}
-                        cameraButtonContainer={this.state.orientation ? editProductPortrait.cameraButtonContainer : editProductLandscape.cameraButtonContainer}
-                        buttonIconSize={this.state.orientation ? '4' : '5'}
-                        productNameInputSize={this.state.orientation ? {height:'7.3', width:'46.5'} : {height:'7.3', width:'20.5'}}
-                        quantityInputSize={this.state.orientation ? {height:'7.3', width:'71'} : {height:'7.3', width:'31'}}
-                        priceInputSize={this.state.orientation ? {height:'7.3', width:'71'} : {height:'7.3', width:'31'}}
-                        discountSelectorSize={this.state.orientation ? {height:'7.3', width:'70'} : {height:'7.3', width:'30'}}
-                        cancelButtonStyle={this.state.orientation ? editProductPortrait.cancelButtonStyle : editProductLandscape.cancelButtonStyle}
-                        saveButtonStyle={this.state.orientation ? editProductPortrait.saveButtonStyle : editProductLandscape.saveButtonStyle}
-                        cameraButtonAction={this.openImagePicker.bind(this)}//{()=>alert('Camera not implemented.')}
-                        cancelButtonAction={()=>this.setState({detailVisible: false})}
-                        saveButtonAction={()=>{}}
-                        item={this.props.item}
-                        imageSource={this.state.imagePath === '' ? null : this.state.imagePath}
-                        //itemProduct={}
-                        />
-    
-                </ScrollView>
-            </View>
-            }
-        </View>
-        )
-    }
-}
+      const { label, ...props } = this.props;
+      const labelStyle = {
+        position: 'absolute',
+        left: wp('1%'),
+        fontFamily:'Montserrat-Medium',
+        top: this._animatedIsFocused.interpolate({
+          inputRange: [0, 1],
+          outputRange: [hp('3.2%'), 0],  // on text input, above text input
+        }),
+        fontSize: this._animatedIsFocused.interpolate({
+          inputRange: [0, 1],
+          outputRange: [hp('2.1%'), hp('1.8%')],  // on text input, above text input
+        }),
+        color: this._animatedIsFocused.interpolate({
+          inputRange: [0, 1],
+          outputRange: ['#6B6B6B', '#6B6B6B'],  // on text input, above text input
+        }),
+      };
 
-const styles = StyleSheet.create({
-    container:{
-        width:'100%',
-        flexDirection:'row',
-        alignItems:'center', 
-        justifyContent: 'flex-start',
-    },
-    textProductDefault:{
-        color:'#555555',
-        fontFamily: "Montserrat-Medium", 
-        fontSize:hp('2.1%'),
-    },
-    TextGrayProductIndex:{
-        textAlign:'center',
-        width:'15%',
-    },
-    TextGrayProduct:{
-        width:'38%',
-        textAlign:'left'
-    },
-    TextGray:{
-        width:'15%',
-        textAlign:'center',
-    },
-    productAmount: {
-        width:'32%',
-        flexDirection:'row',
-        justifyContent:'flex-end'
-    },
-    TextBlueProduct:{
-        color:'#174285',
-        width:'32%',
-        textAlign:'right',
-        fontFamily: "Montserrat-SemiBold",
-        paddingRight:hp('2.3%')
-    },
-    productDetailDiscountContainer:{
-        flexDirection:'row', 
-        justifyContent:'flex-end', 
-        width:'100%', 
-        paddingRight:wp('4.4%')
-      },
-    productDetailDiscountLabel:{  
-        color:'#FD853D', 
-        fontFamily:'Montserrat-SemiBold', 
-        fontSize:hp('1.9%'), 
-        width:'38%',
-        textAlign:'left'
-    },
-    productDetailDiscountValue:{
-        color:'#FD853D',
-        width:'32%',
-        textAlign:'right',
-        fontFamily: "Montserrat-SemiBold",
-        fontSize:hp('1.9%'),
-        paddingRight:hp('2.3%')
-      },
-});
-  export default ProductDetail;
+      const mainInputPortraitStyle = {
+        height: hp('6.5%'), 
+        width: this.props.eraseOption ? '93.5%' : '100%',  
+        fontSize: hp('2.1%'), 
+        paddingBottom:0, 
+        color: this.state.isFocused? '#174285' : '#174285',
+        fontFamily:'Montserrat-SemiBold'
+      }
+
+      const mainInputLandscapeStyle = {
+        height: hp('6.5%'), 
+        width: this.props.eraseOption ? '93.5%' : '100%',  
+        fontSize: hp('2.1%'), 
+        paddingBottom:0, 
+        color: this.state.isFocused? '#174285' : '#174285',
+        fontFamily:'Montserrat-SemiBold',
+        paddingLeft: this.props.rupeeSign ? 0 : wp('1%')
+      }
+
+      const rupeePortrait = { 
+        height: hp('6.5%'), 
+        width: '8%',  
+        fontSize: hp('2.1%'), 
+        paddingBottom:0, 
+        color: '#174285', 
+        fontFamily:'Montserrat-SemiBold' 
+      }
+
+      const rupeeLandscape = { 
+        height: hp('6.5%'), 
+        width: '8%',  
+        fontSize: hp('2.1%'), 
+        paddingBottom:0, 
+        color: '#174285', 
+        fontFamily:'Montserrat-SemiBold',
+        paddingLeft: wp('1%')
+      }
+
+      const clearButtonPortrait = {
+        height:hp('5%'), 
+        width:'6.5%', 
+        position:'absolute', 
+        right:0, 
+        top:hp('2.8%')
+      }
+
+      const clearButtonLandscape = {
+        height:hp('5%'), 
+        width:'5.3%', 
+        position:'absolute', 
+        right:0, 
+        top:hp('2.8%')
+      }
+
+      return (
+        <View style={{ width: wp(''+this.props.inputWidth), height:hp(''+this.props.inputHeight), /*backgroundColor:'#EDCFAC'*/}}>
+          <Animated.Text style={labelStyle}>
+            {label}
+          </Animated.Text>
+          <View style={{flexDirection:'row'}}>
+            { this.props.rupeeSign &&
+              <TextInput 
+                style={this.state.orientation ? rupeePortrait : rupeeLandscape} 
+                underlineColorAndroid='rgba(0,0,0,0)'
+                value={this.props.value !== '' ? this.state.rupeeSign : ''}
+                editable={false}
+              />
+            }
+            <TextInput
+              {...props}
+              style={this.props.orientation ? mainInputPortraitStyle : mainInputLandscapeStyle} 
+              underlineColorAndroid='rgba(0,0,0,0)'
+              autoCorrect={false}
+              numberOfLines={1}
+              autoCapitalize={this.props.autoCapitalizeInput} 
+              keyboardType= {this.props.keyboard}
+              maxLength={this.props.maxLength}
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
+              blurOnSubmit
+            />
+            {
+              /*this.state.isFocused && */this.props.eraseOption && this.props.value !== '' ? 
+              <TouchableOpacity style={this.state.orientation ? clearButtonPortrait : clearButtonLandscape} onPress={this.props.onPressAction}>
+                <View>
+                    <IconMaterialIcons name="cancel" size={hp('2.8%')} />
+                </View>
+              </TouchableOpacity> : null
+            }
+          </View>
+          <View style={{ backgroundColor: this.state.isFocused? '#174285' : /* 6B6B6B */ '#174285', width: wp(''+this.props.inputWidth), height:hp('0.35%'),}}>
+            <View style={{ backgroundColor:'#fff', width: wp('1%'), height:'100%',}}/>
+          </View>
+        </View>
+      );
+    }
+  }
+
+
+  
+  
+  export default class FloatingTextEditProductInput extends Component {
+
+    state = {
+      value: '',
+    };
+  
+    handleTextChange = (newText) => {this.setState({ value: newText });};
+
+    eraseText = () => {this.setState({value:''})}
+  
+    render() {
+      return (
+        <View>
+          {/*<StatusBar hidden />*/}
+          <FloatingLabelInput
+            inputWidth={ this.props.width }
+            inputHeight={ this.props.height }
+            //label={(!this.state.isFocused && this.state.value !== '')  ? '' : this.props.labelText }
+            label={this.props.labelText}
+            value={this.state.value}
+            maxLength={this.props.maximumLength}
+            onChangeText={this.handleTextChange}
+            keyboard={this.props.typeOfKeyboard}
+            eraseOption={this.props.eraseOption}
+            autoCapitalizeInput={this.props.autoCapitalizeText}
+            rupeeSign={this.props.rupeeSign}
+            orientation={this.props.orientation}
+            onPressAction={this.eraseText}
+          />
+        </View>
+      );
+    }
+  }

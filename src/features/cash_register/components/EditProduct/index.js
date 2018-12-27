@@ -82,6 +82,7 @@ class EditProduct extends Component {
             edit_product(product); 
 
             saveEditingState();
+            this.props.closeModal;
         }
 
         saveEditingState = () => {
@@ -97,6 +98,7 @@ class EditProduct extends Component {
             //this.name.setState({value: 'hola'});
         }
 
+        {console.log(this.state)}
         return (
             <Card style={containerStyle}>
                 <View style={{width:'100%', height:'100%', borderRadius:10, alignItems:'center'}}>

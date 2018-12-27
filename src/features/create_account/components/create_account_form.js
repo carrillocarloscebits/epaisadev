@@ -5,15 +5,25 @@ import { PhoneInput } from 'components';
 
 class CreateAccountForm extends Component {
     state = {
-        Username: 'rigelifoz@shayzam.net',
-        Password: 'abc123456$',
-        UserFirstName: 'Test 2',
-        UserLastName: 'Tester',
-        UserMobileNumber: '123456789',
+        //Username: 'rigelifoz@shayzam.net',
+        //Password: 'abc123456$',
+        //UserFirstName: 'Test 2',
+        //UserLastName: 'Tester',
+        //UserMobileNumber: '123456789',
+        //CountryCode: 'AF',
+        //registeredReferralCode: '',
+        //otpType: 1,
+        //BusinessName: 'TestCompany',
+
+        Username: '',
+        Password: '',
+        UserFirstName: '',
+        UserLastName: '',
+        UserMobileNumber: '',
         CountryCode: 'AF',
         registeredReferralCode: '',
         otpType: 1,
-        BusinessName: 'TestCompany',
+        BusinessName: '',
     }
 
     _textChange(key, value) {

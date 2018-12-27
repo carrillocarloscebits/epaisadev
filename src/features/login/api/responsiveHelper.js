@@ -9,4 +9,13 @@ const getCardPadding = () => {
     return 30
 };
 
-export {getCardPadding};
+const isPortrait = () => {
+    const dim = Dimensions.get('window');
+    if(dim.height >= dim.width){
+      return true;
+    }else {
+      return false;
+    }
+};
+
+export {getCardPadding, isPortrait};

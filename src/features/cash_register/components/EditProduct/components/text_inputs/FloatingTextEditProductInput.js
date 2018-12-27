@@ -58,12 +58,12 @@ class FloatingLabelInput extends Component {
 
       const mainInputLandscapeStyle = {
         height: hp('6.5%'), 
-        width: this.props.eraseOption ? '93.5%' : '100%',  
+        width: this.props.eraseOption ? '88%' : '100%',  
         fontSize: hp('2.1%'), 
         paddingBottom:0, 
         color: this.state.isFocused? '#174285' : '#174285',
         fontFamily:'Montserrat-SemiBold',
-        paddingLeft: this.props.rupeeSign ? 0 : wp('1%')
+        paddingLeft: this.props.rupeeSign ? 0 : wp('1%'),
       }
 
       const rupeePortrait = { 
@@ -77,7 +77,7 @@ class FloatingLabelInput extends Component {
 
       const rupeeLandscape = { 
         height: hp('6.5%'), 
-        width: '8%',  
+        width: '10%',  
         fontSize: hp('2.1%'), 
         paddingBottom:0, 
         color: '#174285', 
@@ -87,7 +87,7 @@ class FloatingLabelInput extends Component {
 
       const clearButtonPortrait = {
         height:hp('5%'), 
-        width:'6.5%', 
+        width:'8%', 
         position:'absolute', 
         right:0, 
         top:hp('2.8%')
@@ -95,10 +95,10 @@ class FloatingLabelInput extends Component {
 
       const clearButtonLandscape = {
         height:hp('5%'), 
-        width:'5.3%', 
+        width:'6.5%', 
         position:'absolute', 
         right:0, 
-        top:hp('2.8%')
+        top:hp('2.8%'),
       }
 
       return (

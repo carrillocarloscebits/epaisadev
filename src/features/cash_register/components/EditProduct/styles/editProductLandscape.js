@@ -4,7 +4,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 export const editProductLandscape = StyleSheet.create({
     containerStyle : {
         height:hp('44%'), 
-        width:wp('33.8%'), 
+        width:wp('31%'), 
         padding:0, 
         paddingTop:hp('1.2%'), 
         borderWidth:0.5, 
@@ -13,7 +13,7 @@ export const editProductLandscape = StyleSheet.create({
         elevation:0
     },
     contentWidth : {
-        width:wp('31%'),
+        width:wp('28.2%'),
         //backgroundColor:'#E4C58E'
     },
     cameraButtonContainer : {

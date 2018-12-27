@@ -99,7 +99,7 @@ class ProductDetail extends React.Component{
                         <Text style={[styles.textProductDefault, styles.TextGrayProductIndex]}></Text>     
                         <Text style={styles.productDetailDiscountLabel}>̶— Discount {type=="%"? `@ ${parseFloat(discount)}%`:null}</Text>
                         <Text style={[styles.textProductDefault, styles.TextGray]}></Text>    
-                        <Text style={styles.productDetailDiscountValue}>₹ {type=="%"? formatNumberCommasDecimal(parseFloat(total*discount/100).toFixed(2)):formatNumberCommasDecimalparseFloat((discount).toFixed(2))}</Text>
+                        <Text style={styles.productDetailDiscountValue}>₹ {type=="%"? formatNumberCommasDecimal(parseFloat(total*discount/100).toFixed(2)):formatNumberCommasDecimal(parseFloat((discount).toFixed(2)))}</Text>
                     </View>: null
                     }
                 </View>
@@ -118,10 +118,10 @@ class ProductDetail extends React.Component{
                         contentWidth={this.state.orientation ? editProductPortrait.contentWidth : editProductLandscape.contentWidth}
                         cameraButtonContainer={this.state.orientation ? editProductPortrait.cameraButtonContainer : editProductLandscape.cameraButtonContainer}
                         buttonIconSize={this.state.orientation ? '4' : '5'}
-                        productNameInputSize={this.state.orientation ? {height:'7.3', width:'46.5'} : {height:'7.3', width:'20.5'}}
-                        quantityInputSize={this.state.orientation ? {height:'7.3', width:'71'} : {height:'7.3', width:'31'}}
-                        priceInputSize={this.state.orientation ? {height:'7.3', width:'71'} : {height:'7.3', width:'31'}}
-                        discountSelectorSize={this.state.orientation ? {height:'7.3', width:'70'} : {height:'7.3', width:'30'}}
+                        productNameInputSize={this.state.orientation ? {height:'7.3', width:'46.5'} : {height:'7.3', width:'17.7'}}
+                        quantityInputSize={this.state.orientation ? {height:'7.3', width:'71'} : {height:'7.3', width:'28.2'}}
+                        priceInputSize={this.state.orientation ? {height:'7.3', width:'71'} : {height:'7.3', width:'28.2'}}
+                        discountSelectorSize={this.state.orientation ? {height:'7.3', width:'70'} : {height:'7.3', width:'27.2'}}
                         cancelButtonStyle={this.state.orientation ? editProductPortrait.cancelButtonStyle : editProductLandscape.cancelButtonStyle}
                         saveButtonStyle={this.state.orientation ? editProductPortrait.saveButtonStyle : editProductLandscape.saveButtonStyle}
                         cameraButtonAction={this.openImagePicker.bind(this)}//{()=>alert('Camera not implemented.')}

@@ -137,7 +137,7 @@ class Login extends Component {
                 }, () => {
                     Biometrics.createSignature('Login with Fingerprint', 'keyToEncript')
                     .then((signature) => {
-                        this.props.login_fingerprint(signature);
+                        this.props.login(null, null, signature);
                     })
                 })
 

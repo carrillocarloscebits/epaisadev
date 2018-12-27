@@ -4,11 +4,12 @@ import * as userService from '../services/user_service';
 import NavigationService from '../../../services/navigation';
 import {FINGERPRINT, CASH_REGISTER} from './../api/screen_names';
 
-export function login(email, password) {
+export function login(email, password, signature) {
+
     return dispatch => {
         dispatch(request({ email }));
-
-        userService.login(email, password)
+        
+        loginUser(email, password, signature)
             .then((res) => {
                 const {success} = res;
                 if(success) {
@@ -66,4 +67,12 @@ export function login(email, password) {
     }
     function successLogin(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
     function failureLogin(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+
+    function loginUser(email, password, signature) {
+        if(signature) {
+            return userService.login_fingerprint(signature);
+        } else {
+            return userService.login(email, password);
+        }
+    }
 }

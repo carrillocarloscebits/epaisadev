@@ -7,7 +7,8 @@ import {
     encryptForgotPassword,
     encryptOtpVerify,
     encryptResetPassword,
-    encryptJsonVerifyPut
+    encryptJsonVerifyPut,
+    encryptFingerPrintLogin
 } from './server-api';
 
 export function login(email, password) {
@@ -75,3 +76,10 @@ export function verify_otp(authKey, otp) {
     var direction = "/user/verify";
     sendRequestPut(returnEncrypt, direction)
   }
+
+export function login_fingerprint(signature) {
+
+    var returnEncrypt = encryptFingerPrintLogin(signature);
+    return sendRequest(returnEncrypt, '/fingerprint/login')
+
+}

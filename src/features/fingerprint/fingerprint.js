@@ -9,6 +9,7 @@ import { isTablet } from '../cash_register/constants/isLandscape';
 import {CASH_REGISTER} from 'navigation/screen_names';
 import {connect} from 'react-redux';
 import Biometrics from 'react-native-biometrics';
+import { register_fingerprint } from './actions';
 
 class FingerPrint extends Component{
     static navigationOptions = {
@@ -56,17 +57,7 @@ class FingerPrint extends Component{
                     Biometrics.createSignature('Register Fingerprint', 'keyToEncript')
                     .then((signature) => {
                         this.setState({status: 'success'})
-                        const userId = this.props.user.response.id;
-                        AsyncStorage.getItem('@UsersLogged:Fingerprint').then(item => {
-                            const users = JSON.parse(item);
-                            let exists;
-                            if(Array.isArray(users)) {
-                                exists = users.find((user) => user === userId)
-                            }
-                            AsyncStorage.setItem(`@UsersLogged:Fingerprint`, JSON.stringify(
-                                exists ? [...users, userId] : [userId]
-                            ));
-                        })
+                        this.props.register_fingerprint(this.props.user.response.id, signature, this.props.user.response.auth_key)
                         setTimeout(() => {
                             this.props.navigation.replace(CASH_REGISTER)
                         }, 1000)
@@ -89,7 +80,7 @@ class FingerPrint extends Component{
 
 
   render() {
-
+    console.log(this.props)
     return(
         <View style={styles.container}>
             <BackgroundImage source={require("./assets/img/side_nav_portrait_faded.png")} />
@@ -147,4 +138,10 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps)(FingerPrint)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        register_fingerprint: (user_id, token, auth_key) => dispatch(register_fingerprint(user_id, token, auth_key))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FingerPrint)

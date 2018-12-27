@@ -10,8 +10,8 @@ class Login extends Component {
         header: null
     }
     state = {
-        email: 'am26@epaisa.com',
-        password: 'Test@789',
+        email: '',//'am26@epaisa.com',
+        password: '',//'Test@789',
         loading: false
     }
 

@@ -1,16 +1,31 @@
 import React, {Component} from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, Dimensions} from 'react-native';
 import {SafeAreaView} from 'react-navigation';
-import bg_blue_pattern from './assets/bg_blue_pattern.png';
-import bg_white_pattern from './assets/bg_white_pattern.png';
+import backgroung_portrait from './assets/backgroung_portrait.png';
+import background_image_login_landscape from './assets/background_image_login_landscape.png';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
+
+const isPortrait = () => {
+    const dim = Dimensions.get('window');
+    if(dim.height >= dim.width){
+      return true;
+    }else {
+      return false;
+    }
+};
 class DoubleBackground extends Component {
 
     render() {
         const {children} = this.props;
         return (
             <View style={{flex: 1}}>
-                <Image source={bg_blue_pattern} style={{flex: 45, width: '100%'}} resizeMode={'stretch'}/>
-                <Image source={bg_white_pattern} style={{flex: 55, width: '100%'}} resizeMode={'stretch'}/>
+                {
+                    isPortrait() ? 
+                    <Image source={backgroung_portrait} style={{height:hp('100%'), width: '100%'}} resizeMode={'stretch'}/>
+                    : 
+                    <Image source={background_image_login_landscape} style={{height:hp('100%'), width: '100%'}} resizeMode={'stretch'}/>
+                }
 
                 <View style={{flex: 1, position: "absolute", width: '100%', height: '100%'}}>
                     <SafeAreaView style={{flex: 1}}>

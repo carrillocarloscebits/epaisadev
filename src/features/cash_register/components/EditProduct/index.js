@@ -10,7 +10,6 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import {connect} from 'react-redux';
 import {editProductAction} from './actions';
 
-
 import { cashActions } from '../../actions';
 
 class EditProduct extends Component {

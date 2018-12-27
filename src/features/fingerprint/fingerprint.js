@@ -5,10 +5,10 @@ import Footer from './components/Footer/footer';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import FingerContainer from './components/FingerContainer/fingerContainer';
 import ModalFinger from './components/Modal/modalFinger';
-import { isTablet } from '../cash_register/constants/isLandscape';
+import {isTablet} from './constants/isLandscape';
 
 const status=['normal','success','warning']
-
+const isPhone= !isTablet
 class FingerPrint extends Component{
   static navigationOptions = {
     header: null
@@ -37,8 +37,8 @@ class FingerPrint extends Component{
         <View style={styles.container}>
             <BackgroundImage source={require("./assets/img/side_nav_portrait_faded.png")} />
                 {
-                    isTablet?
-                    <View style={styles.wrapper}>
+                    !isPhone?
+                    <View style={[styles.wrapper,{height:hp('85%')}]}>
                         <Text style={[styles.textDown,{fontSize: hp('2%'),fontFamily:"Montserrat-SemiBold"}]}>All of the fingerprints stores on this device can be used to log into your ePaisa account.</Text>
                     </View>
                     :

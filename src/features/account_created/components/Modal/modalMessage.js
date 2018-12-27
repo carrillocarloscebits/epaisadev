@@ -4,20 +4,21 @@ import { Dimensions,View, Text, StyleSheet, ImageBackground,TouchableOpacity,Ima
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../styles/colors';
+import { isTablet } from '../../constants/isLandscape'
 // create a component
 class ModalMessage extends Component {
     render() {
         const {active, toggleModal} = this.props
-        
+        const isLandscape = isTablet
         return (
             <Modal visible={active} animationType="fade" onRequestClose={toggleModal} transparent={true}>
                 <View style={styles.container}>
-                    <View style={styles.wrapper}>
+                    <View style={[styles.wrapper, isLandscape? {width:hp("60%"),height:hp("70%")}:null]}>
                         <View style={{height:"40%",width:"100%",alignItems:'center'}}>
                             <Image source={require('../../assets/img/congrat.png')} resizeMode="stretch" style={{ top:-hp('7%') ,width:"75%",height:"110%", position:'absolute'}}/>
-                            <Image source={require('../../assets/img/stack.png')} resizeMode="stretch" style={{ top:-hp('17.5%') ,width:hp('45%'),height:hp('45%'), position:'absolute'}}/>
+                            <Image source={require('../../assets/img/stack.png')} resizeMode="stretch" style={{ top:isLandscape?-hp('18%'):-hp('18%') ,width:isLandscape?hp('50%'):hp('45%'),height:isLandscape?hp('50%'):hp('45%'), position:'absolute'}}/>
                         </View>
-                        <View style={{height:"60%", width:"100%",alignItems:'center'}}>
+                        <View style={{height:"60%", width:"100%",alignItems:'center', justifyContent: isLandscape?'center':'flex-start',}}>
                             <Text style={styles.textLogin}>Horayy! Your account</Text>
                             <Text style={styles.textLogin}>has been created</Text>
                             <Text style={[styles.textDescription,{marginTop:hp('3.6%')}]}>Just one more step! To complete the</Text>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Dimensions,View, Text, StyleSheet, ImageBackground,TouchableOpacity,Image} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Swipeout from 'react-native-swipeout';
+import {formatNumberCommasDecimal} from 'api';
 
 class ModuleDiscounts extends Component {
     state={
@@ -36,35 +37,35 @@ class ModuleDiscounts extends Component {
                     >
                         <View style={subTotalContainer}>
                             <Text style={styles.subTextOrange}>Discount</Text>       
-                            <Text style={[styles.subTextOrange,styles.textOrange]}>₹ {parseFloat(totalDiscount).toFixed(2)}</Text>
+                            <Text style={[styles.subTextOrange,styles.textOrange]}>₹ {formatNumberCommasDecimal(parseFloat(totalDiscount).toFixed(2))}</Text>
                         </View>
                     </Swipeout> : null
                 }
                 {
                       deliveryCharge > 0 ? 
                         <Swipeout 
-                          right={swipeBtns}
-                          autoClose={true}
-                          backgroundColor={'transparent'}
-                          buttonWidth={hp('11%')}
-                          onOpen={()=>{this.setState({indexDelete: 2})}}
-                          onClose={()=>{this.setState({indexDelete: 0})}}
-                        >
-                          <View  style={subTotalContainer}>
-                              <Text style={styles.subTextGray}>Delivery Charge</Text>       
-                              <Text style={[styles.subTextGray,styles.subTextBlue]}>₹ {parseFloat(deliveryCharge).toFixed(2)}</Text>
-                          </View> 
+                            right={swipeBtns}
+                            autoClose={true}
+                            backgroundColor={'transparent'}
+                            buttonWidth={hp('11%')}
+                            onOpen={()=>{this.setState({indexDelete: 2})}}
+                            onClose={()=>{this.setState({indexDelete: 0})}}
+                            >
+                            <View  style={subTotalContainer}>
+                                <Text style={styles.subTextGray}>Delivery Charge</Text>       
+                                <Text style={[styles.subTextGray,styles.subTextBlue]}>₹ {formatNumberCommasDecimal(parseFloat(deliveryCharge).toFixed(2))}</Text>
+                            </View> 
                         </Swipeout> : null
                     }
                 <View style={[subTotalContainer, {paddingTop:hp('0.1%')}]}>
                     <Text style={styles.subTextGray}>CGST@9%</Text>       
-                    <Text style={[styles.subTextGray,styles.subTextBlue]}>₹ {parseFloat(cgst).toFixed(2)}</Text>
+                    <Text style={[styles.subTextGray,styles.subTextBlue]}>₹ {formatNumberCommasDecimal(parseFloat(cgst).toFixed(2))}</Text>
                 </View>
                 </View>:null
             }
                 <View  style={subTotalContainer}>
                     <Text style={styles.textDark2}>Total Amount</Text>       
-                    <Text style={[styles.textDark2,styles.TextBlue2]}>₹ {parseFloat(Total>0?Total:0).toFixed(2)}</Text>
+                    <Text style={[styles.textDark2,styles.TextBlue2]}>₹ {formatNumberCommasDecimal(parseFloat(Total>0?Total:0).toFixed(2))}</Text>
                 </View>
             </View>
                     

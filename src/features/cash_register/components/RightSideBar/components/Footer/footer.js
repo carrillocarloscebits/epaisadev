@@ -5,7 +5,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import Button from './components/button';
 import ModuleDiscounts from './components/moduleDiscounts';
 import { isTablet } from '../../../../constants/isLandscape';
-
+import {formatNumberCommasDecimal} from 'api';
 class Footer extends Component {
     render() {
         const {subtotal,products, discount, delivery, type,removeDiscount,removeDelivery} = this.props
@@ -25,7 +25,7 @@ class Footer extends Component {
             <View style={styles.container}>
                 <View  style={[styles.subTotalContainer,{paddingTop:hp('0.9%')}]}>
                     <Text style={styles.textDark1}>Sub Total</Text>    
-                    <Text style={styles.TextBlue1}>₹ {parseFloat(subTotalDiscount).toFixed(2)}</Text>
+                    <Text style={styles.TextBlue1}>₹ {formatNumberCommasDecimal(parseFloat(subTotalDiscount).toFixed(2))}</Text>
                 </View>
                 <ModuleDiscounts cgst={CGST} subTotal={subtotal} totalDiscount={totalDiscount} Total={Total} deliveryCharge={delivery} subTotalContainer={styles.subTotalContainer} removeDiscount={removeDiscount} removeDelivery={removeDelivery}/>
                 <View style={styles.buttonsContainer}>

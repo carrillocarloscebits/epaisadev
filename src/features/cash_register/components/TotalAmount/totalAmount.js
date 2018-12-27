@@ -3,6 +3,7 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 import colors from '../../styles/colors';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {formatNumberCommasDecimal} from 'api';
 export default class TotalAmount extends Component{
   render() {
     const {value, products} = this.props
@@ -17,7 +18,7 @@ export default class TotalAmount extends Component{
     return (
       <View style={styles.container}>
         <Text style={styles.title} >TOTAL AMOUNT</Text>
-        <Text style={styles.title} >₹ {parseFloat(subTotalDiscount).toFixed(2)}</Text>
+        <Text style={styles.title} >₹ {formatNumberCommasDecimal(parseFloat(subTotalDiscount).toFixed(2))}</Text>
       </View>
     );
   }

@@ -13,12 +13,13 @@ class ModalFind extends Component {
         searchStr: ''
     }
     searchCountry = (value) => {
+        this.setState({searchStr:value});
         let filterValues = [];
         
         if(value !== '') {
             filterValues = this.state.values.filter((item) => item.toLowerCase().indexOf(value.toString().toLowerCase()) === -1 ? false : true)
         }
-        this.setState({valuesResults: filterValues.slice(0,5), searchStr: value})
+        this.setState({valuesResults: filterValues.slice(0,5)})
         
     }
     renderResultsBox = () => {
@@ -27,7 +28,15 @@ class ModalFind extends Component {
         return this.state.valuesResults.map((item,i)=>{
             let index = item.toLowerCase().indexOf(value.toString().toLowerCase())
             let valLen= value.length
-            return(<Text key={i}>{item.slice(0,index)}<Text style={{backgroundColor:'blue'}}>{item.slice(index,index+valLen)}</Text>{item.slice(index+valLen,item.length)}</Text>)
+            let name=item.substring(0,item.indexOf('/'));
+            let nameLen=name.length
+            let number=item.substring(item.indexOf('/')+1,item.length);
+            let numberLen=number.length
+            const nameMatch = (<Text>{name.slice(0,index)}<Text style={{backgroundColor:'blue'}}>{name.slice(index,index+valLen)}</Text>{name.slice(index+valLen,nameLen)}</Text>)
+            const numberMatch = (<Text>{number.slice(0,index-nameLen)}<Text style={{backgroundColor:'blue'}}>{number.slice(index-nameLen,index+valLen-nameLen)}</Text>{number.slice(index-nameLen+valLen,numberLen)}</Text>)
+            return(<View> key={i}>{index<nameLen?({nameMatch}):(<Text>{name}</Text>)}/{index>nameLen?({numberMatch}):(<Text>{number}</Text>)}</View>)
+            //return(<Text key={i}><Text key={i} style={{color:'blue'}}>{name.slice(0,index<nameLen?index:nameLen)}<Text style={{backgroundColor:'blue'}}>{index<nameLen?name.slice(index,index+valLen):null}</Text>{name.slice(index+valLen,nameLen)}/</Text><Text key={i} style={{color:'red'}}>{number.slice(0,index>nameLen?index+1:numberLen)}<Text style={{backgroundColor:'blue'}}>{index>nameLen?number.slice(index,index+1+valLen):null}</Text>{number.slice(index+valLen,nameLen)}</Text></Text>)
+            //return(<Text key={i}>{item.slice(0,index)}<Text style={{backgroundColor:'blue'}}>{item.slice(index,index+valLen)}</Text>{item.slice(index+valLen,item.length)}</Text>)
         })
     }
     render() {
@@ -43,8 +52,8 @@ class ModalFind extends Component {
                         <View style={[styles.fieldBox,{height:hp("5.3%"),width: (hp(widthModal)-hp('6%'))}]}>
                             <Image source={require('../../assets/icons/rectangleLarge.png')} resizeMethod="scale" resizeMode="stretch" 
                             style={{position:'absolute', top:hp("0.3%"),height:hp("4.9%"), width: (hp(widthModal)-hp('6%'))}}/>
-                            <TextInput placeholderTextColor="#808080" onChangeText={s=>this.searchCountry(s)} placeholder="Search Name/Mobile Number/Email" 
-                            style={[styles.field,{width: ((hp(widthModal)-hp('6%'))*0.8),},this.state.searchStr!=''? {fontSize: hp('1.8%')}:null]}/>
+                            <TextInput placeholderTextColor="#808080" onChangeText={s=>{this.searchCountry(s)}} placeholder="Search Name/Mobile Number/Email" 
+                            style={[styles.field,{width: ((hp(widthModal)-hp('6%'))*0.9),}]}/>
                             <Image source={require('../../assets/icons/Shape.png')} style={{position:'absolute', right:hp("2%"),height:hp("2%"), width: hp("2%")}}/>
                         </View>
                         { this.state.valuesResults.length>0?
@@ -83,7 +92,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     field:{
-        fontSize: hp('1.5%'),
+        fontSize: hp('1.8%'),
         paddingLeft: hp('2%'),
         paddingVertical: 0,
         fontFamily: 'Montserrat-Bold',
@@ -93,7 +102,7 @@ const styles = StyleSheet.create({
     helpBox:{
         position:'absolute',
         backgroundColor:colors.white,
-        borderWidth: 1,
+        elevation: 10,
         borderRadius: 10,
         top:hp("5.3%"),
     }

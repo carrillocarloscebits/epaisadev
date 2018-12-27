@@ -1,3 +1,4 @@
 import Colors from './colors';
 import Icons from './icons';
-export { Colors,  Icons}
+import {formatNumberCommasDecimal} from './functions';
+export { Colors,  Icons, formatNumberCommasDecimal}

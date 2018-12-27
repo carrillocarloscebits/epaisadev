@@ -6,3 +6,4 @@ export const AUTH_LOADING = "AuthLoading";
 export const CASH_REGISTER = "CashRegister";
 export const AUTH = "Auth";
 export const APP = "App";
+export const FINGERPRINT = "Fingerprint";

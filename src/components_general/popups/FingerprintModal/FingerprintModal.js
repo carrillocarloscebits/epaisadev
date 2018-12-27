@@ -1,29 +1,30 @@
 //import liraries
 import React, { Component } from 'react';
-import { Dimensions,View, Text, StyleSheet, ImageBackground,TouchableOpacity,Image, Modal} from 'react-native';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { View, Text, StyleSheet,TouchableOpacity, Image, Modal} from 'react-native';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
-import colors from '../../styles/colors';
 // create a component
-class ModalFinger extends Component {
+class FingerprintModal extends Component {
     render() {
-        const {active, toggleModal, status, action} = this.props
-        colorFinger = status=='normal'? '#52565F':status=='success'? '#09BA83' : '#D0021B'
-        labelDescription = status=='normal'? 'Register your fingerprint':status=='success'? 'Fingerprint registered' : 'Fingerprint not found'
+        const {active, status, action, cancel, title, description} = this.props;
+
+        colorFinger = status == 'normal' ? '#52565F' : status == 'success'? '#09BA83' : '#D0021B'
+        labelDescription = status == 'normal' ? 'Register your fingerprint': status == 'success' ? 'Fingerprint registered' : 'Fingerprint not found';
+        console.log(status)
         return (
-            <Modal visible={active} animationType="fade" onRequestClose={toggleModal} transparent={true}>
+            <Modal visible={active} animationType="fade" onRequestClose={() => {}} transparent={true}>
                 <View style={styles.container}>
                     <View style={styles.wrapper}>
                         <View style={[styles.finger,{backgroundColor:colorFinger}]}> 
-                            <Image source={require('../../assets/img/finger.png')} style={{height:hp('5%'), width:hp('5%')*0.86}}/>
+                            <Image source={require('./assets/img/finger.png')} style={{height:hp('5%'), width:hp('5%')*0.86}}/>
                         </View>
-                        <Text style={styles.textLogin}>Fingerprint for log in</Text>
-                        <Text style={[styles.textDescription, {color:colorFinger}]}>{labelDescription}</Text>
+                        <Text style={styles.textLogin}>{title || 'Fingerprint for log in'}</Text>
+                        <Text style={[styles.textDescription, {color:colorFinger}]}>{description || labelDescription}</Text>
                         {
-                            status=='warning'?
+                            status=='error'?
                             <View style={styles.buttonContainer}>
                                 
-                                <TouchableOpacity onPress={action} style= {{backgroundColor:colors.white, borderRadius:25,elevation:5,width: '45%', paddingVertical: hp('1.7%'), alignItems: 'center', justifyContent: 'center'}} >
+                                <TouchableOpacity onPress={action} style= {{backgroundColor: 'white', borderRadius:25,elevation:5,width: '45%', paddingVertical: hp('1.7%'), alignItems: 'center', justifyContent: 'center'}} >
                                     <Text style={{color:'#174285',fontSize: hp('1.7%'),fontFamily:'Montserrat-Bold', letterSpacing:1}}>NOT NOW</Text>  
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={action} style={styles.buttonRight}>
@@ -39,7 +40,7 @@ class ModalFinger extends Component {
                                 </TouchableOpacity>
                             </View>
                             :
-                            <TouchableOpacity style={styles.button} onPress={action}>
+                            <TouchableOpacity style={styles.button} onPress={cancel}>
                                 <LinearGradient 
                                     colors={['#174285', '#0079AA']} 
                                     start={{ x: 0, y: 1 }}
@@ -65,10 +66,10 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:colors.opacityDin(0.6)
+        backgroundColor: 'rgba(0,0,0,0.6)'
     },
     wrapper:{
-        backgroundColor: colors.white,
+        backgroundColor: 'white',
         width:hp('45%'),
         justifyContent:'center',
         alignItems:'center',
@@ -112,4 +113,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default ModalFinger;
+export default FingerprintModal;

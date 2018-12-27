@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
-import {View, ScrollView, Platform, Dimensions} from 'react-native';
+import {View, ScrollView, Platform, Dimensions, AsyncStorage} from 'react-native';
 import {CREATE_ACCOUNT, FORGOT_PASSWORD} from 'navigation/screen_names';
 import {Colors} from 'api';
+import {FingerprintModal} from 'components';
 import { ButtonGradient, ButtonOutline, Card, TouchableText, FloatingTextInput, DoubleBackground, Loading, Logo } from 'components-login';
 import EStyleSheet from 'react-native-extended-stylesheet';
+
 class Login extends Component {
 
     static navigationOptions = {
         header: null
     }
+
     state = {
         email: 'am26@epaisa.com',
         password: 'Test@789',
@@ -115,10 +118,6 @@ class Login extends Component {
             }
           });
     }
-    
-    componentDidMount() {
-        console.log(this.props)
-    }
 
     handleLogin() {
         const {email, password} = this.state;
@@ -126,8 +125,20 @@ class Login extends Component {
         this.props.login(email, password)
     }
 
-    render() {
+    componentDidMount() {
+        AsyncStorage.getItem('@UsersLogged:Fingerprint')
+        .then(item => {
+            if(JSON.parse(item)) {
+                this.setState({
+                    fingerprintLogin: true,
+                    fingerprintStatus: 'normal'
+                })
+            }
+        })
+    }
 
+    render() {
+        
         const {container, containerSignIn, logoContainer,createAccountButton, containerCreateAccount,signInButton, scroll, upperSide, card, cardContainer, forgotPasswordText, forgotContainer} = this.getEStyle();
         const {email, password} = this.state;
         return (
@@ -172,6 +183,12 @@ class Login extends Component {
                             </View>
                         </View>
                 </ScrollView>
+                {this.state.fingerprintLogin && <FingerprintModal
+                    status={this.state.fingerprintStatus}
+                    title="Fingerprint - Login"
+                    description="Login with your fingerprint"
+                    cancel={() => this.setState({fingerprintLogin: false})} 
+                />}
             </DoubleBackground>
         )
     }

@@ -11,6 +11,7 @@ import cashScreen from "../../features/cash_register/cashScreen";
 import CashRegister from "../../features/cash_register/cashScreen";
 import Fingerprint from "../../features/fingerprint/fingerprint";
 
+
 const AuthStack = createStackNavigator({
   [screenNames.LOGIN]: {
     screen: LoginContainer
@@ -21,6 +22,11 @@ const AuthStack = createStackNavigator({
   [screenNames.FORGOT_PASSWORD]: {
     screen: ForgotPassword,
   },
+}, {
+  initialRouteName: screenNames.LOGIN
+});
+
+const AppStack = createStackNavigator({
   [screenNames.FINGERPRINT]: {
     screen: Fingerprint,
   },
@@ -28,13 +34,7 @@ const AuthStack = createStackNavigator({
     screen: CashRegister,
   },
 }, {
-  initialRouteName: screenNames.CASH_REGISTER
-});
-
-const AppStack = createStackNavigator({
-  [screenNames.CASH_REGISTER]: {
-    screen: CashRegister,
-  }
+  initialRouteName: screenNames.FINGERPRINT,
 })
 
 AppNavigator = createSwitchNavigator({

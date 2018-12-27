@@ -15,6 +15,8 @@ class CreateAccount extends Component {
         header: null
     }
 
+    timer = null;
+
     state = {
         modalTerms: false,
         modalESign: false,
@@ -112,7 +114,7 @@ class CreateAccount extends Component {
 
     _handleCreateAccount = () => {
         this.props.create_account(this.state.userData);
-        this.setState({show_otp: true})
+        // this.setState({show_otp: true})
     }
 
     componentDidMount() {
@@ -177,7 +179,7 @@ class CreateAccount extends Component {
                     <View style={styles.cardContainer}>
                         <Card style={styles.card}>
                             <CreateAccountForm onChangeForm={this._setUserData.bind(this)}/>
-                            {this.props.register.registering && <Loading/>}                        
+                            {this.props.register.loading && <Loading/>}                        
                         </Card>
                     </View>
                     <View style={styles.termsContainer}>
@@ -207,6 +209,7 @@ class CreateAccount extends Component {
                     </View>
                     <View style={otpStyles.timerContainer}>
                         <Timer
+                            ref={(timer) => this.timer = timer}
                             textStyle={otpStyles.timerText}
                             onStart={() => this.setState({can_resend_otp: false})}
                             onFinished={() => this.setState({can_resend_otp: true})}
@@ -219,7 +222,7 @@ class CreateAccount extends Component {
                         invalid={this.props.register.otp_invalid}
                         data={['first', 'second', 'third', 'fourth']}
                         onComplete={(otp) => {
-                            this.props.validate_otp(this.props.register.mobile_number, otp);
+                            this.props.verify_otp(this.props.register.auth_key, otp);
                         }} />
                         
                         {this.props.register.otp_invalid && 
@@ -234,7 +237,7 @@ class CreateAccount extends Component {
                                 disabled={!this.state.can_resend_otp}
                                 onPress={() => {
                                     this.timer.restart()
-                                    this.props.resend_otp(this.props.register.mobile_number)
+                                    this.props.resend_otp(this.props.register.auth_key)
                                 }}
                             />
                         </View>

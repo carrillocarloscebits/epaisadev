@@ -5,105 +5,58 @@ import {APP} from './../../../navigation/screen_names';
 
 export function create_account(userData) {
     return dispatch => {
-        dispatch(request());
+        dispatch(requestRegister());
         
-        setTimeout(() => {
-            dispatch(successRegister({
-                mobile_number: `+${51}${userData.UserMobileNumber}`
-            }));
-        }, 1000)
+        // setTimeout(() => {
+        //     dispatch(successRegister({
+        //         mobile_number: `+${51}${userData.UserMobileNumber}`
+        //     }));
+        // }, 1000)
 
 
-        // userService.create_account(userData)
-        // .then((res) => {
-        //     console.log(res)
-        //     const {success} = res;
-        //     if(success) {
-        //         // const {success, ...user} = res;
-        //         dispatch(successRegister({
-        //             mobile_number: `+${51}${userData.UserMobileNumber}`
-        //         }));
-        //         // NavigationService.navigate(APP)
-        //     } else {
-        //         const {message} = res;
-        //         dispatch(failure(message));
-        //     }
-        // })
-
-
-
-
-        //     .then((res) => {
-        //         const {success} = res;
-        //         if(success) {
-        //             const {success, ...user} = res;
-        //             dispatch(successLogin(user));
-        //             NavigationService.navigate(APP)
-        //         } else {
-        //             const {message} = res;
-        //             dispatch(failureLogin(message));
-        //         }
-        //     }).catch((err) => {
-        //         console.log(err)
-        //         dispatch(failureLogin('Network error, try again!'));
-        //     })
-
-            // user => { 
-            //     dispatch(success(user));
-            //     history.push('/');
-            // },
-            // error => {
-            //     dispatch(failure(error.toString()));
-            //     dispatch(alertActions.error(error.toString()));
-            // }
+        userService.create_account(userData)
+        .then((res) => {
+            console.log(res)
+            const {success} = res;
+            if(success) {
+                // const {success, ...user} = res;
+                dispatch(successRegister({
+                    mobile_number: `+${51}${userData.UserMobileNumber}`,
+                    auth_key: res.response.auth_key
+                }));
+                // NavigationService.navigate(APP)
+            } else {
+                const {message} = res;
+                dispatch(failureRegister(message));
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+            dispatch(failureRegister('Network error, try again!'));
+        })
     };
 
-    function request(user) { return { type: userConstants.REGISTER_REQUEST } }
+    function requestRegister() { return { type: userConstants.REGISTER_REQUEST } }
     function successRegister(payload) { return { type: userConstants.REGISTER_SUCCESS, payload } }
-    function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
+    function failureRegister(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
-export const validate_otp = (mobile, otp) => {
+export const verify_otp = (auth_key, otp) => {
     
-    const request         = () => ({type: userConstants.OTP_VALIDATION_REQUEST})
-    const successValidate = (payload) => ({type: userConstants.OTP_VALIDATION_SUCCESS, payload})
-    const failureValidate = (payload) => ({type: userConstants.OTP_VALIDATION_FAILURE, payload})
-verifyAccPut = (numberValue) => {
-    //added numberValue parameter, this.state.otpCode4 was sending it's declaration value, function called before setting new state value
-    let fourDigitOtpCode = this.state.otpCode1 + this.state.otpCode2 + this.state.otpCode3 + numberValue //this.state.otpCode4
-    console.log('consoleError OTP VALUE '+fourDigitOtpCode)
-    var returnEncrypt = encryptJsonVerifyPut(authKey,fourDigitOtpCode);
-    var direction = "/user/verify";
-    sendRequestPut(returnEncrypt,direction).then((result)=>{
-      let verify = result['success'];
-      let err = result['message'];
-      if (verify ==1) {
-        this.setState({confirmationCodeSuccess: true});
-        this.setState({confirmationCodeFail: false});
-        clearInterval(interval)
-        this.navigateToCash()
-      }
-      else {
-        this.setState({confirmationCodeSuccess: false});
-        this.setState({confirmationCodeFail: true});
-        Keyboard.dismiss;
-        Alert.alert('Error', err)
-        console.log('consoleError'+err)
-      }
-    },()=>{
-      Alert.alert('Error','Network Error, Please check your connection')
-    })
-  }
+    const requestVerify = () => ({type: userConstants.OTP_VERIFY_REQUEST})
+    const successVerify = (payload) => ({type: userConstants.OTP_VERIFY_SUCCESS, payload})
+    const failureVerify = (payload) => ({type: userConstants.OTP_VERIFY_FAILURE, payload})
+
     return (dispatch) => {
-        dispatch(request());
+        dispatch(requestVerify());
         
-        user_service.validate_otp(mobile, otp)
+        userService.verify_otp(auth_key, otp)
         .then((res) => {
             console.log(res)
             if(res.success) {
-                dispatch(successValidate({otp_code: otp, auth_key: res.response.auth_key}))
+                dispatch(successVerify())
             } else {
-                dispatch(failureValidate({otp_invalid: true}))
+                dispatch(failureVerify({otp_invalid: true}))
             }
         })
         .catch(err => {
@@ -113,24 +66,21 @@ verifyAccPut = (numberValue) => {
     
 }
 
-export const resend_otp = (mobile) => {
+export const resend_otp = (auth_key) => {
     
-    const request         = () => ({type: userConstants.OTP_MOBILE_REQUEST})
-    const successValidate = () => ({type: userConstants.OTP_MOBILE_SUCCESS})
-    const failureValidate = () => ({type: userConstants.OTP_MOBILE_FAILURE})
+    const requestResend = () => ({type: userConstants.RESEND_REGISTER_OTP_REQUEST})
+    const successResend = (payload) => ({type: userConstants.RESEND_REGISTER_OTP_SUCCESS, payload})
+    const failureResend = (payload) => ({type: userConstants.RESEND_REGISTER_OTP_FAILURE, payload})
 
     return (dispatch) => {
-        dispatch(request());
-        
-        user_service.opt_send(mobile, 'mobile')
+        dispatch(requestResend())
+
+        userService.resend_register_otp(auth_key)
         .then((res) => {
             console.log(res)
-            dispatch(successValidate())
         })
-        .catch(err => {
+        .catch((err) => {
             console.log(err)
-            dispatch(failureValidate(['Network error, try again!']));
         })
     }
-    
 }

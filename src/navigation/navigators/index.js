@@ -10,6 +10,7 @@ import AuthLoading from "../../features/auth_loading";
 import cashScreen from "../../features/cash_register/cashScreen";
 import CashRegister from "../../features/cash_register/cashScreen";
 import Fingerprint from "../../features/fingerprint/fingerprint";
+import AccountCreated from "../../features/account_created/account_created";
 
 const AuthStack = createStackNavigator({
   [screenNames.LOGIN]: {
@@ -26,6 +27,9 @@ const AuthStack = createStackNavigator({
   },
   [screenNames.CASH_REGISTER]: {
     screen: CashRegister,
+  },
+  [screenNames.ACCOUNT_CREATED]: {
+    screen: AccountCreated,
   },
 }, {
   initialRouteName: screenNames.CASH_REGISTER

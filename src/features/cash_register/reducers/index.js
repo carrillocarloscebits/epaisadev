@@ -44,11 +44,14 @@ const cashData = (state = initialState, action) => {
       return {...state,totalDelivery: parseFloat(0)};
       
     case cashConstants.EDIT_PRODUCT:
-    console.log('EN EDIT_PRODUCT')
-    console.log(state)
+    let newTotal=0;
+    let newProducts = state.products.map(product => (product.id === action.payload.id) ? action.payload : product)
+    let newProductsRealPrice = newProducts.map(product => {product.total = product.quant*product.unitPrice; newTotal+=product.total; return product})
+    
     return {
       ...state, 
-      products: state.products.map(product => (product.id === action.payload.id) ? action.payload : product),
+      products: newProductsRealPrice,
+      total_amount: newTotal
     }
 
     default:

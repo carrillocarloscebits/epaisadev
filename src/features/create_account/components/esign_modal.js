@@ -28,7 +28,7 @@ export default class ESignModal extends Component {
                     </View>
                     <View style={styles.modalTermsTop2}>
                     <View>
-                        <ScrollView showsVerticalScrollIndicator={false}>
+                        <ScrollView showsVerticalScrollIndicator={true}>
                         <Text style={styles.modalTermsText}>
                             ePaisa, Services {'\n'}{'\n'}
         Limited and its affiliates and third party service providers (“ePaisa”) may need to provide you with certain communications, notices, agreements, billing statements, or disclosures in writing (“Communications”) regarding our products or services (“Services”). {'\n'}{'\n'}

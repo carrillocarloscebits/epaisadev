@@ -5,7 +5,10 @@ import {
     encryptJsonCredentials,
     encryptForgotPassword,
     encryptOtpVerify,
-    encryptResetPassword
+    encryptResetPassword,
+    sendRequestPut,
+    encryptJsonVerifyPut,
+    encryptJsonVerifyPost
 } from '../services/server-api';
 
 export function login(email, password) {
@@ -65,5 +68,20 @@ export function reset_password(mobile, otp, password, auth_key) {
     var returnEncrypt = encryptResetPassword(mobile, otp, password, auth_key);
     var direction = "/user/forgotpassword";
 
+    return sendRequest(returnEncrypt, direction)
+}
+
+export function verify_otp(auth_key, otp) {
+    
+    var returnEncrypt = encryptJsonVerifyPut(auth_key, otp);
+    var direction = "/user/verify";
+
+    return sendRequestPut(returnEncrypt, direction)
+}
+
+export function resend_register_otp(authKey) {
+    var returnEncrypt = encryptJsonVerifyPost(authKey);
+    var direction = "/user/verify";
+    
     return sendRequest(returnEncrypt, direction)
 }

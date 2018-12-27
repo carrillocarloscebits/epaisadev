@@ -104,8 +104,8 @@ class ProductDetail extends React.Component{
                     }
                 </View>
             </TouchableOpacity>
-            {//this.state.detailVisible && 
-            <View style={{height:this.state.heightCard, alignItems:'center',  marginTop:this.state.marginTopCard, marginBottom:this.state.marginBottomCard, width:'100%'}}>
+            {this.state.detailVisible ? 
+            <View style={{height:this.state.heightCard, alignItems:'center',  marginTop:this.state.marginCard, marginBottom:this.state.marginBottomCard, width:'100%'}}>
                 <ScrollView
                     style={{borderRadius:10, elevation:hp('2%'),}}
                     scrollEnabled={true}
@@ -129,11 +129,11 @@ class ProductDetail extends React.Component{
                         saveButtonAction={()=>{}}
                         item={this.props.item}
                         imageSource={this.state.imagePath === '' ? null : this.state.imagePath}
-                        //itemProduct={}
+                        closeModal={()=>{this.setState({detailVisible: false})}}
                         />
     
                 </ScrollView>
-            </View>
+            </View>:null
             }
         </View>
         )

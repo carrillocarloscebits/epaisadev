@@ -72,8 +72,8 @@ const styles = EStyleSheet.create({
   },
   badge:{
     position: 'absolute',
-    right:-hp('0.6%'),
-    top:-hp('0.6%'),
+    left:hp('3.5%'),
+    bottom:hp('3.5%'),
     backgroundColor: colors.gray,
     alignItems:'center',
     justifyContent:'center',

@@ -8,7 +8,7 @@ import { isTablet } from './constants/isLandscape';
 export default class SideBar extends Component{
     
     render() {
-        const {active,toggle, sideOption, handleOption}=this.props
+        const {active,toggle, sideOption, handleOption, logoutAction}=this.props
         const isLandscape= isTablet
         const paddingLandscape = isLandscape? {paddingHorizontal: wp('3%')}:null
         return (
@@ -21,9 +21,15 @@ export default class SideBar extends Component{
                         </View>
                         <ListOptions sideOption={sideOption} handleOption={handleOption}/>
                         <View style={styles.iconContainer}>
-                            <Image source={require('./assets/img/BT.png')} resizeMode="contain" style={{height: '100%',width:'6%'}}/>
-                            <Image source={require('./assets/img/Velo.png')} resizeMode="contain" style={{height: '100%',width:'12%'}}/>
-                            <Image source={require('./assets/img/Exit.png')} resizeMode="contain" style={{height: '100%',width:'13%'}}/>
+                            <TouchableOpacity>
+                                <Image source={require('./assets/img/BT.png')} style={{height: hp('4%'),width:hp('4%')*0.52}}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <Image source={require('./assets/img/Velo.png')} style={{height: hp('4%'),width:hp('4%')}}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={logoutAction}>
+                                <Image source={require('./assets/img/Exit.png')} style={{height: hp('4%'),width:hp('4%')*1.24}}/>
+                            </TouchableOpacity>
                         </View>    
                     </View>
                 </View>
@@ -70,11 +76,10 @@ const styles = EStyleSheet.create({
   },
   iconContainer:{
     flexDirection: 'row',
-    height:'8%',
     alignItems: 'center',
     justifyContent:'space-between',
-    marginTop: 15,
-    marginBottom: 2,
+    marginTop: hp('4%'),
+    marginBottom: hp('3%'),
   },
   '@media (min-width: 200) and (max-width: 400)': { // media queries
     /*headerTextTop:{

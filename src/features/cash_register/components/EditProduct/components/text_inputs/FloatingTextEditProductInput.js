@@ -27,8 +27,6 @@ class ProductDetail extends React.Component{
             imagePath: '',
             imageHeight: '',
             imageWidth: '',
-
-            heightCard: 0,
         }
     }
 
@@ -64,7 +62,7 @@ class ProductDetail extends React.Component{
         const { id, name, quant, total,discount,type} = this.props.item
         return(
         <View>
-            <TouchableOpacity onPress={()=>{ this.setState({detailVisible: !this.state.detailVisible},()=>{this.setState({heightCard: this.state.detailVisible ? hp('44%'): 0})}) }}>
+            <TouchableOpacity onPress={()=>{ this.setState({detailVisible:!this.state.detailVisible}) }}>
                 <View>
                     <View style={styles.container}>
                         <Text style={[styles.textProductDefault, styles.TextGrayProductIndex]}>{id}.</Text>     
@@ -82,8 +80,8 @@ class ProductDetail extends React.Component{
                     }
                 </View>
             </TouchableOpacity>
-            {//this.state.detailVisible && 
-            <View style={{height:this.state.heightCard, alignItems:'center',  marginTop:hp('1%'), marginBottom:hp('2.5%'), width:'100%'}}>
+            {this.state.detailVisible && 
+            <View style={{height:hp('44%'), alignItems:'center',  marginTop:hp('1%'), marginBottom:hp('2.5%'), width:'100%'}}>
                 <ScrollView
                     style={{borderRadius:10, elevation:hp('2%'),}}
                     scrollEnabled={true}

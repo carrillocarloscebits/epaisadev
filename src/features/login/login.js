@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, ScrollView, Platform, Dimensions, AsyncStorage} from 'react-native';
+import {View, ScrollView, Platform, Dimensions, AsyncStorage, KeyboardAvoidingView} from 'react-native';
 import {CREATE_ACCOUNT, FORGOT_PASSWORD} from 'navigation/screen_names';
 import {Colors} from 'api';
 import {FingerprintModal} from 'components';
@@ -10,7 +10,14 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import {portraitStyles} from './styles/portrait';
 import {landscapeStyles} from './styles/landscape';
 
-
+const isPortrait = () => {
+    const dim = Dimensions.get('window');
+    if(dim.height >= dim.width){
+      return true;
+    }else {
+      return false;
+    }
+};
 class Login extends Component {
 
     static navigationOptions = {
@@ -20,7 +27,9 @@ class Login extends Component {
     state = {
         email: '',//'am26@epaisa.com',
         password: '',//'Test@789',
-        loading: false
+        loading: false,
+        
+        orientation: isPortrait(),
     }
 
     navigateTo = (screen) => {
@@ -93,11 +102,12 @@ class Login extends Component {
         return (
             <DoubleBackground>
                 <View style={{alignItems:'center', height:hp('100%'), width:('100%')}}>
-                        <View style={portraitStyles.logoContainer}>
+                        <KeyboardAvoidingView behavior='position' enabled>
+                        <View style={this.state.orientation ? portraitStyles.logoContainer : landscapeStyles.logoContainer}>
                             <Logo/>
                         </View>
-                        <View style={portraitStyles.cardContainer}>
-                            <Card style={portraitStyles.card}>
+                        <View style={this.state.orientation ? portraitStyles.cardContainer : landscapeStyles.cardContainer}>
+                            <Card style={this.state.orientation ? portraitStyles.card : landscapeStyles.card}>
                                 <FloatingTextInput
                                     label={'E-mail'}
                                     onChangeText={(email) => this.setState({email})}
@@ -112,23 +122,25 @@ class Login extends Component {
                                 {this.props.auth.loggingIn && <Loading/>}
                             </Card>
                         </View>
+                        
+                        </KeyboardAvoidingView>
                         <View style={forgotContainer}>
                             <TouchableText
                                 onPress={() => this.navigateTo(FORGOT_PASSWORD)}
-                                style={portraitStyles.forgotPasswordText}>
+                                style={this.state.orientation ? portraitStyles.forgotPasswordText : landscapeStyles.forgotPasswordText}>
                                 Forgot your Password?
                             </TouchableText>
                         </View>
                         <ButtonGradient 
                             title={'SIGN IN'}
-                            style={portraitStyles.buttonSignIn}
+                            style={this.state.orientation ? portraitStyles.buttonSignIn : landscapeStyles.buttonSignIn}
                             onPress={this.handleLogin.bind(this)}
                         />
-                        <View style={portraitStyles.containerCreateAccount}>
+                        <View style={this.state.orientation ? portraitStyles.containerCreateAccount : landscapeStyles.containerCreateAccount}>
                             <ButtonOutline 
                                 title={'CREATE NEW ACCOUNT'} 
                                 onPress={() => this.navigateTo(CREATE_ACCOUNT)}
-                                style={portraitStyles.buttonCreateAccount}
+                                style={this.state.orientation ? portraitStyles.buttonCreateAccount : landscapeStyles.buttonCreateAccount}
                             />
                         </View>
                 </View>

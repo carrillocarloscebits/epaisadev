@@ -1,25 +1,52 @@
 import React from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, Dimensions} from 'react-native';
 import TextMontserrat from '../../texts/textMontserrat';
 import LogoSrc from './assets/ep_logo.png';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
+const isPortrait = () => {
+    const dim = Dimensions.get('window');
+    if(dim.height >= dim.width){
+      return true;
+    }else {
+      return false;
+    }
+};
+
 const styles = EStyleSheet.create({
     container: {
         alignItems: 'center',
     },
-    logo: {
+    logoPortrait: {
         height: hp('5.8%'),
         marginBottom: hp('2.2%')
     },
-    lineStyle: {
+    lineStylePortrait: {
         borderColor: '#fff',
         backgroundColor:'#FFF',
         width: wp('11%'),
         height:hp('0.3%')
     },
-    text : {
+    textPortrait : {
+        marginHorizontal: 15,
+        color: 'white', 
+        fontWeight: '700',
+        fontSize: hp('1.8%'), 
+        letterSpacing: wp('0.2%'),
+    },
+
+    logoLandscape: {
+        height: hp('7.3%'),
+        marginBottom: hp('3.3%')
+    },
+    lineStyleLandscape: {
+        borderColor: '#fff',
+        backgroundColor:'#FFF',
+        width: wp('11%'),
+        height:hp('0.3%')
+    },
+    textLandscape : {
         marginHorizontal: 15,
         color: 'white', 
         fontWeight: '700',
@@ -29,16 +56,20 @@ const styles = EStyleSheet.create({
 })
 
 export default () => {
-    const {lineStyle, logo, container, text} = styles;
+    state = {
+        orientation : isPortrait()
+    }
+
+    const {container, logoPortrait, logoLandscape, lineStylePortrait, lineStyleLandscape, textPortrait, textLandscape} = styles;
     return (
         <View style={container}>
             <Image 
                 resizeMode="contain"
-                style={logo} source={LogoSrc}/>
+                style={this.state.orientation ? logoPortrait: logoLandscape} source={LogoSrc}/>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={lineStyle}/>
-                <TextMontserrat style={text}>LEARN MORE</TextMontserrat>
-                <View style={lineStyle}/>
+                <View style={this.state.orientation ? lineStylePortrait : lineStyleLandscape}/>
+                <TextMontserrat style={this.state.orientation ? textPortrait : textLandscape}>LEARN MORE</TextMontserrat>
+                <View style={this.state.orientation ? lineStylePortrait : lineStyleLandscape}/>
             </View>
         </View>
     )

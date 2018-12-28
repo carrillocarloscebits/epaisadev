@@ -20,7 +20,7 @@ import ModalCustomer from '../modal_customer/modalCustomer';
 import { LOGIN } from '../../navigation/screen_names';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-let keyboard = false
+let keyboard = "100%"
 const isPhone = !isTablet;
 class CashScreen extends Component {
   static navigationOptions = {
@@ -49,11 +49,12 @@ class CashScreen extends Component {
     this.keyboardDidHideListener.remove();
   }
   _keyboardDidShow () {
-    keyboard=true
+    keyboard=hp("100%")
+    
   }
 
   _keyboardDidHide () {
-    keyboard=false
+    keyboard="100%"
   }
   // ACTIONS REDUX
   sumAmount = value => {
@@ -126,10 +127,11 @@ class CashScreen extends Component {
     });
   };
   toggleSideBar = () => {
-    this.setState({
+    /*this.setState({
       modalActive: !this.state.modalActive,
       modalOptions: false,
-    });
+    });*/
+    alert(keyboard)
   };
   changeOption = value => {
     const { change } = this.props;
@@ -225,7 +227,7 @@ class CashScreen extends Component {
             {
               //MAIN VIEW
             }
-            <View style={[styles.container, {height:'100%'}]}>
+            <View style={[styles.container, {height:keyboard}]}>
               <Header
                 label="CASH REGISTER"
                 cant={products.length}
@@ -272,7 +274,7 @@ class CashScreen extends Component {
           </Drawer>
         ) : (
           <View style={styles.containerLandscape}>
-            <View style={[styles.container, isTablet? {flex:1}:null]}>
+            <View style={[styles.container, isTablet? {flex:1}:null, {height:keyboard}]}>
               <Header
                 label="CASH REGISTER"
                 cant={products.length}

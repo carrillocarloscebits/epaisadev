@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   wrapper:{
       width:"100%",
-      height:hp('89%'),
+      height:isTablet?hp('85'): hp('89%'),
       alignItems:'center',
       justifyContent:'flex-end',
       paddingBottom: hp('1.5%'),

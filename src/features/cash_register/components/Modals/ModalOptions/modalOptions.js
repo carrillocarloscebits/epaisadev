@@ -9,11 +9,11 @@ class ModalOptions extends Component {
         const {openDiscount, openDelivery} = this.props
         return(
             <View style={styles.container}>
-                <TouchableOpacity style={styles.rowOption} onPress={openDiscount}>
+                <TouchableOpacity style={[styles.rowOption,{marginTop:hp('0.5%')}]} onPress={openDiscount}>
                     <Image style={styles.icon} source={require("../../../assets/img/Discount2.png")} />
                     <Text style={styles.label}>Discount</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.rowOption} onPress={openDelivery}>
+                <TouchableOpacity style={[styles.rowOption,{marginTop:hp('0.6%'),marginBottom:hp('0.5%')}]} onPress={openDelivery}>
                     <Image style={styles.icon} source={require("../../../assets/img/Delivery2.png")} />
                     <Text style={styles.label}>Delivery Charge</Text>
                 </TouchableOpacity>

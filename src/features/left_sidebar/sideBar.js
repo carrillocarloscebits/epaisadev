@@ -1,18 +1,34 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image, Dimensions, Modal,TouchableOpacity} from 'react-native';
+import {Keyboard, Platform, StyleSheet, Text, View, Image, Dimensions, Modal,TouchableOpacity} from 'react-native';
 import colors from './styles/colors'
 import EStyleSheet from 'react-native-extended-stylesheet';
 import ListOptions from './components/ListOptions/listOptions';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { isTablet } from './constants/isLandscape';
+let keyboard=false;
 export default class SideBar extends Component{
+    componentDidMount () {
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+      }
     
+      componentWillUnmount () {
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+      }
+    _keyboardDidShow () {
+        keyboard=true
+    }
+    
+    _keyboardDidHide () {
+        keyboard=false
+    }
     render() {
         const {active,toggle, sideOption, handleOption, logoutAction}=this.props
         const isLandscape= isTablet
         const paddingLandscape = isLandscape? {paddingHorizontal: wp('3%')}:null
         return (
-                <View style={styles.container}>
+                <View style={[styles.container, keyboard?{height:hp('100%')}:{height:'100%',flexGrow:1,}]}>
                     <View style={[styles.barContainer, paddingLandscape]}>
                         <View style={styles.header}>
                             <Image source={require('./assets/img/coffeelogo.png')} style={{height: hp('7%'),width:hp('7%'), marginBottom: hp('1%')}}/>
@@ -39,8 +55,9 @@ export default class SideBar extends Component{
 
 const styles = EStyleSheet.create({
   container: {
-    flex:1,
     width: '100%',
+    height:'100%',
+    flexGrow:1,
     backgroundColor: colors.opacityDin(0.5),
     alignItems: 'flex-end'
   },

@@ -33,7 +33,7 @@ const AuthStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: screenNames.LOGIN,
+    initialRouteName: screenNames.CASH_REGISTER,
   }
 );
 

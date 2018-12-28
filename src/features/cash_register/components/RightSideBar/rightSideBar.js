@@ -1,22 +1,38 @@
 //import liraries
 import React, { Component } from 'react';
-import { Dimensions,View, Text, StyleSheet, ImageBackground,TouchableOpacity,Image} from 'react-native';
+import {Keyboard, Dimensions,View, Text, StyleSheet, ImageBackground,TouchableOpacity,Image} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Header from './components/Header/header';
 import BackgroundImage from './components/BackgroundImage/backgroundImage';
 import Table from './components/Table/table';
 import Footer from './components/Footer/footer';
 import { isTablet } from '../../constants/isLandscape';
-
+let keyboard=false;
 // create a component
 class RightSideBar extends Component {
+    componentDidMount () {
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+      }
+    
+      componentWillUnmount () {
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+      }
+    _keyboardDidShow () {
+        keyboard=true
+    }
+    
+    _keyboardDidHide () {
+        keyboard=false
+    }
     render() {
         const {products, subtotal, discount, delivery,actionClose, type, openDiscount,openDelivery,removeDiscount,removeDelivery} = this.props
         const isLandscape= isTablet
         const width = isLandscape? '34%' : null
         return (
             
-            <View style={[styles.drawerRightContainer,{width}]}>
+            <View style={[styles.drawerRightContainer,{width},keyboard?{height:hp('100%'),}:null]}>
                 <BackgroundImage source={require('./assets/side_nav_portrait_faded.png') }/>
                 <Header actionClose={actionClose} openDiscount={openDiscount} openDelivery={openDelivery}/>
                 <Table products={products} actionClose={actionClose}/>
@@ -56,7 +72,7 @@ const styles = StyleSheet.create({
     },
     drawerRightContainer: {
         flexDirection:'column',
-        height:Dimensions.get('window').height - 25,
+        height:'100%',
         justifyContent:'center',
         backgroundColor:'#5D6770',
     },

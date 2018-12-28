@@ -8,7 +8,7 @@ class AddItems extends Component {
         const {actionClose} = this.props
         return (
                 <View  style={styles.container} >
-                
+                    <Image source={require('../../../assets/addItems.png')} resizeMode="stretch" style={{opacity:0.2, width:hp('20%')*0.97,height:hp('21%')}}/>
                     <Text style={styles.carEmpty}>Your Cart is empty</Text>
                     <TouchableOpacity onPress={isTablet?null:actionClose}>
                         <Text style={styles.addMore}>Add Items</Text>

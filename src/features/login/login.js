@@ -198,6 +198,11 @@ class Login extends Component {
                 ? portraitStyles.buttonSignIn
                 : landscapeStyles.buttonSignIn
             }
+            buttonTextStyle={
+                this.state.orientation
+                  ? portraitStyles.textSignIn
+                  : landscapeStyles.textSignIn
+              }
             onPress={this.handleLogin.bind(this)}
           />
           <View
@@ -210,16 +215,16 @@ class Login extends Component {
             <ButtonOutline
               title={'CREATE NEW ACCOUNT'}
               onPress={() => this.props.navigation.navigate(CREATE_ACCOUNT)}
-              style={
-                this.state.orientation
-                  ? portraitStyles.buttonCreateAccount
-                  : landscapeStyles.buttonCreateAccount
-              }
-              buttonTextStyle={
-                this.state.orientation
-                  ? portraitStyles.textCreateAccount
-                  : landscapeStyles.textCreateAccount
-              }
+                style={
+                    this.state.orientation
+                        ? portraitStyles.buttonCreateAccount
+                        : landscapeStyles.buttonCreateAccount
+                }
+                buttonTextStyle={
+                    this.state.orientation
+                        ? portraitStyles.textCreateAccount
+                        : landscapeStyles.textCreateAccount
+                    }
             />
           </View>
         </View>

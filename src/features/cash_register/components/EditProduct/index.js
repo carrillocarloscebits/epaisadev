@@ -66,7 +66,7 @@ class EditProduct extends Component {
         }
 
         setProduct = () => {
-            if(this.name.state.value === '' || this.quantity.state.value === '' || this.price.state.discount=== '' || imageSource=== ''){
+            if(this.name.state.value === '' || this.quantity.state.value === '' || this.price.state.discount=== ''||this.discount.state.discount=== "0" || imageSource=== ''){
                 alert('Please, insert valid data.')
                 return;
             }

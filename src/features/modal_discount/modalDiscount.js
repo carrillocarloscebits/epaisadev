@@ -27,7 +27,7 @@ class ModalDiscount extends Component {
         const {active, closeModal, widthModal, isLandscape} = this.props
         const wrongStyleLabel= this.state.wrong? {color:'#D0021B'}:null
         const wrongStyleBorders= this.state.wrong? {borderColor:'#D0021B'}:null
-        const noFormat = this.state.optionSelected==1 ? ((parseFloat(this.state.valueDiscount) < 0.1 || parseFloat(this.state.valueDiscount) > 99.9)? 1 :0 ): parseFloat(this.state.valueDiscount) > 0? 0: 2
+        const noFormat = this.state.optionSelected==1 ? ((parseFloat(this.state.valueDiscount) < 0.1 || parseFloat(this.state.valueDiscount) > 99.9)||this.state.valueDiscount==''? 1 :0 ): parseFloat(this.state.valueDiscount) > 0? 0: 2
         
         return(
             <Modal visible={active} transparent={true} animationType="fade" onRequestClose={closeModal} >
@@ -35,13 +35,13 @@ class ModalDiscount extends Component {
                 <CardWithHeader isLandscape={isLandscape} sizeHeaderLabel={isLandscape?"3.5%":"3%"} customBodyStyle={{alignItems:'center',justifyContent:'center'}} headerTitle="Discount" closeButton={true} onPressCloseButton={closeModal} customCardStyle={{width: hp(widthModal),}}>
                     <View style={styles.wrapper}>
                         <View style={[styles.rowForm,wrongStyleBorders]}>
-                            <View style={styles.leftForm}>
+                            <TouchableOpacity style={styles.leftForm} onPress={()=>{this.setState({optionsActive:!this.state.optionsActive})}}>
                                 <Text style={[styles.select,wrongStyleLabel,isLandscape?{fontSize:hp('3.4%'),}:null]}>{options[this.state.optionSelected-1]}</Text>
-                                <TouchableOpacity style={styles.drop} onPress={()=>{this.setState({optionsActive:true})}}>
+                                <TouchableOpacity style={styles.drop} >
                                     <Icon  name={"angle-down"} size={isLandscape?hp('3.3%'):hp('2.5%')} />
                                 </TouchableOpacity>
                                 
-                            </View>
+                            </TouchableOpacity>
                             <View style={[styles.separation,wrongStyleBorders]}>
 
                             </View>

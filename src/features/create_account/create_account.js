@@ -133,6 +133,7 @@ class CreateAccount extends Component {
   };
 
   render() {
+    console.log(Dimensions.get('window'));
     const otpStyles = EStyleSheet.create({
       textInstructions: {
         fontSize: '1.8rem',
@@ -247,7 +248,7 @@ class CreateAccount extends Component {
                 confirmation code to
               </TextMontserrat>
               <TextMontserrat style={otpStyles.textPhoneNumber}>
-                +51 917 324 872
+                {'+51 900 999 999'}
               </TextMontserrat>
             </View>
             <View style={otpStyles.timerContainer}>

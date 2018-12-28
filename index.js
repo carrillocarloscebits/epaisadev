@@ -1,18 +1,21 @@
 /** @format */
 
-import {AppRegistry, Dimensions, YellowBox } from 'react-native';
+import { AppRegistry, Dimensions, YellowBox } from 'react-native';
 import App from './src';
-import {name as appName} from './app.json';
+import { name as appName } from './app.json';
 import EStyleSheet from 'react-native-extended-stylesheet';
-getRem = () => {
-    if(Dimensions.get('window').width > 500) {
-        return 14
-    }
-
-    return 10
-}
+const getRem = () => {
+  const width = Dimensions.get('window').width;
+  if (width > 500) {
+    return 14;
+  } else if (width <= 320) {
+    return 8;
+  }
+  return 10;
+};
 EStyleSheet.build({
-    $rem: getRem()
+  $rem: getRem(),
 });
-YellowBox.ignoreWarnings(['Remote debugger is in'])
+
+YellowBox.ignoreWarnings(['Remote debugger is in']);
 AppRegistry.registerComponent(appName, () => App);

@@ -4,7 +4,7 @@ import { TextMontserrat } from "components";
 import LinearGradient from "react-native-linear-gradient";
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-const ButtonGradient = ({ title, onPress, style, disabled }) => {
+const ButtonGradient = ({ title, onPress, style, disabled, shadow }) => {
 
   const { buttonText, linearGradient, container } = styles;
   const color = disabled ? 
@@ -21,13 +21,13 @@ const ButtonGradient = ({ title, onPress, style, disabled }) => {
     }
   }
   return (
-    <TouchableOpacity activeOpacity={disabled ? 1 : .5} onPress={this.handlePress} >
-      <View style={[container, style]}>
+    <TouchableOpacity activeOpacity={disabled ? 1 : .5} onPress={this.handlePress} style={style}>
+      <View style={[style, {marginTop:0, elevation:0}]}>
         <LinearGradient
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           colors={color}
-          style={linearGradient}
+          style={[style, {marginTop:0}]}
         >
           <TextMontserrat style={buttonText}>{title}</TextMontserrat>
         </LinearGradient>
@@ -47,7 +47,7 @@ const styles = EStyleSheet.create({
         shadowOpacity: .5,
       },
       android: {
-        elevation: 3,
+        //elevation: 3,
       }
     })
   },

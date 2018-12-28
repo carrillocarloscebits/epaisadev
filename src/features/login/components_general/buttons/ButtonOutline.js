@@ -3,14 +3,14 @@ import {Text, View, TouchableOpacity} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { TextMontserrat } from '../texts';
 
-const ButtonOutline = ({title, onPress}) => {
+const ButtonOutline = ({title, onPress, style}) => {
     const {buttonStyle, buttonText} = styles;
     return (
         <TouchableOpacity
             activeOpacity={.5}
             onPress={onPress}
         >
-            <View style={buttonStyle}>
+            <View style={[buttonStyle, style]}>
                 <TextMontserrat style={buttonText}>{title}</TextMontserrat>
             </View>
         </TouchableOpacity>
@@ -19,11 +19,7 @@ const ButtonOutline = ({title, onPress}) => {
 
 const styles = EStyleSheet.create({
     buttonStyle: {
-        width: '100%',
-        height: '5rem',
         backgroundColor: 'white',
-        borderRadius: '5rem',
-        borderWidth: 1,
         borderColor: '#666',
         justifyContent: 'center',
         alignItems: 'center',

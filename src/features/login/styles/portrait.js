@@ -40,6 +40,8 @@ export const portraitStyles = StyleSheet.create({
         height:hp('7.5%'),
         marginTop:hp('2.3%'),
         borderRadius:hp('20%'),
+        justifyContent:'center',
+        alignItems:'center',
         ...Platform.select({
             ios: {
                 shadowOffset: { width: 1, height: 2 },
@@ -51,6 +53,12 @@ export const portraitStyles = StyleSheet.create({
             }
         })
     },
+    textSignIn: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: hp('1.8%'),
+        letterSpacing: 1.33,
+    },
     buttonCreateAccount: {
         width:wp('86.6%'), 
         height:hp('7.5%'), 
@@ -61,7 +69,7 @@ export const portraitStyles = StyleSheet.create({
     textCreateAccount: {
         color: '#164486',
         fontWeight: 'bold',
-        fontSize: hp('1%'),
+        fontSize: hp('1.8%'),
         letterSpacing: 1.33,
     },
     containerCreateAccount: {

@@ -4,7 +4,7 @@ import { TextMontserrat } from "components";
 import LinearGradient from "react-native-linear-gradient";
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-const ButtonGradient = ({ title, onPress, style, disabled, shadow }) => {
+const ButtonGradient = ({ title, onPress, style, disabled, buttonTextStyle }) => {
 
   const { buttonText, linearGradient, container } = styles;
   const color = disabled ? 
@@ -29,7 +29,7 @@ const ButtonGradient = ({ title, onPress, style, disabled, shadow }) => {
           colors={color}
           style={[style, {marginTop:0}]}
         >
-          <TextMontserrat style={buttonText}>{title}</TextMontserrat>
+          <TextMontserrat style={buttonTextStyle}>{title}</TextMontserrat>
         </LinearGradient>
       </View>
     </TouchableOpacity>

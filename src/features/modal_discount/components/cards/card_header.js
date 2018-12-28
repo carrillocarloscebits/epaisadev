@@ -19,7 +19,7 @@ class CardWithHeader extends Component {
           activeOpacity={0.5}
           onPress={onPressCloseButton}
         >
-          <Image source={require('../../assets/icons/close.png')} style={isLandscape?{width: hp('3%'), height: hp('3%')}:{width: wp('4%'), height: wp('4%')}} />
+          <Image source={require('../../assets/icons/close.png')} resizeMode="contain" style={isLandscape?{width: hp('4%')}:{width: hp('3.5%')}} />
           {/* <Icon
             name={"close"}
             size={closeButtonSize || 30}
@@ -73,9 +73,8 @@ const styles = {
     alignItems: "center"
   },
   closeButtonStyle: {
-    position: "absolute",
-    right: 12,
-    top:hp('1.5%')
+    position: "absolute", 
+    right: hp('1%'),
   }
 };
 

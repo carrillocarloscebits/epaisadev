@@ -25,13 +25,13 @@ export default class Header extends Component{
                    <Text style={[styles.stackText,{fontSize:hp('2.0%')}]}>5</Text>
                 </View>
               </View>
-              <TouchableOpacity style={[styles.iconItem,{width:hp('4.5%'),height:hp('4.5%')}]} onPress={toggleRight}>
-                <Image source={require('../../assets/img/Cart.png')}/>
+              <TouchableOpacity style={[styles.iconItem,{marginLeft:wp('1.5%'),width:hp('3.5%'),height:hp('3.5%')}]} onPress={toggleRight}>
+                <Image source={require('../../assets/img/Cart.png')} style={[{width:hp('3.5%'),height:hp('3.5%')}]}/>
                 <View style={styles.badge}>
                   <Text style={styles.badgeText}>{cant}</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.iconItem,{width:hp('4.5%'),height:hp('4.5%')}]} onPress={toggleOptions}>
+              <TouchableOpacity style={[styles.iconItem,{width:hp('4.5%')*0.8,height:hp('4.5%')}]} onPress={toggleOptions}>
                 <Image  source={require('../../assets/img/MoreDot.png')} />
               </TouchableOpacity>
           </View>
@@ -72,8 +72,8 @@ const styles = EStyleSheet.create({
   },
   badge:{
     position: 'absolute',
-    left:hp('3.5%'),
-    bottom:hp('3.5%'),
+    left:hp('3%'),
+    bottom:hp('3%'),
     backgroundColor: colors.gray,
     alignItems:'center',
     justifyContent:'center',
@@ -82,7 +82,7 @@ const styles = EStyleSheet.create({
   },
   badgeText:{
     color: colors.white,
-    fontSize:9,
+    fontSize:hp('1.3%'),
     fontFamily: 'Montserrat-Bold'
   },
   stack:{
@@ -109,7 +109,7 @@ const styles = EStyleSheet.create({
     height:'100%',
     justifyContent:'center',
     marginHorizontal: hp('0.3%'),
-    alignItems:'center'
+    alignItems:'center',
   },
   marginExtra:{
     marginLeft: 12,
@@ -121,8 +121,8 @@ const styles = EStyleSheet.create({
   },
   titleCentral:{
     color: colors.white,
-    fontSize: hp('2.5%'),
-    letterSpacing: 2,
+    fontSize: hp('2.4%'),
+    letterSpacing: hp('0.1%'),
     textAlign:'center',
     fontFamily:'Montserrat-Bold'
   },

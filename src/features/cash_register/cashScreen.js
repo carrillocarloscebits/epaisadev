@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import {Keyboard, View, StyleSheet } from 'react-native';
 import Header from './components/Header/header';
 import TotalAmount from './components/TotalAmount/totalAmount';
 import ItemsContainer from './components/ItemsContainer/itemsContainer';
@@ -18,11 +18,15 @@ import ModalOptions from './components/Modals/ModalOptions/modalOptions';
 import { isTablet } from './constants/isLandscape';
 import ModalCustomer from '../modal_customer/modalCustomer';
 import { LOGIN } from '../../navigation/screen_names';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
+let keyboard = false
 const isPhone = !isTablet;
 class CashScreen extends Component {
   static navigationOptions = {
     header: null,
   };
+  keyboard= false;
   state = {
     modalOptions: false,
     modalActive: false,
@@ -30,9 +34,26 @@ class CashScreen extends Component {
     modalDiscount: false,
     modalDelivery: false,
     modalCustomer: false,
+    keyboard: false,
   };
   componentWillMount() {
     isPhone ? Orientation.lockToPortrait() : Orientation.lockToLandscape();
+  }
+  componentDidMount () {
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+  }
+
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+  _keyboardDidShow () {
+    keyboard=true
+  }
+
+  _keyboardDidHide () {
+    keyboard=false
   }
   // ACTIONS REDUX
   sumAmount = value => {
@@ -151,7 +172,7 @@ class CashScreen extends Component {
       type,
     } = this.props.state;
     const opa = this.state.modalActive || this.state.modalRight ? true : false;
-
+    console.log(keyboard)
     return (
       <Drawer
         ref={ref => (this._drawer2 = ref)}
@@ -204,7 +225,7 @@ class CashScreen extends Component {
             {
               //MAIN VIEW
             }
-            <View style={styles.container}>
+            <View style={[styles.container, {height:'100%'}]}>
               <Header
                 label="CASH REGISTER"
                 cant={products.length}
@@ -251,7 +272,7 @@ class CashScreen extends Component {
           </Drawer>
         ) : (
           <View style={styles.containerLandscape}>
-            <View style={styles.container}>
+            <View style={[styles.container, isTablet? {flex:1}:null]}>
               <Header
                 label="CASH REGISTER"
                 cant={products.length}
@@ -311,8 +332,6 @@ class CashScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    height: '100%',
     alignItems: 'center',
     backgroundColor: colors.darkWhite,
   },

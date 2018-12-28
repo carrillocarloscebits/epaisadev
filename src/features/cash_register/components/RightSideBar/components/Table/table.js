@@ -24,7 +24,7 @@ class Table extends Component {
 
 const styles = StyleSheet.create({
     container: {
-          flex:6,
+          flex: 1,
           flexDirection:'column',
     },
 });

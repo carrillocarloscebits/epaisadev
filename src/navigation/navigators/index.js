@@ -28,9 +28,12 @@ const AuthStack = createStackNavigator(
     [screenNames.ACCOUNT_CREATED]: {
       screen: AccountCreated,
     },
+    [screenNames.CASH_REGISTER]: {
+      screen: CashRegister,
+    },
   },
   {
-    initialRouteName: screenNames.LOGIN,
+    initialRouteName: screenNames.CASH_REGISTER,
   }
 );
 

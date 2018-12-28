@@ -34,13 +34,11 @@ class Login extends Component {
   };
 
   state = {
-    email: 'am26@epaisa.com',
-    password: 'Test@789',
+    email: '', //'am26@epaisa.com',
+    password: '', //'Test@789',
     loading: false,
-  };
 
-  navigateTo = screen => {
-    return this.props.navigation.navigate(screen);
+    orientation: isPortrait(),
   };
 
   getHeight = () => {

@@ -127,11 +127,10 @@ class CashScreen extends Component {
     });
   };
   toggleSideBar = () => {
-    /*this.setState({
+    this.setState({
       modalActive: !this.state.modalActive,
       modalOptions: false,
-    });*/
-    alert(keyboard)
+    });
   };
   changeOption = value => {
     const { change } = this.props;

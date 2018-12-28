@@ -167,9 +167,10 @@ class PhoneInput extends Component {
   };
 
   render() {
-    const { callingCodes, flag, name } = this.state.selectedCountry;
+    const { callingCodes, flag, name} = this.state.selectedCountry;
+    const { label , noAngle} = this.props;
     const { phone } = this.state;
-
+    const text= label || "Mobile"
     const {
       modalContainer,
       modalHeader,
@@ -181,7 +182,7 @@ class PhoneInput extends Component {
       <View>
         <View style={{ flexDirection: 'row' }}>
           <FloatingTextInput
-            label="Mobile"
+            label={text}
             phone={true}
             keyboardType="phone-pad"
             value={phone}
@@ -208,8 +209,9 @@ class PhoneInput extends Component {
                     }}
                   >{`+${callingCodes[0]}`}</Text>
                 </View>
+                
                 <View>
-                  <Icon name={'angle-down'} size={25} />
+                   {noAngle?<Icon name={'angle-down'} size={25} />:null}
                 </View>
               </View>
             </TouchableOpacity>

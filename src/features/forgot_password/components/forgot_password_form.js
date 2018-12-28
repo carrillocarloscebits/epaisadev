@@ -60,6 +60,8 @@ class ForgotPasswordForm extends Component {
                         errors={this.getErrors('mobile')}
                     /> */}
                     <PhoneInput 
+                        label="Mobile Number"
+                        noAngle={false}
                         onChange={(val) => {
                             const phone = `+${val.callingCode}${val.phone}`;
                             this._textChange('mobile', phone)
@@ -83,7 +85,8 @@ const styles = EStyleSheet.create({
         fontSize: '2rem',
         textAlign: 'center',
         fontWeight: '700',
-        marginVertical: '1.5rem'
+        marginTop: '1.5rem',
+        marginBottom: '1rem'
     },
     nameInputs: {
         flexDirection: 'row',

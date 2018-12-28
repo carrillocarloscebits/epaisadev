@@ -103,26 +103,25 @@ class Login extends Component {
             <DoubleBackground>
                 <View style={{alignItems:'center', height:hp('100%'), width:('100%')}}>
                         <KeyboardAvoidingView behavior='position' enabled>
-                        <View style={this.state.orientation ? portraitStyles.logoContainer : landscapeStyles.logoContainer}>
-                            <Logo/>
-                        </View>
-                        <View style={this.state.orientation ? portraitStyles.cardContainer : landscapeStyles.cardContainer}>
-                            <Card style={this.state.orientation ? portraitStyles.card : landscapeStyles.card}>
-                                <FloatingTextInput
-                                    label={'E-mail'}
-                                    onChangeText={(email) => this.setState({email})}
-                                    value={email}
-                                />
-                                <FloatingTextInput
-                                    label={'Password'}
-                                    secureTextEntry={true}
-                                    onChangeText={(password) => this.setState({password})}
-                                    value={password}
-                                />
-                                {this.props.auth.loggingIn && <Loading/>}
-                            </Card>
-                        </View>
-                        
+                            <View style={this.state.orientation ? portraitStyles.logoContainer : landscapeStyles.logoContainer}>
+                                <Logo/>
+                            </View>
+                            <View style={this.state.orientation ? portraitStyles.cardContainer : landscapeStyles.cardContainer}>
+                                <Card style={this.state.orientation ? portraitStyles.card : landscapeStyles.card}>
+                                    <FloatingTextInput
+                                        label={'E-mail'}
+                                        onChangeText={(email) => this.setState({email})}
+                                        value={email}
+                                    />
+                                    <FloatingTextInput
+                                        label={'Password'}
+                                        secureTextEntry={true}
+                                        onChangeText={(password) => this.setState({password})}
+                                        value={password}
+                                    />
+                                    {this.props.auth.loggingIn && <Loading/>}
+                                </Card>
+                            </View>
                         </KeyboardAvoidingView>
                         <View style={forgotContainer}>
                             <TouchableText

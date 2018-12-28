@@ -93,9 +93,6 @@ class EditProduct extends Component {
                 discount:this.discount.state.discount,
                 image:imageSource,
             })
-
-            
-            //this.name.setState({value: 'hola'});
         }
 
         {console.log(this.state)}
@@ -139,6 +136,7 @@ class EditProduct extends Component {
                             width={priceInputSize.width} 
                             height={priceInputSize.height} 
                             labelText={'Price (₹)'} 
+                            firstValue={this.props.item.unitPrice}
                             value={this.state.price}
                             typeOfKeyboard={'numeric'}
                             eraseOption={true}

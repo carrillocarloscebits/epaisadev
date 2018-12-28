@@ -151,7 +151,7 @@ class FloatingLabelInput extends Component {
   export default class FloatingTextEditProductInput extends Component {
 
     state = {
-      value: '',
+      value: this.props.firstValue || '',
     };
   
     handleTextChange = (newText) => {this.setState({ value: newText });};
@@ -176,6 +176,7 @@ class FloatingLabelInput extends Component {
             rupeeSign={this.props.rupeeSign}
             orientation={this.props.orientation}
             onPressAction={this.eraseText}
+            firstValue={this.props.firstValue}
           />
         </View>
       );

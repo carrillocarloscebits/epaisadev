@@ -206,12 +206,11 @@ class FloatingTextInput extends Component {
     const textInputStyle = {
       fontSize: ExtendedStyles.textInput.fontSize,
       color: isFocused ? inputActiveColor : inputInActiveColor,
-      height: hp('7%'),
+      height: this.state.orientation ? hp('6%') : hp('7%'),
       marginTop: this.props.margin || 20,
       fontFamily: "Montserrat-SemiBold",
       width: "80%",
-      paddingBottom: this.state.orientation ? hp('1%') : hp('1%'),
-      backgroundColor:'#E4C58E'
+      paddingBottom: this.state.orientation ? hp('0.5%') : hp('1%'),
     };
 
     const leftOffset = Platform.OS === 'ios' ? 0 : 0;
@@ -222,7 +221,7 @@ class FloatingTextInput extends Component {
       left: leftOffset + leftPadding,
       top: this._animatedIsFocusedAndEmpty.interpolate({
         inputRange: [0, 1],
-        outputRange: this.state.orientation ? [28, 5] : [28, 0]
+        outputRange: this.state.orientation ? [34, 10] : [28, 0]
       }),
       fontSize: this._animatedIsFocusedAndEmpty.interpolate({
         inputRange: [0, 1],
@@ -267,7 +266,7 @@ class FloatingTextInput extends Component {
     }
 
     return (
-      <View style={{width: '100%', backgroundColor:'yellow', height:hp('12%')}}>
+      <View style={{width: '100%', height:this.state.orientation ? hp('8%') : hp('10%')}}>
         <Animated.Text style={labelStyle}>
           {label}{" "}{this._hasError() && <IconMaterialCommunityIcons size={18} name="alert-circle" color={inputActiveColor}/>}
           <Animated.Text style={optionalLabelStyle}>

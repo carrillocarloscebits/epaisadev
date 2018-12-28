@@ -18,7 +18,7 @@ export const landscapeStyles = StyleSheet.create({
         backgroundColor:'white',
         borderRadius:hp('2%'),
         paddingHorizontal:wp('4.7%'),
-        paddingTop:hp('4%'),
+        justifyContent:'center',
         elevation:10,
         shadowColor: '#000000',
         shadowOffset: {

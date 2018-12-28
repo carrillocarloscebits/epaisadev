@@ -31,9 +31,12 @@ const AuthStack = createStackNavigator(
     [screenNames.CASH_REGISTER]: {
       screen: CashRegister,
     },
+    [screenNames.FINGERPRINT]: {
+      screen: Fingerprint,
+    },
   },
   {
-    initialRouteName: screenNames.CASH_REGISTER,
+    initialRouteName: screenNames.LOGIN,
   }
 );
 

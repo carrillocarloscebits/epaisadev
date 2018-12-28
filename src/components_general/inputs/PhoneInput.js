@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -8,22 +8,32 @@ import {
   Image,
   SectionList,
   TouchableWithoutFeedback,
-  ScrollView
-} from "react-native";
-import Modal from "react-native-modal";
-import { Colors } from "api";
-import Icon from "react-native-vector-icons/FontAwesome";
-import { FloatingTextInput } from "./index";
-import { CountryItem } from "./components";
-import sectionListGetItemLayout from "react-native-section-list-get-item-layout";
+  ScrollView,
+} from 'react-native';
+import Modal from 'react-native-modal';
+import { Colors } from 'api';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { FloatingTextInput } from './index';
+import { CountryItem } from './components';
+import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
 // import ExtraDimensions from "react-native-extra-dimensions-android";
-import { countries } from "./api/countries";
+import { countries } from './api/countries';
 
 class PhoneInput extends Component {
-  constructor() {
-    super();
-  }
-
+  state = {
+    touched: false,
+    isModalVisible: false,
+    letterIndexes: {},
+    phone: '',
+    countries: [],
+    sections: [],
+    dataToShow: [],
+    selectedCountry: {
+      flag: 'https://www.countryflags.io/af/flat/64.png',
+      callingCodes: ['93'],
+      name: 'Afghanistan',
+    },
+  };
   componentDidMount() {
     let currentLetter;
     let letters = [];
@@ -32,16 +42,16 @@ class PhoneInput extends Component {
       if (!currentLetter) {
         currentLetter = {
           letter: name.charAt(0),
-          start: 0
+          start: 0,
         };
       }
-      const itemLetter = name.charAt(0) === "Å" ? "A" : name.charAt(0);
+      const itemLetter = name.charAt(0) === 'Å' ? 'A' : name.charAt(0);
       if (itemLetter !== currentLetter.letter) {
-        currentLetter["end"] = index;
+        currentLetter['end'] = index;
         letters.push(currentLetter);
         currentLetter = {
           letter: name.charAt(0),
-          start: index
+          start: index,
         };
       }
     });
@@ -50,37 +60,22 @@ class PhoneInput extends Component {
     const sections = letters.map(({ letter, start, end }) => {
       letterIndexes[letter] = {
         letter: letter,
-        index: letterI
+        index: letterI,
       };
       letterI++;
       return {
         title: letter,
-        data: countries.slice(start, end)
+        data: countries.slice(start, end),
       };
     });
 
     this.setState({ sections, countries, dataToShow: sections, letterIndexes });
   }
 
-  state = {
-    touched: false,
-    isModalVisible: false,
-    letterIndexes: {},
-    phone: "",
-    countries: [],
-    sections: [],
-    dataToShow: [],
-    selectedCountry: {
-      flag: "https://www.countryflags.io/af/flat/64.png",
-      callingCodes: ["93"],
-      name: "Afghanistan"
-    }
-  };
-
   getItemLayout = sectionListGetItemLayout({
     // The height of the row with rowData at the given sectionIndex and rowIndex
-    getItemHeight: (rowData, sectionIndex, rowIndex) => 36,
-    getSeparatorHeight: () => 12
+    getItemHeight: () => 36,
+    getSeparatorHeight: () => 12,
   });
 
   getLettersArr = () => {
@@ -102,7 +97,7 @@ class PhoneInput extends Component {
             console.log(this.myFlatList);
             this.myFlatList.scrollToLocation({
               itemIndex: 0,
-              sectionIndex: index
+              sectionIndex: index,
             });
           }}
         >
@@ -115,10 +110,10 @@ class PhoneInput extends Component {
 
   handleSearch = term => {
     let matchedItemsArray = [];
-    if (term === "") {
+    if (term === '') {
       this.setState({
         search: false,
-        dataToShow: this.state.sections
+        dataToShow: this.state.sections,
       });
     } else {
       this.state.countries.map(item => {
@@ -131,9 +126,9 @@ class PhoneInput extends Component {
         dataToShow: [
           {
             title: `Results for "${term}"`,
-            data: matchedItemsArray
-          }
-        ]
+            data: matchedItemsArray,
+          },
+        ],
       });
     }
   };
@@ -142,32 +137,34 @@ class PhoneInput extends Component {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
-  _selectCountryCode = (item) => {
-    this.setState({ 
-      selectedCountry: item,
-      touched:true
-    }, this.onChange({
-      alpha2Code: item.alpha2Code,
-      callingCode: item.callingCodes[0],
-      phone: this.state.phone,
-    }))
-    
-  }
+  _selectCountryCode = item => {
+    this.setState(
+      {
+        selectedCountry: item,
+        touched: true,
+      },
+      this.onChange({
+        alpha2Code: item.alpha2Code,
+        callingCode: item.callingCodes[0],
+        phone: this.state.phone,
+      })
+    );
+  };
 
-  _changeText = (v) => {
-    this.setState({ phone: v })
+  _changeText = v => {
+    this.setState({ phone: v });
     this.onChange({
       alpha2Code: this.state.selectedCountry.alpha2Code,
       callingCode: this.state.selectedCountry.callingCodes[0],
-      phone: v
+      phone: v,
     });
-  }
+  };
 
-  onChange = (payload) => {
-    if(this.props.onChange) {
-      this.props.onChange(payload)
+  onChange = payload => {
+    if (this.props.onChange) {
+      this.props.onChange(payload);
     }
-  }
+  };
 
   render() {
     const { callingCodes, flag, name } = this.state.selectedCountry;
@@ -178,50 +175,51 @@ class PhoneInput extends Component {
       modalHeader,
       countryCodeContainer,
       modalHeaderText,
-      modalCloseButton
+      modalCloseButton,
     } = styles;
     return (
       <View>
-        <View style={{ flexDirection: "row"}}>
-            <FloatingTextInput
-              label="Mobile"
-              phone={true}
-              keyboardType="phone-pad"
-              value={phone}
-              onChangeText={this._changeText}
-              focus={this.state.touched}
-              {...this.props}
-            >
-              <TouchableOpacity onPress={this._toggleModal}>
-                <View style={countryCodeContainer}>
-                  <View>
-                    <Image
-                      source={{ uri: flag }}
-                      style={{ width: 30, height: 25 }}
-                    />
-                  </View>
-                  <View style={{ paddingHorizontal: 5 }}>
-                    <Text
-                      style={{
-                        fontSize: 17,
-                        fontWeight: "bold",
-                        color: "#6b6b6b",
-                        bottom: 2
-                      }}
-                    >{`+${callingCodes[0]}`}</Text>
-                  </View>
-                  <View>
-                    <Icon name={"angle-down"} size={25} />
-                  </View>
+        <View style={{ flexDirection: 'row' }}>
+          <FloatingTextInput
+            label="Mobile"
+            phone={true}
+            keyboardType="phone-pad"
+            value={phone}
+            onChangeText={this._changeText}
+            focus={this.state.touched}
+            maxLength={10}
+            {...this.props}
+          >
+            <TouchableOpacity onPress={this._toggleModal}>
+              <View style={countryCodeContainer}>
+                <View>
+                  <Image
+                    source={{ uri: flag }}
+                    style={{ width: 30, height: 25 }}
+                  />
                 </View>
-              </TouchableOpacity>
-            </FloatingTextInput>
+                <View style={{ paddingHorizontal: 5 }}>
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      fontWeight: 'bold',
+                      color: '#6b6b6b',
+                      bottom: 2,
+                    }}
+                  >{`+${callingCodes[0]}`}</Text>
+                </View>
+                <View>
+                  <Icon name={'angle-down'} size={25} />
+                </View>
+              </View>
+            </TouchableOpacity>
+          </FloatingTextInput>
         </View>
 
         <Modal
           isVisible={this.state.isModalVisible}
           style={{ margin: 0 }}
-          swipeDirection={"down"}
+          swipeDirection={'down'}
           onSwipe={this._toggleModal}
         >
           <View style={modalContainer}>
@@ -229,47 +227,47 @@ class PhoneInput extends Component {
               <View style={modalCloseButton}>
                 <TouchableOpacity onPress={this._toggleModal}>
                   <Icon
-                    name={"close"}
+                    name={'close'}
                     size={width > 400 ? 30 : 24}
-                    color={"white"}
+                    color={'white'}
                   />
                 </TouchableOpacity>
               </View>
               <View
                 style={{
-                  margin: width > 400 ? 25 : 15
+                  margin: width > 400 ? 25 : 15,
                 }}
               >
                 <Text style={modalHeaderText}>Select Country/region code</Text>
               </View>
               <View
                 style={{
-                  width: "94%",
-                  backgroundColor: "white",
+                  width: '94%',
+                  backgroundColor: 'white',
                   marginBottom: 25,
                   borderRadius: 12,
-                  flexDirection: "row"
+                  flexDirection: 'row',
                 }}
               >
                 <View
                   style={{
                     width: 60,
-                    justifyContent: "center",
-                    alignItems: "center"
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
                 >
-                  <Icon name={"search"} size={25} color={Colors.primary} />
+                  <Icon name={'search'} size={25} color={Colors.primary} />
                 </View>
                 <View
                   style={{
-                    flex: 1
+                    flex: 1,
                   }}
                 >
                   <TextInput
                     placeholderTextColor={Colors.primary}
                     placeholder="Search..."
                     style={{
-                      fontSize: 20
+                      fontSize: 20,
                     }}
                     onChangeText={term => this.handleSearch(term)}
                   />
@@ -277,11 +275,11 @@ class PhoneInput extends Component {
                 <View
                   style={{
                     width: 60,
-                    justifyContent: "center",
-                    alignItems: "center"
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
                 >
-                  <Icon name={"close"} size={20} color={Colors.primary} />
+                  <Icon name={'close'} size={20} color={Colors.primary} />
                 </View>
               </View>
             </View>
@@ -290,8 +288,8 @@ class PhoneInput extends Component {
                 marginTop: 20,
                 marginLeft: 20,
                 flex: 1,
-                height: "100%",
-                marginBottom: 48
+                height: '100%',
+                marginBottom: 48,
               }}
             >
               <CountryItem
@@ -302,7 +300,7 @@ class PhoneInput extends Component {
               />
               <View
                 style={{
-                  flexDirection: "row"
+                  flexDirection: 'row',
                 }}
               >
                 <SectionList
@@ -313,8 +311,8 @@ class PhoneInput extends Component {
                     <Text
                       style={{
                         fontSize: 18,
-                        fontWeight: "bold",
-                        color: "#aaaaaa"
+                        fontWeight: 'bold',
+                        color: '#aaaaaa',
                       }}
                     >
                       {title}
@@ -322,7 +320,7 @@ class PhoneInput extends Component {
                   )}
                   renderItem={({
                     item,
-                    item: { flag, name, callingCodes }
+                    item: { flag, name, callingCodes },
                   }) => (
                     <CountryItem
                       flag={flag}
@@ -335,13 +333,13 @@ class PhoneInput extends Component {
                 />
                 <ScrollView
                   style={{
-                    position: "absolute",
+                    position: 'absolute',
                     right: 0,
                     paddingHorizontal: 10,
                     width: 35,
                     flex: 1,
-                    height: "100%",
-                    backgroundColor: "white"
+                    height: '100%',
+                    backgroundColor: 'white',
                   }}
                 >
                   {this.getLettersArr().map(({ letter, index }) => (
@@ -350,15 +348,15 @@ class PhoneInput extends Component {
                       onPress={() => {
                         this.myFlatList.scrollToLocation({
                           itemIndex: 0,
-                          sectionIndex: index
+                          sectionIndex: index,
                         });
                       }}
                     >
                       <Text
                         style={{
                           fontSize: 18,
-                          fontWeight: "bold",
-                          color: Colors.primary
+                          fontWeight: 'bold',
+                          color: Colors.primary,
                         }}
                       >
                         {letter}
@@ -375,43 +373,43 @@ class PhoneInput extends Component {
   }
 }
 
-const width = Dimensions.get("window").width;
+const width = Dimensions.get('window').width;
 
 const styles = {
   modalContainer: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: 'white',
   },
   modalHeader: {
-    width: "100%",
+    width: '100%',
     backgroundColor: Colors.primary,
-    alignItems: "center",
-    position: "relative",
+    alignItems: 'center',
+    position: 'relative',
     elevation: 8,
     shadowOffset: {
       width: 5,
-      height: 10
+      height: 10,
     },
-    shadowColor: "black",
-    shadowOpacity: 1
+    shadowColor: 'black',
+    shadowOpacity: 1,
   },
   modalCloseButton: {
-    position: "absolute",
+    position: 'absolute',
     top: width > 400 ? 26 : 16,
     right: 20,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalHeaderText: {
-    color: "white",
+    color: 'white',
     fontSize: width > 400 ? 24 : 18,
-    fontWeight: "bold"
+    fontWeight: 'bold',
   },
   countryCodeContainer: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
-  }
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+  },
 };
 
 export default PhoneInput;

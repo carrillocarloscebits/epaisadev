@@ -49,6 +49,7 @@ class ModalDiscount extends Component {
                                 <TextInput value={this.state.valueDiscount>'0' || this.state.valueDiscount?this.state.valueDiscount.toString():""} 
                                         onChangeText={(valueDiscount)=>{this.setState({valueDiscount})}} 
                                         onFocus={()=>{this.setState({inputFocus:true, optionsActive:false})}} 
+                                        keyboardType={'numeric'}
                                         style={[styles.textInput,wrongStyleLabel,isLandscape?{fontSize:hp('3.4%'),paddingLeft: hp('4%'),}:null]}/>
                                 <TouchableOpacity style={styles.icon} onPress={()=>{this.setState({valueDiscount: 0})}}>
                                 <IconMaterialIcons  name={"cancel"} size={isLandscape?hp('4.2%'):hp('2.9%')} color="#666"/>

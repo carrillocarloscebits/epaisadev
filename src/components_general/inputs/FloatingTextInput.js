@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { View, TextInput, Text, Animated, Platform } from "react-native";
-import { Colors } from "api";
+import React, { Component } from 'react';
+import { View, TextInput, Text, Animated, Platform } from 'react-native';
+import { Colors } from 'api';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {TextMontserrat} from "components";
+import { TextMontserrat } from 'components';
 import {
   widthPercentageToDP as wp,
-  heightPercentageToDP as hp
-} from "react-native-responsive-screen";
-import normalize from "./../utilities/helpers/normalizeText";
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import normalize from './../utilities/helpers/normalizeText';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 /**
@@ -47,19 +47,18 @@ import EStyleSheet from 'react-native-extended-stylesheet';
  */
 
 class FloatingTextInput extends Component {
-
   state = {
     isFocused: false,
-    value: this.props.value ? `${this.props.value}` : "",
+    value: this.props.value ? `${this.props.value}` : '',
     secureTextEntry: this.props.secureTextEntry,
     isPassword: this.props.secureTextEntry,
     errors: this.props.errors || [],
-    validate: this.props.validate
+    validate: this.props.validate,
   };
 
   componentWillMount() {
     this._animatedIsFocusedAndEmpty = new Animated.Value(
-      this.state.value === "" ? 0 : 1
+      this.state.value === '' ? 0 : 1
     );
     this._animatedIsFocused = new Animated.Value(0);
     // if(this.props.focus === true) {
@@ -69,71 +68,84 @@ class FloatingTextInput extends Component {
 
   componentDidUpdate() {
     Animated.timing(this._animatedIsFocusedAndEmpty, {
-      toValue: this.state.isFocused || this.state.value !== "" || this.props.focus ? 1 : 0,
-      duration: 200
+      toValue:
+        this.state.isFocused || this.state.value !== '' || this.props.focus
+          ? 1
+          : 0,
+      duration: 200,
     }).start();
 
     Animated.timing(this._animatedIsFocused, {
       toValue: this.state.isFocused ? 1 : 0,
-      duration: 100
+      duration: 100,
     }).start();
   }
 
   iconPressHandler = () => {
     if (this.state.isPassword) {
       this.setState({
-        secureTextEntry: !this.state.secureTextEntry
+        secureTextEntry: !this.state.secureTextEntry,
       });
       return;
     }
-    this.setState({ value: "" });
+    this.setState({ value: '' });
   };
 
   handleFocus = () => {
-    this.setState({ isFocused: true })
-    if(this.props.onFocus){
-      this.props.onFocus()
+    this.setState({ isFocused: true });
+    if (this.props.onFocus) {
+      this.props.onFocus();
     }
   };
 
   handleBlur = () => {
     this.setState({ isFocused: false });
-    if(this.props.onBlur){
-      this.props.onBlur()
+    if (this.props.onBlur) {
+      this.props.onBlur();
     }
   };
 
   renderValidation = () => {
-    const {validate: {title, validations}} = this.props;
+    const {
+      validate: { title, validations },
+    } = this.props;
     const textStyle = {
       fontWeight: '600',
       fontSize: EStyleSheet.value('1.2rem'),
-      color: '#6b6b6b'
-    }
+      color: '#6b6b6b',
+    };
 
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View style={{ flexDirection: 'row' }}>
         <TextMontserrat style={textStyle}>{title} - </TextMontserrat>
         <View>
           {validations.map((validation, i) => {
             const passed = validation.validateInput(this.state.value);
             const statusColor = passed ? '#00c38a' : '#787878';
             return (
-              <View key={`validation_${i}`} style={{flexDirection: 'row', alignItems: 'center', left: 3}}>
-                <IconMaterialCommunityIcons name='check-circle' color={statusColor}/>
-                <TextMontserrat style={{...textStyle, color: statusColor}}> {validation.name}</TextMontserrat>
+              <View
+                key={`validation_${i}`}
+                style={{ flexDirection: 'row', alignItems: 'center', left: 3 }}
+              >
+                <IconMaterialCommunityIcons
+                  name="check-circle"
+                  color={statusColor}
+                />
+                <TextMontserrat style={{ ...textStyle, color: statusColor }}>
+                  {' '}
+                  {validation.name}
+                </TextMontserrat>
               </View>
-            )
+            );
           })}
-
         </View>
       </View>
-    )
-  }
+    );
+  };
 
   renderIcon = () => {
     if (this.state.isPassword) {
-      const icon = this.state.secureTextEntry ? "eye-off" : "eye";
+      const icon = this.state.secureTextEntry ? 'eye-off' : 'eye';
       return (
         <IconMaterialCommunityIcons
           style={[styles.iconStyle, this.props.iconStyle]}
@@ -148,7 +160,7 @@ class FloatingTextInput extends Component {
         return (
           <IconMaterialIcons
             style={styles.iconStyle}
-            name={"cancel"}
+            name={'cancel'}
             size={24}
             color="#666"
             onPress={this.iconPressHandler}
@@ -164,115 +176,126 @@ class FloatingTextInput extends Component {
       //   v = v.toFixed(decimals);
     }
     this.setState({ value: v });
-    if(this.props.onChangeText){
+    if (this.props.onChangeText) {
       this.props.onChangeText(v);
-
     }
   };
 
   _hasError = () => {
-    if(this.props.errors) {
+    if (this.props.errors) {
       return this.props.errors.length > 0;
     }
-    return false
-  }
+    return false;
+  };
 
   showFlag = () => {
-    if(this.props.focus) {
-      return true
+    if (this.props.focus) {
+      return true;
     }
 
-    if(this.state.value !== '') {
-      return true
+    if (this.state.value !== '') {
+      return true;
     }
 
-
-    if(this.props.children && this.state.isFocused){
-      return true
+    if (this.props.children && this.state.isFocused) {
+      return true;
     }
 
     return false;
-  }
+  };
 
   render() {
-
     const leftPadding = this.props.lineLeft ? 10 : 0;
-    const paddingLeftFlags = this.props.children ? 10: 0;
+    const paddingLeftFlags = this.props.children ? 10 : 0;
     const { isFocused, value, secureTextEntry } = this.state;
-    const { label, underline, inputStyle, keyboardType, returnKeyType, onSubmitEditing, refTo } = this.props;
+    const {
+      label,
+      underline,
+      inputStyle,
+      keyboardType,
+      returnKeyType,
+      onSubmitEditing,
+      maxLength,
+    } = this.props;
 
     const inputActiveColor = this._hasError() ? Colors.danger : Colors.primary;
-    const inputInActiveColor = this._hasError() ? Colors.danger : "#6b6b6b";
+    const inputInActiveColor = this._hasError() ? Colors.danger : '#6b6b6b';
     const ExtendedStyles = EStyleSheet.create({
       labelDown: {
-        fontSize: '1.6rem'
+        fontSize: '1.6rem',
       },
       labelUp: {
-        fontSize: '1.2rem'
+        fontSize: '1.2rem',
       },
       labelOptionalDown: {
-        fontSize: '1.3rem'
+        fontSize: '1.3rem',
       },
       labelOptionalUp: {
-        fontSize: '1.0rem'
+        fontSize: '1.0rem',
       },
       underline: {
         height: '.2rem',
       },
       textInput: {
-        fontSize: '1.4rem'
+        fontSize: '1.4rem',
       },
       errorText: {
-        fontSize: '1.3rem'
+        fontSize: '1.3rem',
       },
-      '@media (min-width: 500)' : {
+      '@media (min-width: 500)': {
         textInput: {
-          fontSize: '1.6rem'
+          fontSize: '1.6rem',
         },
-      }
-    })
+      },
+    });
 
     const textInputStyle = {
       fontSize: ExtendedStyles.textInput.fontSize,
       color: isFocused ? inputActiveColor : inputInActiveColor,
       height: EStyleSheet.value('4rem'),
       marginTop: this.props.margin || 20,
-      fontFamily: "Montserrat-SemiBold",
-      width: "80%"
+      fontFamily: 'Montserrat-SemiBold',
+      width: '80%',
     };
 
     const leftOffset = Platform.OS === 'ios' ? 0 : 0;
-    
+
     const labelStyle = {
-      position: "absolute",
+      position: 'absolute',
       fontFamily: 'Montserrat-SemiBold',
       left: leftOffset + leftPadding,
       top: this._animatedIsFocusedAndEmpty.interpolate({
         inputRange: [0, 1],
-        outputRange: [28, 5]
+        outputRange: [28, 5],
       }),
       fontSize: this._animatedIsFocusedAndEmpty.interpolate({
         inputRange: [0, 1],
-        outputRange: [ExtendedStyles.labelDown.fontSize, ExtendedStyles.labelUp.fontSize]
+        outputRange: [
+          ExtendedStyles.labelDown.fontSize,
+          ExtendedStyles.labelUp.fontSize,
+        ],
       }),
-      color: "#6b6b6b",
-      ...this.props.labelStyle
+      color: '#6b6b6b',
+      ...this.props.labelStyle,
     };
     optionalLabelStyle = {
       fontSize: this._animatedIsFocusedAndEmpty.interpolate({
         inputRange: [0, 1],
-        outputRange: [ExtendedStyles.labelOptionalDown.fontSize, ExtendedStyles.labelOptionalUp.fontSize]
-      })
+        outputRange: [
+          ExtendedStyles.labelOptionalDown.fontSize,
+          ExtendedStyles.labelOptionalUp.fontSize,
+        ],
+      }),
     };
     const underlineStyle = {
       left: leftOffset,
       backgroundColor: this._animatedIsFocused.interpolate({
         inputRange: [0, 1],
-        outputRange: ['#eee', inputActiveColor]
+        outputRange: ['#eee', inputActiveColor],
       }),
       height: ExtendedStyles.underline.height,
-      width: "100%",
-      marginBottom: 3
+      width: '100%',
+      marginBottom: 3,
     };
 
     renderUnderline = () => {
@@ -282,47 +305,75 @@ class FloatingTextInput extends Component {
     };
 
     renderErrors = (color, offset, fontSize) => {
-      if(!this.props.errors) return false;
+      if (!this.props.errors) return false;
       return this.props.errors.map((error, i) => {
-        return (<TextMontserrat key={`err_${i}`} style={{
-          fontWeight: '600',
-          color: color,
-          left: offset,
-          fontSize: fontSize
-        }}>{error}</TextMontserrat>)
-      })
-    }
+        return (
+          <TextMontserrat
+            key={`err_${i}`}
+            style={{
+              fontWeight: '600',
+              color: color,
+              left: offset,
+              fontSize: fontSize,
+            }}
+          >
+            {error}
+          </TextMontserrat>
+        );
+      });
+    };
 
     return (
-      <View style={{width: '100%'}}>
+      <View style={{ width: '100%' }}>
         <Animated.Text style={labelStyle}>
-          {label}{" "}{this._hasError() && <IconMaterialCommunityIcons size={18} name="alert-circle" color={inputActiveColor}/>}
+          {label}{' '}
+          {this._hasError() && (
+            <IconMaterialCommunityIcons
+              size={18}
+              name="alert-circle"
+              color={inputActiveColor}
+            />
+          )}
           <Animated.Text style={optionalLabelStyle}>
-            {this.props.labelOptional ? this.props.labelOptional : ""}
+            {this.props.labelOptional ? this.props.labelOptional : ''}
           </Animated.Text>
         </Animated.Text>
-        <View style={{flexDirection: "row"}}>
+        <View style={{ flexDirection: 'row' }}>
           {this.renderIcon()}
-          {this.props.lineLeft && <View style={{
-            width: 1, 
-            height: 35, 
-            backgroundColor: this.state.isFocused ? inputActiveColor : '#eee',
-            position: "absolute",
-            bottom: 0
-            }}/>}
-          {this.showFlag() && <View style={{
-            alignSelf: "flex-end",
-            marginBottom: 8
-            }}>
-            {this.props.children}
-          </View>}
+          {this.props.lineLeft && (
+            <View
+              style={{
+                width: 1,
+                height: 35,
+                backgroundColor: this.state.isFocused
+                  ? inputActiveColor
+                  : '#eee',
+                position: 'absolute',
+                bottom: 0,
+              }}
+            />
+          )}
+          {this.showFlag() && (
+            <View
+              style={{
+                alignSelf: 'flex-end',
+                marginBottom: 8,
+              }}
+            >
+              {this.props.children}
+            </View>
+          )}
           <TextInput
-            style={[textInputStyle, inputStyle, {
-              paddingLeft: leftPadding + paddingLeftFlags,
-              marginLeft: paddingLeftFlags,
-              borderLeftWidth: this.props.phone && this.showFlag() ? 2 : 0,
-              borderColor: this.state.isFocused ? inputActiveColor : '#eee'
-              }]}
+            style={[
+              textInputStyle,
+              inputStyle,
+              {
+                paddingLeft: leftPadding + paddingLeftFlags,
+                marginLeft: paddingLeftFlags,
+                borderLeftWidth: this.props.phone && this.showFlag() ? 2 : 0,
+                borderColor: this.state.isFocused ? inputActiveColor : '#eee',
+              },
+            ]}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
             value={value}
@@ -332,22 +383,29 @@ class FloatingTextInput extends Component {
             underlineColorAndroid="transparent"
             returnKeyType={returnKeyType}
             onSubmitEditing={onSubmitEditing}
+            maxLength={maxLength}
           />
         </View>
         {renderUnderline()}
-        {renderErrors(inputActiveColor, leftOffset, ExtendedStyles.errorText.fontSize)}
-        {!!this.props.validate && this.state.isFocused && this.renderValidation()}
+        {renderErrors(
+          inputActiveColor,
+          leftOffset,
+          ExtendedStyles.errorText.fontSize
+        )}
+        {!!this.props.validate &&
+          this.state.isFocused &&
+          this.renderValidation()}
       </View>
     );
   }
 }
 const styles = {
   iconStyle: {
-    position: "absolute",
+    position: 'absolute',
     right: 5,
-    top: "50%",
-    
-    zIndex: 50
-  }
+    top: '50%',
+
+    zIndex: 50,
+  },
 };
 export default FloatingTextInput;

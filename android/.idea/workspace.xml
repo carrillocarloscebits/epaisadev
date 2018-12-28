@@ -9570,6 +9570,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="48" y="46" width="1400" height="920" extended-state="1" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="Android Profiler" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="TODO" order="6" />

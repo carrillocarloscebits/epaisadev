@@ -5,6 +5,7 @@ import {
   Platform,
   Dimensions,
   AsyncStorage,
+  KeyboardAvoidingView
 } from 'react-native';
 import { CREATE_ACCOUNT, FORGOT_PASSWORD } from 'navigation/screen_names';
 import { Colors } from 'api';
@@ -27,6 +28,15 @@ import {
 } from 'react-native-responsive-screen';
 import { portraitStyles } from './styles/portrait';
 import { landscapeStyles } from './styles/landscape';
+
+const isPortrait = () => {
+    const dim = Dimensions.get('window');
+    if (dim.height >= dim.width) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
 class Login extends Component {
   static navigationOptions = {

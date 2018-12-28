@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 import { Colors } from 'api';
 import {
@@ -48,6 +47,7 @@ class CreateAccount extends Component {
   };
 
   getStyles = () => {
+<<<<<<< HEAD
         return EStyleSheet.create({
             mainContainer: {
                 //flex: 1,
@@ -122,15 +122,92 @@ class CreateAccount extends Component {
             }
         });
     }
+=======
+    return EStyleSheet.create({
+      mainContainer: {
+        flex: 1,
+      },
+      scroll: {},
+      logoContainer: {
+        flexGrow: 1,
+        justifyContent: 'center',
+      },
+      cardContainer: {
+        alignItems: 'center',
+        flexGrow: 1,
+      },
+      card: {
+        paddingHorizontal: '3rem',
+        paddingBottom: '2rem',
+      },
+      termsContainer: {
+        marginVertical: '2rem',
+        flexDirection: 'row',
+        justifyContent: 'center',
+      },
+      termsText: {
+        fontSize: Dimensions.get('screen').width <= 320 ? 12 : 14,
+        fontWeight: '500',
+        textAlign: 'center',
+        color: '#666',
+      },
+      touchableText: {
+        fontSize: Dimensions.get('screen').width <= 320 ? 12 : 14,
+        fontWeight: '700',
+        color: Colors.primary,
+      },
+
+      createAccountContainer: {
+        alignItems: 'center',
+        marginBottom: 20,
+      },
+      opt_container: {
+        width: '85%',
+      },
+      '@media (min-width: 500)': {
+        $scale: 1.5,
+        $width: 320,
+        card: {
+          width: '$width',
+          paddingHorizontal: '2.5rem',
+          paddingBottom: '1.5rem',
+          borderRadius: 14,
+        },
+        createAccountButton: {
+          width: '$width',
+        },
+        opt_container: {
+          width: '$width',
+        },
+      },
+      '@media (min-width: 320) and (max-width: 500)': {
+        $width: '85%',
+        card: {
+          width: '$width',
+        },
+        forgotPasswordText: {
+          fontSize: '1.6rem',
+        },
+        containerSignIn: {},
+        signInButton: {
+          width: '$width',
+        },
+        createAccountButton: {
+          width: '$width',
+        },
+      },
+    });
+  };
+
+  _setUserData = data => {
+    this.setState({ userData: data });
+  };
+>>>>>>> ddd00010012425b13c8c055f6c21a55bdc463c3d
 
   _handleCreateAccount = () => {
     this.props.create_account(this.state.userData);
     // this.setState({show_otp: true})
   };
-
-  componentDidMount() {
-    console.log(this.props);
-  }
 
   render() {
     const otpStyles = EStyleSheet.create({

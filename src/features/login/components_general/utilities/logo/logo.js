@@ -8,18 +8,16 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 const styles = EStyleSheet.create({
     container: {
         alignItems: 'center',
-        marginBottom: '2rem'
     },
     logo: {
         height: hp('5.8%'),
         marginBottom: hp('2.2%')
     },
     lineStyle: {
-        marginTop: hp('1.15%'),
         borderColor: '#fff',
-        borderWidth: hp('3%'),
         backgroundColor:'#FFF',
         width: wp('11%'),
+        height:hp('0.3%')
     },
     text : {
         marginHorizontal: 15,
@@ -27,9 +25,6 @@ const styles = EStyleSheet.create({
         fontWeight: '700',
         fontSize: hp('1.8%'), 
         letterSpacing: wp('0.2%'),
-    },
-    lineStyle: {
-        width: '11%'
     },
 })
 
@@ -42,7 +37,7 @@ export default () => {
                 style={logo} source={LogoSrc}/>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View style={lineStyle}/>
-                    <TextMontserrat style={text}>LEARN MORE</TextMontserrat>
+                <TextMontserrat style={text}>LEARN MORE</TextMontserrat>
                 <View style={lineStyle}/>
             </View>
         </View>

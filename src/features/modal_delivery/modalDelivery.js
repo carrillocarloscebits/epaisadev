@@ -37,6 +37,7 @@ class ModalDelivery extends Component {
                                 <TextInput value={this.state.valueDelivery>'0' || this.state.valueDelivery?this.state.valueDelivery.toString():""} 
                                         onChangeText={(valueDelivery)=>{this.setState({valueDelivery})}} 
                                         onFocus={()=>{this.setState({inputFocus:true, optionsActive:false})}} 
+                                        keyboardType={'numeric'}
                                         style={[styles.textInput,wrongStyleLabel,isLandscape?{fontSize:hp('3.4%'),marginLeft: hp('4%'),paddingLeft: hp('6%')}:null]}/>
                                 <TouchableOpacity style={styles.icon} onPress={()=>{this.setState({valueDelivery: 0})}}>
                                 <IconMaterialIcons  name={"cancel"} size={isLandscape?hp('4.2%'):hp('2.5%')} color="#666"/>

@@ -50,18 +50,6 @@ class Login extends Component {
             
             forgotContainer: {
             },
-            
-            containerSignIn: {
-                alignItems: 'center',
-            },
-            containerCreateAccount: {
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-                flexGrow:1,
-            },
-            createAccountButton: {
-                marginBottom: '1rem'
-            },
           });
     }
 
@@ -104,7 +92,7 @@ class Login extends Component {
         const {email, password} = this.state;
         return (
             <DoubleBackground>
-                <ScrollView style={scroll} contentContainerStyle={{justifyContent: 'center', alignItems:'center', height:hp('100%')}} centerContent={true}>
+                <View style={{alignItems:'center', height:hp('100%'), width:('100%')}}>
                         <View style={portraitStyles.logoContainer}>
                             <Logo/>
                         </View>
@@ -131,19 +119,19 @@ class Login extends Component {
                                 Forgot your Password?
                             </TouchableText>
                         </View>
-                        <View style={containerSignIn}>
-                            <View style={signInButton}>
-                                <ButtonGradient title={'SIGN IN'}
-                                    onPress={this.handleLogin.bind(this)}
-                                />
-                            </View>
+                        <ButtonGradient 
+                            title={'SIGN IN'}
+                            style={portraitStyles.buttonSignIn}
+                            onPress={this.handleLogin.bind(this)}
+                        />
+                        <View style={portraitStyles.containerCreateAccount}>
+                            <ButtonOutline 
+                                title={'CREATE NEW ACCOUNT'} 
+                                onPress={() => this.navigateTo(CREATE_ACCOUNT)}
+                                style={portraitStyles.buttonCreateAccount}
+                            />
                         </View>
-                        <View style={containerCreateAccount}>
-                            <View style={createAccountButton}>
-                                <ButtonOutline title={'CREATE NEW ACCOUNT'} onPress={() => this.navigateTo(CREATE_ACCOUNT)}/>
-                            </View>
-                        </View>
-                </ScrollView>
+                </View>
                 {this.state.fingerprintLogin && <FingerprintModal
                     status={this.state.fingerprintStatus}
                     title="Fingerprint - Login"

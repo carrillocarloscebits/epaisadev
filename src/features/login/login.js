@@ -1,99 +1,109 @@
-import React, {Component} from 'react';
-import {View, ScrollView, Platform, Dimensions, AsyncStorage, KeyboardAvoidingView} from 'react-native';
-import {CREATE_ACCOUNT, FORGOT_PASSWORD} from 'navigation/screen_names';
-import {Colors} from 'api';
-import {FingerprintModal} from 'components';
-import { ButtonGradient, ButtonOutline, Card, TouchableText, FloatingTextInput, DoubleBackground, Loading, Logo } from 'components-login';
+import React, { Component } from 'react';
+import {
+  View,
+  ScrollView,
+  Platform,
+  Dimensions,
+  AsyncStorage,
+} from 'react-native';
+import { CREATE_ACCOUNT, FORGOT_PASSWORD } from 'navigation/screen_names';
+import { Colors } from 'api';
+import { FingerprintModal } from 'components';
+import {
+  ButtonGradient,
+  ButtonOutline,
+  Card,
+  TouchableText,
+  FloatingTextInput,
+  DoubleBackground,
+  Loading,
+  Logo,
+} from 'components-login';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Biometrics from 'react-native-biometrics';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {portraitStyles} from './styles/portrait';
-import {landscapeStyles} from './styles/landscape';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import { portraitStyles } from './styles/portrait';
+import { landscapeStyles } from './styles/landscape';
 
-const isPortrait = () => {
-    const dim = Dimensions.get('window');
-    if(dim.height >= dim.width){
-      return true;
-    }else {
-      return false;
-    }
-};
 class Login extends Component {
+  static navigationOptions = {
+    header: null,
+  };
 
-    static navigationOptions = {
-        header: null
+  state = {
+    email: '', //'am26@epaisa.com',
+    password: '', //'Test@789',
+    loading: false,
+
+    orientation: isPortrait(),
+  };
+
+  getHeight = () => {
+    if (this.state.orientation) {
+      return (
+        (Dimensions.get('window').height > 700
+          ? 700
+          : Dimensions.get('window').height) - (Platform.OS === 'ios' ? 0 : 48)
+      );
+    } else {
+      return (
+        (Dimensions.get('window').width > 700
+          ? 700
+          : Dimensions.get('window').width) - (Platform.OS === 'ios' ? 0 : 48)
+      );
     }
+  };
 
-    state = {
-        email: '',//'am26@epaisa.com',
-        password: '',//'Test@789',
-        loading: false,
-        
-        orientation: isPortrait(),
-    }
+  getEStyle = () => {
+    return EStyleSheet.create({
+      $scale: 1.5,
+      container: {
+        flex: 1,
+      },
+      scroll: {},
+      logoContainer: {
+        flexGrow: 1,
+        justifyContent: 'center',
+      },
 
-    navigateTo = (screen) => {
-        return this.props.navigation.navigate(screen);
-    }
+      forgotContainer: {},
+    });
+  };
 
-    getHeight = () => {
-        if(this.state.orientation) {
-            return (Dimensions.get('window').height > 700 ? 700 : Dimensions.get('window').height) - (Platform.OS === 'ios' ? 0 : 48);
-        } else {
-            return (Dimensions.get('window').width > 700 ? 700 : Dimensions.get('window').width) - (Platform.OS === 'ios' ? 0 : 48);
-        }
-    }
+  handleLogin() {
+    const { email, password } = this.state;
+    this.setState({ loading: true });
+    this.props.login(email, password);
+  }
 
-    getEStyle = () => {
-        return EStyleSheet.create({
-            $scale: 1.5,
-            container: {
-                flex: 1,
-            },
-            scroll: {
-            },
-            logoContainer:{
-                flexGrow:1,
-                justifyContent: 'center',
-            },
-            
-            forgotContainer: {
-            },
-          });
-    }
-
-    handleLogin() {
-        const {email, password} = this.state;
-        this.setState({loading: true})
-        this.props.login(email, password)
-    }
-
-    componentDidMount() {
-        AsyncStorage.getItem('@UsersLogged:Fingerprint')
-        .then(item => {
-            if(JSON.parse(item)) {
-                
+  componentDidMount() {
+    AsyncStorage.getItem('@UsersLogged:Fingerprint').then(item => {
+      if (JSON.parse(item)) {
+        this.setState(
+          {
+            fingerprintLogin: true,
+            fingerprintStatus: 'normal',
+          },
+          () => {
+            Biometrics.createSignature('Login with Fingerprint', 'keyToEncript')
+              .then(signature => {
+                this.props.login(null, null, signature);
+              })
+              .catch(err => {
+                console.log(err);
                 this.setState({
-                    fingerprintLogin: true,
-                    fingerprintStatus: 'normal'
-                }, () => {
-                    Biometrics.createSignature('Login with Fingerprint', 'keyToEncript')
-                    .then((signature) => {
-                        this.props.login(null, null, signature);
-                    })
-                    .catch(err => {
-                        console.log(err)
-                        this.setState({
-                            fingerprintLogin: true,
-                            fingerprintStatus: 'error'
-                        })
-                    })
-                })
-
-                
-            }
-        })
-    }
+                  fingerprintLogin: true,
+                  fingerprintStatus: 'error',
+                });
+              });
+          }
+        );
+      }
+    });
+  }
 
     render() {
         

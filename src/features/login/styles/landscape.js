@@ -58,6 +58,12 @@ export const landscapeStyles = StyleSheet.create({
         borderRadius:hp('20%'),
         borderColor:'#979797'
     },
+    textCreateAccount: {
+        color: '#164486',
+        fontWeight: 'bold',
+        fontSize: hp('1%'),
+        letterSpacing: 1.33,        
+    },
     containerCreateAccount: {
         alignItems: 'center',
         justifyContent: 'flex-end',

@@ -140,6 +140,7 @@ class Login extends Component {
                                 title={'CREATE NEW ACCOUNT'} 
                                 onPress={() => this.navigateTo(CREATE_ACCOUNT)}
                                 style={this.state.orientation ? portraitStyles.buttonCreateAccount : landscapeStyles.buttonCreateAccount}
+                                buttonTextStyle={this.state.orientation ? portraitStyles.textCreateAccount : landscapeStyles.textCreateAccount}
                             />
                         </View>
                 </View>

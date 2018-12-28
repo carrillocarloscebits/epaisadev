@@ -5,11 +5,8 @@ import {
   Platform,
   Dimensions,
   AsyncStorage,
-  KeyboardAvoidingView
 } from 'react-native';
 import { CREATE_ACCOUNT, FORGOT_PASSWORD } from 'navigation/screen_names';
-import { Colors } from 'api';
-import { FingerprintModal } from 'components';
 import {
   ButtonGradient,
   ButtonOutline,
@@ -28,18 +25,7 @@ import {
 } from 'react-native-responsive-screen';
 import { portraitStyles } from './styles/portrait';
 import { landscapeStyles } from './styles/landscape';
-<<<<<<< HEAD
 
-const isPortrait = () => {
-    const dim = Dimensions.get('window');
-    if (dim.height >= dim.width) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-=======
 const isPortrait = () => {
   const dim = Dimensions.get('window');
   if (dim.height >= dim.width) {
@@ -48,7 +34,7 @@ const isPortrait = () => {
     return false;
   }
 };
->>>>>>> 32e86aa712263f997f6f743266929ed1bf9d4f17
+
 class Login extends Component {
   static navigationOptions = {
     header: null,
@@ -216,7 +202,7 @@ class Login extends Component {
           >
             <ButtonOutline
               title={'CREATE NEW ACCOUNT'}
-              onPress={() => this.navigateTo(CREATE_ACCOUNT)}
+              onPress={() => this.props.navigation.navigate(CREATE_ACCOUNT)}
               style={
                 this.state.orientation
                   ? portraitStyles.buttonCreateAccount

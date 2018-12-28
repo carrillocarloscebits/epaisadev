@@ -37,7 +37,7 @@ class CreateAccountForm extends Component {
       return this.setState({
         errors: {
           ...(this.state.errors || {}),
-          email: ['Enter a valid e-mail address'],
+          Username: ['Enter a valid e-mail address'],
         },
       });
     }
@@ -46,7 +46,7 @@ class CreateAccountForm extends Component {
         return this.setState({
           errors: {
             ...(this.state.errors || {}),
-            email: res.errors,
+            Username: res.errors,
           },
         });
       })
@@ -80,6 +80,11 @@ class CreateAccountForm extends Component {
   }
   _textChange(key, value) {
     this.setState({ [key]: value });
+    const errors = this.state.errors;
+    errors[key] = [];
+    this.setState({
+      errors,
+    });
     this._changeForm({
       ...this.state,
       ...{ [key]: value },
@@ -94,10 +99,13 @@ class CreateAccountForm extends Component {
   };
 
   _changePhone = value => {
+    const errors = this.state.errors;
+    errors['mobile'] = [];
     this.setState({
       CountryCode: value.alpha2Code,
       UserMobileNumber: value.phone,
       CallingCode: value.callingCode,
+      errors,
     });
     this._changeForm({
       ...this.state,
@@ -143,7 +151,7 @@ class CreateAccountForm extends Component {
             value={Username}
             onChangeText={val => this._textChange('Username', val)}
             onSubmitEditing={this._checkEmail.bind(this)}
-            errors={errors.email || []}
+            errors={errors.Username || []}
           />
         </View>
         <View>

@@ -11,7 +11,7 @@ const ButtonOutline = ({title, onPress, style, buttonTextStyle}) => {
             onPress={onPress}
         >
             <View style={[buttonStyle, style]}>
-                <TextMontserrat style={buttonText}>{title}</TextMontserrat>
+                <TextMontserrat style={buttonTextStyle}>{title}</TextMontserrat>
             </View>
         </TouchableOpacity>
     )

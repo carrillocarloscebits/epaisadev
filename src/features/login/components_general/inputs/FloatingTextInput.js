@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TextInput, Text, Animated, Platform } from "react-native";
+import { View, TextInput, Text, Animated, Platform, Dimensions } from "react-native";
 import { Colors } from "api";
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -11,40 +11,14 @@ import {
 import normalize from "./../utilities/helpers/normalizeText";
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-/**
- * Example of input with errors and validation
-  <FloatingTextInput
-      label={'E-mail'}
-      errors={['Enter a valid E-mail address']}
-  />
-  <FloatingTextInput
-      label={'Password'}
-      secureTextEntry={true}
-      validate={{
-          title: 'Password must contain',
-          validations: [
-              {
-                  name: '5 Characters',
-                  validateInput: (val) => {
-                      return val.length > 5;
-                  }
-              },
-              {
-                  name: '1 Number',
-                  validateInput: (val) => {
-                      return /\d/.test(val);
-                    }
-              },
-              {
-                  name: '1 Special Character',
-                  validateInput: (val) => {
-                      return /\W+/.test(val);
-                    }
-              }
-          ]
-      }}
-  />
- */
+const isPortrait = () => {
+  const dim = Dimensions.get('window');
+  if (dim.height >= dim.width) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 class FloatingTextInput extends Component {
 
@@ -54,7 +28,9 @@ class FloatingTextInput extends Component {
     secureTextEntry: this.props.secureTextEntry,
     isPassword: this.props.secureTextEntry,
     errors: this.props.errors || [],
-    validate: this.props.validate
+    validate: this.props.validate,
+
+    orientation: isPortrait()
   };
 
   componentWillMount() {
@@ -203,34 +179,29 @@ class FloatingTextInput extends Component {
 
     const inputActiveColor = this._hasError() ? Colors.danger : Colors.primary;
     const inputInActiveColor = this._hasError() ? Colors.danger : "#6b6b6b";
-    const ExtendedStyles = EStyleSheet.create({
+    const ExtendedStyles = {
       labelDown: {
-        fontSize: '1.6rem'
+        fontSize: this.state.orientation ? hp('2.1%') : hp('2.8%')
       },
       labelUp: {
-        fontSize: '1.2rem'
+        fontSize: this.state.orientation ? hp('1.8%') : hp('2.4%')
       },
       labelOptionalDown: {
-        fontSize: '1.3rem'
+        fontSize: this.state.orientation ? hp('1.8%') : hp('2.5%')
       },
       labelOptionalUp: {
-        fontSize: '1.0rem'
+        fontSize: this.state.orientation ? hp('1.5%') : hp('2.2%')
       },
       underline: {
-        height: '.2rem',
+        height: this.state.orientation ? hp('0.4%') : hp('0.4%')
       },
       textInput: {
-        fontSize: '1.4rem'
+        fontSize: this.state.orientation ? hp('2.1%') : hp('2.8%')
       },
       errorText: {
-        fontSize: '1.3rem'
+        fontSize: this.state.orientation ? hp('1.8%') : hp('2.5%')
       },
-      '@media (min-width: 500)' : {
-        textInput: {
-          fontSize: '1.6rem'
-        },
-      }
-    })
+    }
 
     const textInputStyle = {
       fontSize: ExtendedStyles.textInput.fontSize,
@@ -249,7 +220,7 @@ class FloatingTextInput extends Component {
       left: leftOffset + leftPadding,
       top: this._animatedIsFocusedAndEmpty.interpolate({
         inputRange: [0, 1],
-        outputRange: [28, 5]
+        outputRange: this.state.orientation ? [28, 5] : [28, 0]
       }),
       fontSize: this._animatedIsFocusedAndEmpty.interpolate({
         inputRange: [0, 1],

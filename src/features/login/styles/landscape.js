@@ -40,6 +40,8 @@ export const landscapeStyles = StyleSheet.create({
         height:hp('7.8%'),
         marginTop:hp('3.3%'),
         borderRadius:hp('20%'),
+        justifyContent:'center',
+        alignItems:'center',
         ...Platform.select({
             ios: {
                 shadowOffset: { width: 1, height: 2 },
@@ -51,6 +53,12 @@ export const landscapeStyles = StyleSheet.create({
             }
         })
     },
+    textSignIn: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: hp('2.6%'),
+        letterSpacing: 1.33,
+    },
     buttonCreateAccount: {
         width:wp('45.7%'), 
         height:hp('7.8%'),
@@ -61,7 +69,7 @@ export const landscapeStyles = StyleSheet.create({
     textCreateAccount: {
         color: '#164486',
         fontWeight: 'bold',
-        fontSize: hp('1%'),
+        fontSize: hp('2.7%'),
         letterSpacing: 1.33,        
     },
     containerCreateAccount: {

@@ -3,13 +3,14 @@ package com.project_1;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.rnbiometrics.ReactNativeBiometricsPackage;
-import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
 import org.wonday.orientation.OrientationPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
+import com.imagepicker.ImagePickerPackage;
+import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.rnbiometrics.ReactNativeBiometricsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -30,13 +31,14 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ReactNativeBiometricsPackage(),
-            new ImagePickerPackage(),
             new VectorIconsPackage(),
             new SvgPackage(),
             new OrientationPackage(),
             new LinearGradientPackage(),
+            new ImagePickerPackage(),
+            new ExtraDimensionsPackage(),
             new RNDeviceInfo(),
+            new ReactNativeBiometricsPackage(),
             new RNGestureHandlerPackage()
       );
     }

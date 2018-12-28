@@ -6,6 +6,10 @@ import {FingerprintModal} from 'components';
 import { ButtonGradient, ButtonOutline, Card, TouchableText, FloatingTextInput, DoubleBackground, Loading, Logo } from 'components-login';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Biometrics from 'react-native-biometrics';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {portraitStyles} from './styles/portrait';
+import {landscapeStyles} from './styles/landscape';
+
 
 class Login extends Component {
 
@@ -17,14 +21,6 @@ class Login extends Component {
         email: '',//'am26@epaisa.com',
         password: '',//'Test@789',
         loading: false
-    }
-
-    wp = (dp) => {
-        return (dp/100) * Dimensions.get("window").width;
-    }
-
-    hp = (dp) => {
-        return (dp/100) * Dimensions.get("window").height;
     }
 
     navigateTo = (screen) => {
@@ -51,22 +47,10 @@ class Login extends Component {
                 flexGrow:1,
                 justifyContent: 'center',
             },
-            cardContainer: {
-                alignItems: 'center',
-            },
-            card: {
-                paddingHorizontal: '3rem',
-                paddingBottom: '2rem'
-            },
+            
             forgotContainer: {
             },
-            forgotPasswordText: {
-                fontWeight: '700',
-                color: Colors.primary,
-                textAlign: 'center',
-                fontSize: '2rem',
-                margin: '.8rem'
-            },
+            
             containerSignIn: {
                 alignItems: 'center',
             },
@@ -78,45 +62,6 @@ class Login extends Component {
             createAccountButton: {
                 marginBottom: '1rem'
             },
-            '@media (min-width: 500)': {
-                $width: 320,
-                card: {
-                    width: '$width',
-                    paddingHorizontal: '2.5rem',
-                    paddingBottom: '1.5rem'
-                },
-                forgotPasswordText: {
-                    fontSize: 14
-                },
-                signInButton: {
-                    width: '$width'
-                },
-                containerCreateAccount: {
-                    justifyContent: 'flex-start'
-                },
-                createAccountButton: {
-                    marginTop: 20,
-                    width: '$width'
-                }
-            },
-            '@media (min-width: 320) and (max-width: 500)': {
-                $scale: 1,
-                $width: '85%',
-                card: {
-                    width: '$width',
-                },
-                forgotPasswordText: {
-                    fontSize: '1.6rem'
-                },
-                containerSignIn: {
-                },
-                signInButton: {
-                    width: '$width'
-                },
-                createAccountButton: {
-                    width: '$width'
-                }
-            }
           });
     }
 
@@ -152,12 +97,12 @@ class Login extends Component {
         const {email, password} = this.state;
         return (
             <DoubleBackground>
-                <ScrollView style={scroll} contentContainerStyle={{justifyContent: 'center', flex:1}} centerContent={true}>
-                        <View style={logoContainer}>
+                <ScrollView style={scroll} contentContainerStyle={{justifyContent: 'center', alignItems:'center', height:hp('100%')}} centerContent={true}>
+                        <View style={portraitStyles.logoContainer}>
                             <Logo/>
                         </View>
-                        <View style={cardContainer}>
-                            <Card style={this.getEStyle().card}>
+                        <View style={portraitStyles.cardContainer}>
+                            <Card style={portraitStyles.card}>
                                 <FloatingTextInput
                                     label={'E-mail'}
                                     onChangeText={(email) => this.setState({email})}
@@ -175,7 +120,7 @@ class Login extends Component {
                         <View style={forgotContainer}>
                             <TouchableText
                                 onPress={() => this.navigateTo(FORGOT_PASSWORD)}
-                                style={forgotPasswordText}>
+                                style={portraitStyles.forgotPasswordText}>
                                 Forgot your Password?
                             </TouchableText>
                         </View>

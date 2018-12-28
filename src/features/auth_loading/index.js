@@ -28,7 +28,7 @@ export default class AuthLoading extends Component {
         // screen will be unmounted and thrown away.
         setTimeout(() => {
             this.props.navigation.navigate(false ? 'App' : 'Auth');
-        }, 2000)
+        }, 100)
     };
 
     render() {

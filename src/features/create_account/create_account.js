@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, ScrollView, Dimensions} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 import {Colors} from 'api';
 import { DoubleBackground, Timer, ButtonClose, Card, TextMontserrat, BackHeader, ButtonGradient, Loading, TouchableText, Logo, PopUp} from 'components';
@@ -35,7 +36,7 @@ class CreateAccount extends Component {
     getStyles = () => {
         return EStyleSheet.create({
             mainContainer: {
-                flex: 1,
+                //flex: 1,
             },
             scroll: {
             },

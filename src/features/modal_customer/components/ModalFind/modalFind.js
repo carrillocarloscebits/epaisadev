@@ -32,11 +32,21 @@ class ModalFind extends Component {
             let nameLen=name.length
             let number=item.substring(item.indexOf('/')+1,item.length);
             let numberLen=number.length
-            const nameMatch = (<View style={{flexDirection:'row', alignItems:'center'}}><Text style={{fontFamily:"Montserrat-Bold", fontSize:hp('1.3%'),letterSpacing:hp('0.2%')}}>{name.slice(0,index)}</Text><Text style={{backgroundColor:'blue',fontFamily:"Montserrat-Bold", fontSize:hp('1.3%'),letterSpacing:hp('0.2%')}}>{name.slice(index,index+valLen)}</Text><Text style={{fontFamily:"Montserrat-Bold", fontSize:hp('1.3%'),letterSpacing:hp('0.2%')}}>{name.slice(index+valLen,nameLen)}</Text></View>)
-            const numberMatch = (<View style={{flexDirection:'row', alignItems:'center'}}><Text>{number.slice(0,index-1-nameLen)}</Text><Text style={{backgroundColor:'blue'}}>{number.slice(index-1-nameLen,index+valLen-1-nameLen)}</Text><Text>{number.slice(index-1-nameLen+valLen,numberLen)}</Text></View>)
-            return(<View style={{flexDirection:'row', alignItems:'center'}} key={i}>{index<nameLen?nameMatch:(<Text>{name}</Text>)}<Text>/</Text>{index>nameLen?numberMatch:(<Text>{number}</Text>)}</View>)
-            //return(<Text key={i}><Text key={i} style={{color:'blue'}}>{name.slice(0,index<nameLen?index:nameLen)}<Text style={{backgroundColor:'blue'}}>{index<nameLen?name.slice(index,index+valLen):null}</Text>{name.slice(index+valLen,nameLen)}/</Text><Text key={i} style={{color:'red'}}>{number.slice(0,index>nameLen?index+1:numberLen)}<Text style={{backgroundColor:'blue'}}>{index>nameLen?number.slice(index,index+1+valLen):null}</Text>{number.slice(index+valLen,nameLen)}</Text></Text>)
-            //return(<Text key={i}>{item.slice(0,index)}<Text style={{backgroundColor:'blue'}}>{item.slice(index,index+valLen)}</Text>{item.slice(index+valLen,item.length)}</Text>)
+            const nameMatch = (<View style={{flexDirection:'row', alignItems:'center'}}>
+                <Text style={styles.labelNameCustomer}>{name.slice(0,index)}</Text>
+                <Text style={[{backgroundColor:'#5AC8FA', paddingVertical:hp('0.35%')},styles.labelNameCustomer]}>{name.slice(index,index+valLen)}</Text>
+                <Text style={styles.labelNameCustomer}>{name.slice(index+valLen,nameLen)}</Text>
+            </View>)
+            const numberMatch = (<View style={{flexDirection:'row', alignItems:'center'}}>
+                <Text style={styles.labelNumberCustomer}>{number.slice(0,index-1-nameLen)}</Text>
+                <Text style={[{backgroundColor:'#5AC8FA', paddingVertical:hp('0.3%')},styles.labelNumberCustomer]}>{number.slice(index-1-nameLen,index+valLen-1-nameLen)}</Text>
+                <Text style={styles.labelNumberCustomer}>{number.slice(index-1-nameLen+valLen,numberLen)}</Text>
+            </View>)
+            return(<View style={[styles.itemBox,{flexDirection:'row', alignItems:'center'},i>0?{borderTopWidth:1, borderColor:'rgba(108,123,138,0.08)'}:null]} key={i}>
+                {index<nameLen?nameMatch:(<Text style={styles.labelNameCustomer}>{name}</Text>)}
+                <Text style={styles.labelNameCustomer}>/</Text>{
+                index>nameLen?numberMatch:(<Text style={styles.labelNumberCustomer}>{number}</Text>)}
+            </View>)
         })
     }
     render() {
@@ -105,6 +115,20 @@ const styles = StyleSheet.create({
         elevation: 10,
         borderRadius: 10,
         top:hp("5.3%"),
+    },
+    labelNameCustomer:{
+        fontFamily:"Montserrat-Bold", 
+        fontSize:hp('1.38%'),
+        letterSpacing:hp('0.2%')
+    },
+    labelNumberCustomer:{
+        fontFamily:"Montserrat-Bold", 
+        fontSize:hp('1.32%'),
+        letterSpacing:hp('0.1%')
+    },
+    itemBox:{
+        paddingLeft:hp('3%'),
+        paddingVertical:hp('2%')
     }
 });
 

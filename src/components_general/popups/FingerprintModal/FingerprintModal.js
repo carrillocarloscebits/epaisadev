@@ -6,7 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 // create a component
 class FingerprintModal extends Component {
     render() {
-        const {active, status, action, cancel, title, description} = this.props;
+        const {active, status, action, cancel, title, description, notNow, openSettings} = this.props;
 
         colorFinger = status == 'normal' ? '#52565F' : status == 'success'? '#09BA83' : '#D0021B'
         labelDescription = status == 'normal' ? 'Register your fingerprint': status == 'success' ? 'Fingerprint registered' : 'Fingerprint not found';
@@ -24,11 +24,11 @@ class FingerprintModal extends Component {
                             status=='error'?
                             <View style={styles.buttonContainer}>
                                 
-                                <TouchableOpacity onPress={action} style= {{backgroundColor: 'white', borderRadius:25,elevation:5,width: '45%', paddingVertical: hp('1.7%'), alignItems: 'center', justifyContent: 'center'}} >
+                                <TouchableOpacity onPress={notNow} style= {{backgroundColor: 'white', borderRadius:25,elevation:5,width: '45%', paddingVertical: hp('1.7%'), alignItems: 'center', justifyContent: 'center'}} >
                                     <Text style={{color:'#174285',fontSize: hp('1.7%'),fontFamily:'Montserrat-Bold', letterSpacing:1}}>NOT NOW</Text>  
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={action} style={styles.buttonRight}>
-                                <LinearGradient 
+                                <TouchableOpacity onPress={openSettings} style={styles.buttonRight}>
+                                <LinearGradient
                                     colors={['#174285', '#0079AA']} 
                                     start={{ x: 0, y: 1 }}
                                     end={{ x: 1, y: 1 }}

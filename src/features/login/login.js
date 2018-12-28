@@ -84,6 +84,13 @@ class Login extends Component {
                     .then((signature) => {
                         this.props.login(null, null, signature);
                     })
+                    .catch(err => {
+                        console.log(err)
+                        this.setState({
+                            fingerprintLogin: true,
+                            fingerprintStatus: 'error'
+                        })
+                    })
                 })
 
                 
@@ -141,7 +148,8 @@ class Login extends Component {
                     status={this.state.fingerprintStatus}
                     title="Fingerprint - Login"
                     description="Login with your fingerprint"
-                    cancel={() => this.setState({fingerprintLogin: false})} 
+                    cancel={() => this.setState({fingerprintLogin: false})}
+                    notNow={() => this.setState({fingerprintLogin: false})}
                 />}
             </DoubleBackground>
         )

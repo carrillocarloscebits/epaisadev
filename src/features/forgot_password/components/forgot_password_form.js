@@ -87,6 +87,11 @@ const styles = EStyleSheet.create({
     },
     nameInputs: {
         flexDirection: 'row',
+    },
+    '@media (min-width: 500)': {
+        instructions: {
+            fontSize: '1.4rem',
+        },
     }
 })
 

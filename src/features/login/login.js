@@ -25,7 +25,7 @@ import {
 } from 'react-native-responsive-screen';
 import { portraitStyles } from './styles/portrait';
 import { landscapeStyles } from './styles/landscape';
-
+import { FingerprintModal } from 'components';
 const isPortrait = () => {
   const dim = Dimensions.get('window');
   if (dim.height >= dim.width) {
@@ -49,27 +49,34 @@ class Login extends Component {
   };
 
   componentDidMount() {
-    AsyncStorage.getItem('@UsersLogged:Fingerprint').then(item => {
-      if (JSON.parse(item)) {
-        this.setState(
-          {
-            fingerprintLogin: true,
-            fingerprintStatus: 'normal',
-          },
-          () => {
-            Biometrics.createSignature('Login with Fingerprint', 'keyToEncript')
-              .then(signature => {
-                this.props.login(null, null, signature);
-              })
-              .catch(err => {
-                console.log(err);
-                this.setState({
-                  fingerprintLogin: true,
-                  fingerprintStatus: 'error',
-                });
-              });
+    Biometrics.isSensorAvailable().then(biometryType => {
+      if (biometryType === Biometrics.TouchID) {
+        AsyncStorage.getItem('@UsersLogged:Fingerprint').then(item => {
+          if (JSON.parse(item)) {
+            this.setState(
+              {
+                fingerprintLogin: true,
+                fingerprintStatus: 'normal',
+              },
+              () => {
+                Biometrics.createSignature(
+                  'Login with Fingerprint',
+                  'keyToEncript'
+                )
+                  .then(signature => {
+                    this.props.login(null, null, signature);
+                  })
+                  .catch(err => {
+                    console.log(err);
+                    this.setState({
+                      fingerprintLogin: true,
+                      fingerprintStatus: 'error',
+                    });
+                  });
+              }
+            );
           }
-        );
+        });
       }
     });
   }
@@ -216,13 +223,15 @@ class Login extends Component {
             />
           </View>
         </View>
-        {/* {this.state.fingerprintLogin && <FingerprintModal
-                    status={this.state.fingerprintStatus}
-                    title="Fingerprint - Login"
-                    description="Login with your fingerprint"
-                    cancel={() => this.setState({fingerprintLogin: false})}
-                    notNow={() => this.setState({fingerprintLogin: false})}
-                />} */}
+        {this.state.fingerprintLogin && (
+          <FingerprintModal
+            status={this.state.fingerprintStatus}
+            title="Fingerprint - Login"
+            description="Login with your fingerprint"
+            cancel={() => this.setState({ fingerprintLogin: false })}
+            notNow={() => this.setState({ fingerprintLogin: false })}
+          />
+        )}
       </DoubleBackground>
     );
   }

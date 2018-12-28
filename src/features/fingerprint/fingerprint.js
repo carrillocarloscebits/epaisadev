@@ -60,18 +60,17 @@ class FingerPrint extends Component {
     Biometrics.isSensorAvailable()
       .then(biometryType => {
         if (biometryType === Biometrics.TouchID) {
-          this.toggleModalFinger('normal', () => {
-            Biometrics.createSignature('register', 'keyToEncript')
-              .then(signature => {
-                this.setState({ status: 'success' });
-                this.props.register_fingerprint(
-                  this.props.user.response.id,
-                  signature,
-                  this.props.user.response.auth_key
-                );
-              })
-              .catch(err => console.log(err));
-          });
+          Biometrics.createSignature('register', 'keyToEncript')
+            .then(signature => {
+              this.props.register_fingerprint(
+                this.props.user.response.id,
+                signature,
+                this.props.user.response.auth_key
+              );
+            })
+            .catch(() => {
+              this.toggleModalFinger('error', () => {});
+            });
         } else {
           this.fingerprintError('no fingerprint scanner');
         }
@@ -118,13 +117,14 @@ class FingerPrint extends Component {
           onReject={this._rejectLinkFingerprint}
         />
         <FingerContainer />
-        {/* {this.state.modalActive && (
+        {this.state.modalActive && (
           <FingerprintModal
             action={this.changeStatus}
             status={this.state.status}
             cancel={() => this.setState({ modalActive: false })}
+            notNow={() => this.setState({ modalActive: false })}
           />
-        )} */}
+        )}
       </View>
     );
   }

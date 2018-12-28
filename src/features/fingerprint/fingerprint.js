@@ -63,6 +63,7 @@ class FingerPrint extends Component{
                         }, 1000)
                         console.log(signature)
                     })
+                    .catch(err => console.log(err))
                 });
             }else{
                 this.fingerprintError('no fingerprint scanner');

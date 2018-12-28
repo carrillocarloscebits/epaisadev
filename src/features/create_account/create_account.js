@@ -100,6 +100,9 @@ class CreateAccount extends Component {
         createAccountButton: {
           width: '$width',
         },
+        opt_container: {
+          width: '$width',
+        },
       },
       '@media (min-width: 320) and (max-width: 500)': {
         $width: '85%',
@@ -128,10 +131,6 @@ class CreateAccount extends Component {
     this.props.create_account(this.state.userData);
     // this.setState({show_otp: true})
   };
-
-  componentDidMount() {
-    console.log(this.props);
-  }
 
   render() {
     const otpStyles = EStyleSheet.create({

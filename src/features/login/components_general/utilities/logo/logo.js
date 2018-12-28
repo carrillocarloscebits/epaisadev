@@ -3,6 +3,7 @@ import {View, Image} from 'react-native';
 import TextMontserrat from '../../texts/textMontserrat';
 import LogoSrc from './assets/ep_logo.png';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const styles = EStyleSheet.create({
     container: {
@@ -10,30 +11,28 @@ const styles = EStyleSheet.create({
         marginBottom: '2rem'
     },
     logo: {
-        width: '60%',
-        height: 60
+        height: hp('5.8%'),
+        marginBottom: hp('2.2%')
     },
     lineStyle: {
-        width: '15%',
-        height: '0.3rem',
-        backgroundColor: 'white'
+        marginTop: hp('1.15%'),
+        borderColor: '#fff',
+        borderWidth: hp('3%'),
+        backgroundColor:'#FFF',
+        width: wp('11%'),
     },
     text : {
         marginHorizontal: 15,
         color: 'white', 
         fontWeight: '700',
-        fontSize: '1.4rem'
+        fontSize: hp('1.8%'), 
+        letterSpacing: wp('0.2%'),
     },
-    '@media (min-width: 500)': {
-        lineStyle: {
-            width: '11%'
-        },
-        logo: {
-            marginBottom: '.5rem'
-        }
-    }
-
+    lineStyle: {
+        width: '11%'
+    },
 })
+
 export default () => {
     const {lineStyle, logo, container, text} = styles;
     return (

@@ -16,10 +16,15 @@ class EditProduct extends Component {
     state={      
         rupeeSign:'₹ ',
         name:'',
-        quantity:0,
-        price:0.00,
-        discount:0.00,
+        quantity:'',
+        price:'',
+        discount:'',
         image:'',
+
+        tempName:'',
+        tempQuantity:'',
+        tempDiscount:'',
+        tempImage:'',
 
         products: []
     }
@@ -119,6 +124,7 @@ class EditProduct extends Component {
                                 autoCapitalizeText={"words"}  
                                 orientation={orientation}     
                                 ref={(name)=>{this.name=name}}
+                                //firstValue={this.state.name}
                                 />
                         </View>
                         <FloatingTextEditProductInput
@@ -130,20 +136,21 @@ class EditProduct extends Component {
                             eraseOption={false}
                             autoCapitalizeText={"words"}   
                             orientation={orientation}    
-                            ref={(quantity)=>{this.quantity=quantity}}   
+                            ref={(quantity)=>{this.quantity=quantity}} 
+                            //firstValue={this.state.quantity}  
                             />
                         <FloatingTextEditProductInput
                             width={priceInputSize.width} 
                             height={priceInputSize.height} 
                             labelText={'Price (₹)'} 
-                            firstValue={this.props.item.unitPrice}
                             value={this.state.price}
                             typeOfKeyboard={'numeric'}
                             eraseOption={true}
                             autoCapitalizeText={"words"}   
                             orientation={orientation}  
                             rupeeSign={true}    
-                            ref={(price)=>{this.price=price}}   
+                            ref={(price)=>{this.price=price}}
+                            firstValue={this.props.item.unitPrice}   
                             />
                         <View style={{width:wp(discountSelectorSize.width+'%'), height:hp(discountSelectorSize.height+'%'), paddingLeft:wp('1%')}}>
                             <SelectorDiscount 

@@ -83,7 +83,7 @@ class FloatingTextInput extends Component {
     const {validate: {title, validations}} = this.props;
     const textStyle = {
       fontWeight: '600',
-      fontSize: EStyleSheet.value('1.2rem'),
+      fontSize: hp('1.8%'),
       color: '#6b6b6b'
     }
 
@@ -184,7 +184,7 @@ class FloatingTextInput extends Component {
         fontSize: this.state.orientation ? hp('2.1%') : hp('2.8%')
       },
       labelUp: {
-        fontSize: this.state.orientation ? hp('1.8%') : hp('2.4%')
+        fontSize: this.state.orientation ? hp('1.8%') : hp('2.2%')
       },
       labelOptionalDown: {
         fontSize: this.state.orientation ? hp('1.8%') : hp('2.5%')
@@ -206,10 +206,12 @@ class FloatingTextInput extends Component {
     const textInputStyle = {
       fontSize: ExtendedStyles.textInput.fontSize,
       color: isFocused ? inputActiveColor : inputInActiveColor,
-      height: EStyleSheet.value('4rem'),
+      height: hp('7%'),
       marginTop: this.props.margin || 20,
       fontFamily: "Montserrat-SemiBold",
-      width: "80%"
+      width: "80%",
+      paddingBottom: this.state.orientation ? hp('1%') : hp('1%'),
+      backgroundColor:'#E4C58E'
     };
 
     const leftOffset = Platform.OS === 'ios' ? 0 : 0;
@@ -265,7 +267,7 @@ class FloatingTextInput extends Component {
     }
 
     return (
-      <View style={{width: '100%'}}>
+      <View style={{width: '100%', backgroundColor:'yellow', height:hp('12%')}}>
         <Animated.Text style={labelStyle}>
           {label}{" "}{this._hasError() && <IconMaterialCommunityIcons size={18} name="alert-circle" color={inputActiveColor}/>}
           <Animated.Text style={optionalLabelStyle}>
@@ -297,6 +299,7 @@ class FloatingTextInput extends Component {
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
             value={value}
+            autoCorrect={false}
             onChangeText={v => this._changeText(v)}
             secureTextEntry={secureTextEntry}
             keyboardType={keyboardType}

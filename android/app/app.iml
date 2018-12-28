@@ -141,7 +141,9 @@
     <orderEntry type="module" module-name="react-native-svg" />
     <orderEntry type="module" module-name="react-native-orientation-locker" />
     <orderEntry type="module" module-name="react-native-vector-icons" />
+    <orderEntry type="module" module-name="react-native-biometrics" />
     <orderEntry type="module" module-name="react-native-linear-gradient" />
     <orderEntry type="module" module-name="react-native-device-info" />
+    <orderEntry type="module" module-name="react-native-image-picker" />
   </component>
 </module>

@@ -11,7 +11,7 @@ const listOptions = [
     {label:"Transactions",icon:require('../../assets/icons/transactions.png'), size:"medium"},
     {label:"Settings",icon:require('../../assets/img/Settings.png'), size:"default"},
     {label:"My Account",icon:require('../../assets/icons/myaccount.png'), size:"medium"},
-    {label:"Help - v1.17",icon:require('../../assets/icons/help.png'), size:"medium"},
+    {label:"Help - v1.18",icon:require('../../assets/icons/help.png'), size:"medium"},
 ]
 export default class ListOptions extends Component{
 

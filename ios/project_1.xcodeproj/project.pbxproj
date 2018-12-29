@@ -81,6 +81,7 @@
 		D2E02C146AF84F1898553751 /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A92D23194584661A2972DA6 /* libRNSVG-tvOS.a */; };
 		CE94358ABFCD4964907060BE /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9974AFFC984E4EF5B8304C42 /* libRNImagePicker.a */; };
 		174ACAAC92EB4E8BBE1EBF6E /* libReactNativeBiometrics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E6523D98079442C8F1F3047 /* libReactNativeBiometrics.a */; };
+		2D532CB554AD458390DDD205 /* libRNInstabug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C047E881AC34F69B81FA44A /* libRNInstabug.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -438,6 +439,8 @@
 		9974AFFC984E4EF5B8304C42 /* libRNImagePicker.a */ = {isa = PBXFileReference; name = "libRNImagePicker.a"; path = "libRNImagePicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		F551CF8D1B254609AEA2701F /* ReactNativeBiometrics.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativeBiometrics.xcodeproj"; path = "../node_modules/react-native-biometrics/ios/ReactNativeBiometrics.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		7E6523D98079442C8F1F3047 /* libReactNativeBiometrics.a */ = {isa = PBXFileReference; name = "libReactNativeBiometrics.a"; path = "libReactNativeBiometrics.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		DFB8328C58594981A15E9B30 /* RNInstabug.xcodeproj */ = {isa = PBXFileReference; name = "RNInstabug.xcodeproj"; path = "../node_modules/instabug-reactnative/ios/RNInstabug.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		4C047E881AC34F69B81FA44A /* libRNInstabug.a */ = {isa = PBXFileReference; name = "libRNInstabug.a"; path = "libRNInstabug.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -473,6 +476,7 @@
 				B3447CE1982642C68DB92C7D /* libRNSVG.a in Frameworks */,
 				CE94358ABFCD4964907060BE /* libRNImagePicker.a in Frameworks */,
 				174ACAAC92EB4E8BBE1EBF6E /* libReactNativeBiometrics.a in Frameworks */,
+				2D532CB554AD458390DDD205 /* libRNInstabug.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,6 +674,7 @@
 				E40A5AB8CB5545148E805BA7 /* RNSVG.xcodeproj */,
 				3B9D396AF2874A0F95C74D60 /* RNImagePicker.xcodeproj */,
 				F551CF8D1B254609AEA2701F /* ReactNativeBiometrics.xcodeproj */,
+				DFB8328C58594981A15E9B30 /* RNInstabug.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1383,6 +1388,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1394,6 +1400,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
+					"$(SRCROOT)\..\node_modules\instabug-reactnative\ios\RNInstabug/**",
 				);
 			};
 			name = Debug;
@@ -1426,6 +1433,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1437,6 +1445,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
+					"$(SRCROOT)\..\node_modules\instabug-reactnative\ios\RNInstabug/**",
 				);
 			};
 			name = Release;
@@ -1467,6 +1476,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
+					"$(SRCROOT)\..\node_modules\instabug-reactnative\ios\RNInstabug/**",
 				);
 			};
 			name = Debug;
@@ -1496,6 +1506,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
+					"$(SRCROOT)\..\node_modules\instabug-reactnative\ios\RNInstabug/**",
 				);
 			};
 			name = Release;
@@ -1536,6 +1547,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1547,6 +1559,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
+					"$(SRCROOT)\..\node_modules\instabug-reactnative\ios\RNInstabug/**",
 				);
 			};
 			name = Debug;
@@ -1587,6 +1600,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1598,6 +1612,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
+					"$(SRCROOT)\..\node_modules\instabug-reactnative\ios\RNInstabug/**",
 				);
 			};
 			name = Release;
@@ -1637,6 +1652,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1648,6 +1664,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
+					"$(SRCROOT)\..\node_modules\instabug-reactnative\ios\RNInstabug/**",
 				);
 			};
 			name = Debug;
@@ -1687,6 +1704,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1698,6 +1716,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
+					"$(SRCROOT)\..\node_modules\instabug-reactnative\ios\RNInstabug/**",
 				);
 			};
 			name = Release;

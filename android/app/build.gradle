@@ -106,11 +106,12 @@ android {
         applicationId "com.project_1"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 17
-        versionName "1.17"
+        versionCode 18
+        versionName "1.18"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        multiDexEnabled true
     }
     splits {
         abi {
@@ -153,6 +154,7 @@ android {
 }
 
 dependencies {
+    compile project(':instabug-reactnative')
     compile project(':react-native-vector-icons')
     compile project(':react-native-svg')
     compile project(':react-native-orientation-locker')

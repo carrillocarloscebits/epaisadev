@@ -26,6 +26,7 @@ import {
 import { portraitStyles } from './styles/portrait';
 import { landscapeStyles } from './styles/landscape';
 import { FingerprintModal } from 'components';
+
 const isPortrait = () => {
   const dim = Dimensions.get('window');
   if (dim.height >= dim.width) {
@@ -41,8 +42,8 @@ class Login extends Component {
   };
 
   state = {
-    email: '', //'am26@epaisa.com',
-    password: '', //'Test@789',
+    email: 'am26@epaisa.co',
+    password: 'Test@789',
     loading: false,
 
     orientation: isPortrait(),
@@ -181,7 +182,7 @@ class Login extends Component {
           </KeyboardAvoidingView>
           <View style={forgotContainer}>
             <TouchableText
-              onPress={() => this.navigateTo(FORGOT_PASSWORD)}
+              onPress={() => this.props.navigation.navigate(FORGOT_PASSWORD)}
               style={
                 this.state.orientation
                   ? portraitStyles.forgotPasswordText

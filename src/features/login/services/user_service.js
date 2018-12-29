@@ -12,6 +12,7 @@ import {
 } from './server-api';
 
 export function login(email, password) {
+    console.log('HERE')
     const returnEncrypt = encryptJson(email, password);
     return sendRequest(returnEncrypt,'/user/login');
 }

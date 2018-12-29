@@ -42,7 +42,7 @@ async function sendRequestGet(encryptedParam, direction) {
     return responseJson;
  }
 
- async function sendRequest(encryptedParam, direction) {
+ async function sendRequest(encryptedParam, direction) { 
     //console.log("Paramsgg",encryptedParam);
     console.log("BASE URI: ", url + direction);    
     console.log("sendRequest ENCRYPARAM: ", encryptedParam);

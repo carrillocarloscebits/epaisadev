@@ -5,7 +5,7 @@ import {
   Platform,
   Dimensions,
   AsyncStorage,
-  Text
+  Text,
 } from 'react-native';
 import { CREATE_ACCOUNT, FORGOT_PASSWORD } from 'navigation/screen_names';
 import {
@@ -26,8 +26,7 @@ import {
 } from 'react-native-responsive-screen';
 import { portraitStyles } from './styles/portrait';
 import { landscapeStyles } from './styles/landscape';
-import { FingerprintModal } from 'components';
-import {Alert} from './components_general/alert_message';
+import { FingerprintModal, Alert } from 'components';
 
 const isPortrait = () => {
   const dim = Dimensions.get('window');
@@ -44,45 +43,48 @@ class Login extends Component {
   };
 
   state = {
-    email: '',//'am26@epaisa.co',
-    password: '',//'Test@789',
+    email: 'am26@epaisa.com',
+    password: 'Test@789',
     loading: false,
 
     orientation: isPortrait(),
-
   };
 
-  componentDidMount() {
-    Biometrics.isSensorAvailable().then(biometryType => {
-      if (biometryType === Biometrics.TouchID) {
-        AsyncStorage.getItem('@UsersLogged:Fingerprint').then(item => {
-          if (JSON.parse(item)) {
-            this.setState(
-              {
-                fingerprintLogin: true,
-                fingerprintStatus: 'normal',
-              },
-              () => {
-                Biometrics.createSignature(
-                  'Login with Fingerprint',
-                  'keyToEncript'
-                )
-                  .then(signature => {
-                    this.props.login(null, null, signature);
-                  })
-                  .catch(err => {
-                    console.log(err);
-                    this.setState({
-                      fingerprintLogin: true,
-                      fingerprintStatus: 'error',
-                    });
-                  });
-              }
-            );
-          }
-        });
+  async componentDidMount() {
+    // Biometrics.isSensorAvailable().then(biometryType => {
+    //   if (biometryType === Biometrics.TouchID) {
+    //     AsyncStorage.getItem('@UsersLogged:Fingerprint').then(item => {
+    //       if (JSON.parse(item)) {
+    //         Biometrics.createSignature('Login with Fingerprint', 'keyToEncrypt')
+    //           .then(signature => {
+    //             this.props.login(null, null, signature);
+    //           })
+    //           .catch(err => {
+    //             console.log(err);
+    //             this.setState({
+    //               fingerprintLogin: true,
+    //               fingerprintStatus: 'error',
+    //             });
+    //           });
+    //       }
+    //     });
+    //   }
+    // });
+    try {
+      console.log(this.props.navigation.getParam('signedOut', false));
+      if (!this.props.navigation.getParam('signedOut')) {
+        const isSensor = await Biometrics.isSensorAvailable();
+        if (isSensor === Biometrics.TouchID) {
+          const signature = await Biometrics.createSignature(
+            'Login with Fingerprint',
+            'keyToEncrypt'
+          );
+          this.props.login(null, null, signature);
+        }
       }
-    });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   getHeight = () => {
@@ -103,7 +105,6 @@ class Login extends Component {
 
   getEStyle = () => {
     return EStyleSheet.create({
-      $scale: 1.5,
       container: {
         flex: 1,
       },
@@ -112,8 +113,23 @@ class Login extends Component {
         flexGrow: 1,
         justifyContent: 'center',
       },
-
-      forgotContainer: {},
+      alert: {
+        width: '85%',
+        height: 170,
+      },
+      '@media (min-width: 500)': {
+        $scale: 1.5,
+        $width: 320,
+        alert: {
+          width: '$width',
+        },
+      },
+      '@media (min-width: 320) and (max-width: 500)': {
+        $width: '85%',
+        alert: {
+          width: '$width',
+        },
+      },
     });
   };
 
@@ -124,26 +140,13 @@ class Login extends Component {
   }
 
   handleHide() {
-    console.log(this.props.auth)
+    console.log(this.props.auth);
     this.props.failureHide();
-    console.log(this.props.auth)
+    console.log(this.props.auth);
   }
 
   render() {
-    const {
-      container,
-      containerSignIn,
-      logoContainer,
-      createAccountButton,
-      containerCreateAccount,
-      signInButton,
-      scroll,
-      upperSide,
-      card,
-      cardContainer,
-      forgotPasswordText,
-      forgotContainer,
-    } = this.getEStyle();
+    const { forgotContainer, alert } = this.getEStyle();
     const { email, password } = this.state;
     return (
       <DoubleBackground>
@@ -186,14 +189,14 @@ class Login extends Component {
                   value={password}
                 />
                 {this.props.auth.loggingIn && <Loading />}
-                {this.props.auth.loginFailureMessage && 
-                  <Alert 
-                    message={['Invalid credentials.']}
+                {this.props.auth.loginFailureMessage && (
+                  <Alert
+                    message={[this.props.auth.error || 'Invalid credentials']}
                     buttonTitle={'OK'}
                     onPress={this.handleHide.bind(this)}
-                    style={{width:wp('60%'), height:hp('30%')}}
+                    style={alert}
                   />
-                }
+                )}
               </Card>
             </View>
           </KeyboardAvoidingView>
@@ -217,10 +220,10 @@ class Login extends Component {
                 : landscapeStyles.buttonSignIn
             }
             buttonTextStyle={
-                this.state.orientation
-                  ? portraitStyles.textSignIn
-                  : landscapeStyles.textSignIn
-              }
+              this.state.orientation
+                ? portraitStyles.textSignIn
+                : landscapeStyles.textSignIn
+            }
             onPress={this.handleLogin.bind(this)}
           />
           <View
@@ -233,16 +236,16 @@ class Login extends Component {
             <ButtonOutline
               title={'CREATE NEW ACCOUNT'}
               onPress={() => this.props.navigation.navigate(CREATE_ACCOUNT)}
-                style={
-                    this.state.orientation
-                        ? portraitStyles.buttonCreateAccount
-                        : landscapeStyles.buttonCreateAccount
-                }
-                buttonTextStyle={
-                    this.state.orientation
-                        ? portraitStyles.textCreateAccount
-                        : landscapeStyles.textCreateAccount
-                    }
+              style={
+                this.state.orientation
+                  ? portraitStyles.buttonCreateAccount
+                  : landscapeStyles.buttonCreateAccount
+              }
+              buttonTextStyle={
+                this.state.orientation
+                  ? portraitStyles.textCreateAccount
+                  : landscapeStyles.textCreateAccount
+              }
             />
           </View>
         </View>
@@ -259,5 +262,4 @@ class Login extends Component {
     );
   }
 }
-
 export default Login;

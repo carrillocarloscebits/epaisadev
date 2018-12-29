@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Keyboard, View, StyleSheet } from 'react-native';
+import { Keyboard, View, StyleSheet, AsyncStorage } from 'react-native';
 import Header from './components/Header/header';
 import TotalAmount from './components/TotalAmount/totalAmount';
 import ItemsContainer from './components/ItemsContainer/itemsContainer';
@@ -17,16 +17,19 @@ import ModalDelivery from '../modal_delivery/modalDelivery';
 import ModalOptions from './components/Modals/ModalOptions/modalOptions';
 import { isTablet } from './constants/isLandscape';
 import ModalCustomer from '../modal_customer/modalCustomer';
-import { LOGIN } from '../../navigation/screen_names';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { LOGIN, AUTH, APP } from '../../navigation/screen_names';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
-let keyboard = "100%"
+let keyboard = '100%';
 const isPhone = !isTablet;
 class CashScreen extends Component {
   static navigationOptions = {
     header: null,
   };
-  keyboard= false;
+  keyboard = false;
   state = {
     modalOptions: false,
     modalActive: false,
@@ -39,22 +42,27 @@ class CashScreen extends Component {
   componentWillMount() {
     isPhone ? Orientation.lockToPortrait() : Orientation.lockToLandscape();
   }
-  componentDidMount () {
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+  componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      this._keyboardDidShow
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      this._keyboardDidHide
+    );
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
   }
-  _keyboardDidShow () {
-    keyboard=hp("100%")
-    
+  _keyboardDidShow() {
+    keyboard = hp('100%');
   }
 
-  _keyboardDidHide () {
-    keyboard="100%"
+  _keyboardDidHide() {
+    keyboard = '100%';
   }
   // ACTIONS REDUX
   sumAmount = value => {
@@ -159,8 +167,17 @@ class CashScreen extends Component {
       modalCustomer: !this.state.modalCustomer,
     });
   };
-  logout = () => {
-    this.props.navigation.navigate(LOGIN);
+  logout = async () => {
+    try {
+      await AsyncStorage.removeItem('user', error => {
+        if (error) {
+          throw new Error(error);
+        }
+      });
+      this.props.navigation.navigate(AUTH);
+    } catch (error) {
+      console.log(error);
+    }
   };
   render() {
     const {
@@ -173,7 +190,7 @@ class CashScreen extends Component {
       type,
     } = this.props.state;
     const opa = this.state.modalActive || this.state.modalRight ? true : false;
-    console.log(keyboard)
+    console.log(keyboard);
     return (
       <Drawer
         ref={ref => (this._drawer2 = ref)}
@@ -226,7 +243,7 @@ class CashScreen extends Component {
             {
               //MAIN VIEW
             }
-            <View style={[styles.container, {height:keyboard}]}>
+            <View style={[styles.container, { height: keyboard }]}>
               <Header
                 label="CASH REGISTER"
                 cant={products.length}
@@ -273,7 +290,13 @@ class CashScreen extends Component {
           </Drawer>
         ) : (
           <View style={styles.containerLandscape}>
-            <View style={[styles.container, isTablet? {flex:1}:null, {height:keyboard}]}>
+            <View
+              style={[
+                styles.container,
+                isTablet ? { flex: 1 } : null,
+                { height: keyboard },
+              ]}
+            >
               <Header
                 label="CASH REGISTER"
                 cant={products.length}

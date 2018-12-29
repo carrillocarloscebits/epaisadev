@@ -5,7 +5,7 @@ import {
   createSwitchNavigator,
 } from 'react-navigation';
 
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 // SCREENS
 import LoginContainer from '../../features/login/containers/loginContainer';
@@ -30,31 +30,20 @@ const AuthStack = createStackNavigator(
     [screenNames.ACCOUNT_CREATED]: {
       screen: AccountCreated,
     },
-    [screenNames.CASH_REGISTER]: {
-      screen: CashRegister,
-    },
-    [screenNames.FINGERPRINT]: {
-      screen: Fingerprint,
-    },
   },
   {
     initialRouteName: screenNames.LOGIN,
   }
 );
 
-const AppStack = createStackNavigator(
-  {
-    [screenNames.FINGERPRINT]: {
-      screen: Fingerprint,
-    },
-    [screenNames.CASH_REGISTER]: {
-      screen: CashRegister,
-    },
+const AppStack = createStackNavigator({
+  [screenNames.CASH_REGISTER]: {
+    screen: CashRegister,
   },
-  {
-    initialRouteName: screenNames.FINGERPRINT,
-  }
-);
+  [screenNames.FINGERPRINT]: {
+    screen: Fingerprint,
+  },
+});
 
 const AppNavigator = createSwitchNavigator(
   {

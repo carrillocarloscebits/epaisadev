@@ -5,7 +5,7 @@ import {
   Dimensions,
   ImageBackground,
   Image,
-  AsyncStorage
+  AsyncStorage,
 } from 'react-native';
 
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
@@ -19,64 +19,33 @@ const isPortrait = () => {
   }
 };
 export default class AuthLoading extends Component {
-  variab = null;
   constructor(props) {
     super(props);
-    
     this._bootstrapAsync();
     this.state = {
       orientation: isPortrait(),
-      value: null
+      value: null,
     };
   }
 
   // Fetch the token from storage then navigate to our appropriate place
-  _bootstrapAsync = () => {
+  _bootstrapAsync = async () => {
     // const userToken = await AsyncStorage.getItem('userToken');
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    setTimeout(() => {
-      this._retrieveData();
-      
-      this.props.navigation.navigate(false ? 'App' : 'Auth');
-    }, 2000);
-  };
-
-  //ADDED FOR RETRIEVING USER SAVE TO REDIRECT TO CASHSCREEN
-  _retrieveData() {
-    console.log('1');
-    console.log(this.variab);
-      AsyncStorage.getItem('UsersData').then((token) => {
-        
-    // Update State
-    // this.setState({ 
-    //   value: token
-    // });
-        this.variab = token;
-
-  });
-  } 
-/*
-  async _retrieveData() {
-    const value = null;
     try {
-      console.log('BEFORE RETRIEVING')
-      // value = await AsyncStorage.getItem('@UsersData');
-      AsyncStorage.setItem('testing','asd');
-      console.log(AsyncStorage.getItem('testing'))
-      console.log('---------')
-      console.log(AsyncStorage.getItem('@UsersData'))
-      if (value !== null) {
-        console.log(JSON.parse(value))
-        return JSON.parse(value)
-      }
+      const user = await AsyncStorage.getItem('user');
+
+      setTimeout(() => {
+        this.props.navigation.navigate(user ? 'App' : 'Auth');
+      }, 1000);
     } catch (error) {
-      console.log('ERROR ON RETRIEVING USER DATA')
+      setTimeout(() => {
+        this.props.navigation.navigate('Auth');
+      }, 1000);
     }
-    console.log(JSON.parse(value));
-    return null;
-  }*/
+  };
 
   render() {
     return (

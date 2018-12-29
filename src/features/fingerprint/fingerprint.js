@@ -56,28 +56,28 @@ class FingerPrint extends Component {
       });
   };
 
-  _acceptLinkFingerprint = () => {
-    Biometrics.isSensorAvailable()
-      .then(biometryType => {
-        if (biometryType === Biometrics.TouchID) {
-          Biometrics.createSignature('register', 'keyToEncript')
-            .then(signature => {
-              this.props.register_fingerprint(
-                this.props.user.response.id,
-                signature,
-                this.props.user.response.auth_key
-              );
-            })
-            .catch(() => {
-              this.toggleModalFinger('error', () => {});
-            });
-        } else {
-          this.fingerprintError('no fingerprint scanner');
-        }
-      })
-      .catch(err => {
-        this.fingerprintError(err);
-      });
+  _acceptLinkFingerprint = async () => {
+    try {
+      const isSensor = await Biometrics.isSensorAvailable();
+      if (isSensor === Biometrics.TouchID) {
+        // await Biometrics.createKeys('register');
+
+        const signature = await Biometrics.createSignature(
+          'register',
+          'keyToEncrypt'
+        );
+        this.props.register_fingerprint(
+          this.props.user.response.id,
+          signature,
+          this.props.user.response.auth_key
+        );
+      } else {
+        throw new Error('Fingerprint scanner not found');
+      }
+    } catch (error) {
+      console.log(error);
+      this.toggleModalFinger('error');
+    }
   };
 
   fingerprintError = err => {

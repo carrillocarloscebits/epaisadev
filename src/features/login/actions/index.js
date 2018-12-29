@@ -9,40 +9,18 @@ export function login(email, password, signature) {
     dispatch(request({ email }));
 
     loginUser(email, password, signature)
-      .then(res => {
+      .then(async res => {
         const { success } = res;
         if (success) {
-          
-        console.log('SUCCESS DATA')
-        console.log(res['response']['userLastName'].toString())
-        AsyncStorage.setItem(
-          `UsersData`,
-          JSON.stringify({
-            userData: {
-              userLastName: res['response']['userLastName'].toString(),
-            },
-          })
-        );
-
-        AsyncStorage.getItem('UsersData').then((token) => {
-        
-          // Update State
-          // this.setState({ 
-          //   value: token
-          // });
-              console.log(token);
-      
-        });
-        
-
           const { success, ...user } = res;
+          await AsyncStorage.setItem('user', JSON.stringify(user));
           dispatch(successLogin(user));
 
           const userId = user.response.id;
           AsyncStorage.getItem(`@UsersLogged`)
             .then(res => {
               const value = JSON.parse(res);
-              console.log('DATA FROM RESPONSE - VALUE')
+              console.log('DATA FROM RESPONSE - VALUE');
               console.log(value);
               if (!value) {
                 AsyncStorage.setItem(
@@ -60,7 +38,7 @@ export function login(email, password, signature) {
                 // We have data!!
                 if (value[userId].fingerprintLinkRejected) {
                   NavigationService.navigate(CASH_REGISTER);
-                  //   NavigationService.navigate(FINGERPRINT);
+                  // NavigationService.navigate(FINGERPRINT);
                 } else {
                   NavigationService.navigate(FINGERPRINT);
                 }
@@ -88,7 +66,7 @@ export function login(email, password, signature) {
       })
       .catch(err => {
         console.log(err);
-        dispatch(failureLogin('Network error, try again!'));
+        dispatch(failureLogin(err));
       });
   };
 
@@ -106,7 +84,20 @@ export function login(email, password, signature) {
     if (signature) {
       return userService.login_fingerprint(signature);
     } else {
+      if (email === '' || password === '') {
+        return Promise.reject('Email and password cannot be empty!');
+      }
+      const emailReg = new RegExp(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+      console.log(emailReg.test(email));
+      if (!emailReg.test(email)) {
+        return Promise.reject('Enter a valid email!');
+      }
       return userService.login(email, password);
     }
   }
+}
+export function failureAlertHide() {
+  return { type: userConstants.HIDE_FAILURE_MESSAGE };
 }

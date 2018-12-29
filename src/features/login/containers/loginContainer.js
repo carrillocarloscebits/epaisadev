@@ -1,17 +1,21 @@
-import { connect } from "react-redux";
-import Login from "../login";
-import {login} from './../actions';
-import {failureAlertHide} from './../actions/hideAction';
+import { connect } from 'react-redux';
+import Login from '../login';
+import { login, failureAlertHide } from './../actions';
 
 const mapStateToProps = state => ({
-    auth: state.login,
+  auth: state.login,
 });
 
 const mapDispatchToProps = dispatch => ({
-    login: (email, password, signature) => { dispatch(login(email, password, signature)) },
-    failureHide : () => {dispatch(failureAlertHide())}
+  login: (email, password, signature) => {
+    dispatch(login(email, password, signature));
+  },
+  failureHide: () => {
+    dispatch(failureAlertHide());
+  },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    Login
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

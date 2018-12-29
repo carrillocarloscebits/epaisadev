@@ -18,6 +18,7 @@ import { CountryItem } from './components';
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
 // import ExtraDimensions from "react-native-extra-dimensions-android";
 import { countries } from './api/countries';
+import { get_user_country } from '../../services/user_service';
 
 class PhoneInput extends Component {
   state = {
@@ -32,11 +33,22 @@ class PhoneInput extends Component {
       flag: 'https://www.countryflags.io/af/flat/64.png',
       callingCodes: ['93'],
       name: 'Afghanistan',
+      alpha2Code: 'AF',
     },
   };
   componentDidMount() {
     let currentLetter;
     let letters = [];
+    get_user_country().then(x => {
+      this.setState({
+        selectedCountry: {
+          flag: x.location.country_flag,
+          callingCodes: [x.location.calling_code],
+          name: x.country_name,
+          alpha2Code: x.country_code,
+        },
+      });
+    });
     const letterIndexes = {};
     countries.map(({ name }, index) => {
       if (!currentLetter) {
@@ -167,10 +179,10 @@ class PhoneInput extends Component {
   };
 
   render() {
-    const { callingCodes, flag, name} = this.state.selectedCountry;
-    const { label , noAngle} = this.props;
+    const { callingCodes, flag, name } = this.state.selectedCountry;
+    const { label, noAngle } = this.props;
     const { phone } = this.state;
-    const text= label || "Mobile"
+    const text = label || 'Mobile';
     const {
       modalContainer,
       modalHeader,
@@ -209,9 +221,9 @@ class PhoneInput extends Component {
                     }}
                   >{`+${callingCodes[0]}`}</Text>
                 </View>
-                
+
                 <View>
-                   {noAngle?<Icon name={'angle-down'} size={25} />:null}
+                  {noAngle ? <Icon name={'angle-down'} size={25} /> : null}
                 </View>
               </View>
             </TouchableOpacity>
@@ -226,22 +238,27 @@ class PhoneInput extends Component {
         >
           <View style={modalContainer}>
             <View style={modalHeader}>
-              <View style={modalCloseButton}>
-                <TouchableOpacity onPress={this._toggleModal}>
-                  <Icon
-                    name={'close'}
-                    size={width > 400 ? 30 : 24}
-                    color={'white'}
-                  />
-                </TouchableOpacity>
+              <View style={{ flexDirection: 'row' }}>
+                <View
+                  style={{
+                    margin: width > 400 ? 25 : 15,
+                  }}
+                >
+                  <Text style={modalHeaderText}>
+                    Select Country/region code
+                  </Text>
+                </View>
+                <View style={modalCloseButton}>
+                  <TouchableOpacity onPress={this._toggleModal}>
+                    <Icon
+                      name={'close'}
+                      size={width > 400 ? 30 : 24}
+                      color={'white'}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View
-                style={{
-                  margin: width > 400 ? 25 : 15,
-                }}
-              >
-                <Text style={modalHeaderText}>Select Country/region code</Text>
-              </View>
+
               <View
                 style={{
                   width: '94%',
@@ -396,9 +413,6 @@ const styles = {
     shadowOpacity: 1,
   },
   modalCloseButton: {
-    position: 'absolute',
-    top: width > 400 ? 26 : 16,
-    right: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },

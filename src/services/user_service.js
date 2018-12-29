@@ -11,7 +11,7 @@ import {
   encryptJsonVerifyPost,
   encryptMerchantFingerPrintToken,
 } from '../services/server-api';
-
+import { AsyncStorage } from 'react-native';
 export function login(email, password) {
   const returnEncrypt = encryptJson(email, password);
   return sendRequest(returnEncrypt, '/user/login');
@@ -86,4 +86,30 @@ export function register_fingerprint_token(user_id, token, auth_key) {
   var returnEncrypt = encryptMerchantFingerPrintToken(user_id, token, auth_key);
 
   return sendRequest(returnEncrypt, '/fingerprint/register');
+}
+
+export async function get_user_country() {
+  try {
+    const userLocation = await AsyncStorage.getItem('@PhoneLocation');
+
+    if (JSON.parse(userLocation)) {
+      return JSON.parse(userLocation);
+    } else {
+      const url =
+        'http://api.ipstack.com/check?access_key=eae5590f3a37ea38fc1a863c3a7685e0&format=1';
+      const res = await fetch(url);
+      const json = await res.json();
+      const data = {
+        ...json,
+        location: {
+          ...json.location,
+          country_flag: `https://www.countryflags.io/${json.country_code.toLowerCase()}/flat/64.png`,
+        },
+      };
+      await AsyncStorage.setItem('@PhoneLocation', JSON.stringify(data));
+      return json;
+    }
+  } catch (error) {
+    return Promise.reject(error);
+  }
 }

@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { FloatingTextInput } from 'components';
 import { PhoneInput } from 'components';
-import { check_email, check_mobile } from './../../../services/user_service';
+import {
+  check_email,
+  check_mobile,
+  get_user_country,
+} from './../../../services/user_service';
 class CreateAccountForm extends Component {
   state = {
     //Username: 'rigelifoz@shayzam.net',
@@ -20,7 +24,7 @@ class CreateAccountForm extends Component {
     UserFirstName: '',
     UserLastName: '',
     UserMobileNumber: '',
-    CountryCode: 'AF',
+    CountryCode: '',
     registeredReferralCode: '',
     otpType: 1,
     BusinessName: '',
@@ -28,7 +32,17 @@ class CreateAccountForm extends Component {
   };
 
   componentDidMount() {
-    this.props.onChangeForm(this.state);
+    get_user_country().then(x => {
+      this.setState(
+        {
+          CountryCode: x.country_code,
+        },
+        () => {
+          console.log(this.state);
+          this.props.onChangeForm(this.state);
+        }
+      );
+    });
   }
 
   _checkEmail() {
@@ -94,6 +108,7 @@ class CreateAccountForm extends Component {
   _changeForm = payload => {
     if (this.props.onChangeForm) {
       const { errors, ...newPayload } = payload;
+      console.log(newPayload);
       this.props.onChangeForm(newPayload);
     }
   };

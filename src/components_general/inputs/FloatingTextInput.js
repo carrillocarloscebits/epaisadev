@@ -111,7 +111,7 @@ class FloatingTextInput extends Component {
     } = this.props;
     const textStyle = {
       fontWeight: '600',
-      fontSize: EStyleSheet.value('1.2rem'),
+      fontSize: EStyleSheet.value('1.1rem'),
       color: '#6b6b6b',
     };
 
@@ -216,6 +216,7 @@ class FloatingTextInput extends Component {
       returnKeyType,
       onSubmitEditing,
       maxLength,
+      autoCapitalize,
     } = this.props;
 
     const inputActiveColor = this._hasError() ? Colors.danger : Colors.primary;
@@ -384,6 +385,7 @@ class FloatingTextInput extends Component {
             returnKeyType={returnKeyType}
             onSubmitEditing={onSubmitEditing}
             maxLength={maxLength}
+            autoCapitalize={autoCapitalize}
           />
         </View>
         {renderUnderline()}

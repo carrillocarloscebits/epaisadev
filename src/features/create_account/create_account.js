@@ -34,7 +34,7 @@ class CreateAccount extends Component {
   state = {
     modalTerms: false,
     modalESign: false,
-    termsAccepted: false,
+    termsAccepted: true,
     can_resend_otp: false,
   };
 
@@ -66,8 +66,13 @@ class CreateAccount extends Component {
       },
       termsContainer: {
         marginVertical: '2rem',
+        marginBottom: '.5rem',
         flexDirection: 'row',
         justifyContent: 'center',
+      },
+      termsMainContainer: {
+        alignItems: 'center',
+        marginBottom: '1.5rem',
       },
       termsText: {
         fontSize: Dimensions.get('screen').width <= 320 ? 12 : 14,
@@ -197,19 +202,24 @@ class CreateAccount extends Component {
               {this.props.register.loading && <Loading />}
             </Card>
           </View>
-          <View style={styles.termsContainer}>
-            <Checkmark
-              onPress={this._toggleTerms.bind(this)}
-              checked={termsAccepted}
-            />
-            <TextMontserrat style={styles.termsText}> ePaisa's </TextMontserrat>
-            <TouchableText
-              style={styles.touchableText}
-              onPress={() => this._toggleModal('modalTerms')}
-            >
-              Seller Agreement
-            </TouchableText>
-            <TextMontserrat style={styles.termsText}> and </TextMontserrat>
+          <View style={styles.termsMainContainer}>
+            <View style={styles.termsContainer}>
+              <Checkmark
+                onPress={this._toggleTerms.bind(this)}
+                checked={termsAccepted}
+              />
+              <TextMontserrat style={styles.termsText}>
+                {' '}
+                ePaisa's{' '}
+              </TextMontserrat>
+              <TouchableText
+                style={styles.touchableText}
+                onPress={() => this._toggleModal('modalTerms')}
+              >
+                Seller Agreement
+              </TouchableText>
+              <TextMontserrat style={styles.termsText}> and </TextMontserrat>
+            </View>
             <TouchableText
               style={styles.touchableText}
               onPress={() => this._toggleModal('modalESign')}

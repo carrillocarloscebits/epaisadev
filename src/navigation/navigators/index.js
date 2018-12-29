@@ -5,6 +5,8 @@ import {
   createSwitchNavigator,
 } from 'react-navigation';
 
+import {AsyncStorage} from 'react-native';
+
 // SCREENS
 import LoginContainer from '../../features/login/containers/loginContainer';
 import CreateAccount from '../../features/create_account/containers/create_account_container';

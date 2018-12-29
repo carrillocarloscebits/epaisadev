@@ -5,6 +5,7 @@ import {
   Platform,
   Dimensions,
   AsyncStorage,
+  Text
 } from 'react-native';
 import { CREATE_ACCOUNT, FORGOT_PASSWORD } from 'navigation/screen_names';
 import {
@@ -26,6 +27,7 @@ import {
 import { portraitStyles } from './styles/portrait';
 import { landscapeStyles } from './styles/landscape';
 import { FingerprintModal } from 'components';
+import {Alert} from './components_general/alert_message';
 
 const isPortrait = () => {
   const dim = Dimensions.get('window');
@@ -42,11 +44,12 @@ class Login extends Component {
   };
 
   state = {
-    email: 'am26@epaisa.co',
-    password: 'Test@789',
+    email: '',//'am26@epaisa.co',
+    password: '',//'Test@789',
     loading: false,
 
     orientation: isPortrait(),
+
   };
 
   componentDidMount() {
@@ -120,6 +123,12 @@ class Login extends Component {
     this.props.login(email, password);
   }
 
+  handleHide() {
+    console.log(this.props.auth)
+    this.props.failureHide();
+    console.log(this.props.auth)
+  }
+
   render() {
     const {
       container,
@@ -177,6 +186,14 @@ class Login extends Component {
                   value={password}
                 />
                 {this.props.auth.loggingIn && <Loading />}
+                {this.props.auth.loginFailureMessage && 
+                  <Alert 
+                    message={['Invalid credentials.']}
+                    buttonTitle={'OK'}
+                    onPress={this.handleHide.bind(this)}
+                    style={{width:wp('60%'), height:hp('30%')}}
+                  />
+                }
               </Card>
             </View>
           </KeyboardAvoidingView>

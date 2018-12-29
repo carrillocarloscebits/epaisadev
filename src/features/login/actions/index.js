@@ -12,6 +12,29 @@ export function login(email, password, signature) {
       .then(res => {
         const { success } = res;
         if (success) {
+          
+        console.log('SUCCESS DATA')
+        console.log(res['response']['userLastName'].toString())
+        AsyncStorage.setItem(
+          `UsersData`,
+          JSON.stringify({
+            userData: {
+              userLastName: res['response']['userLastName'].toString(),
+            },
+          })
+        );
+
+        AsyncStorage.getItem('UsersData').then((token) => {
+        
+          // Update State
+          // this.setState({ 
+          //   value: token
+          // });
+              console.log(token);
+      
+        });
+        
+
           const { success, ...user } = res;
           dispatch(successLogin(user));
 
@@ -19,6 +42,7 @@ export function login(email, password, signature) {
           AsyncStorage.getItem(`@UsersLogged`)
             .then(res => {
               const value = JSON.parse(res);
+              console.log('DATA FROM RESPONSE - VALUE')
               console.log(value);
               if (!value) {
                 AsyncStorage.setItem(

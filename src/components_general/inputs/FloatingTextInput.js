@@ -206,7 +206,7 @@ class FloatingTextInput extends Component {
 
   render() {
     const leftPadding = this.props.lineLeft ? 10 : 0;
-    const paddingLeftFlags = this.props.children ? 10 : 0;
+    const paddingLeftFlags = this.props.children ? 15 : 0;
     const { isFocused, value, secureTextEntry } = this.state;
     const {
       label,
@@ -253,7 +253,8 @@ class FloatingTextInput extends Component {
     const textInputStyle = {
       fontSize: ExtendedStyles.textInput.fontSize,
       color: isFocused ? inputActiveColor : inputInActiveColor,
-      height: EStyleSheet.value('4rem'),
+      paddingVertical: 0,
+      height: EStyleSheet.value('4rem')+(this.props.height||0),
       marginTop: this.props.margin || 20,
       fontFamily: 'Montserrat-SemiBold',
       width: '80%',
@@ -267,7 +268,7 @@ class FloatingTextInput extends Component {
       left: leftOffset + leftPadding,
       top: this._animatedIsFocusedAndEmpty.interpolate({
         inputRange: [0, 1],
-        outputRange: [28, 5],
+        outputRange: [28, this.props.topper||5],
       }),
       fontSize: this._animatedIsFocusedAndEmpty.interpolate({
         inputRange: [0, 1],

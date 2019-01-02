@@ -76,7 +76,7 @@ class ProductDetail extends React.Component{
     
         const { id, name, quant, total,discount,type} = this.props.item
         return(
-        <View>
+        <View style={{marginBottom: hp('1%')}}>
             <TouchableOpacity 
                 onPress={()=>{ 
                     this.setState({
@@ -129,6 +129,7 @@ class ProductDetail extends React.Component{
                         saveButtonAction={()=>{}}
                         item={this.props.item}
                         imageSource={this.state.imagePath === '' ? null : this.state.imagePath}
+                        imageAtributes={{height: this.state.imageHeight, width:this.state.imageWidth}}
                         closeModal={()=>{ 
                             this.setState({
                                 detailVisible: !this.state.detailVisible},

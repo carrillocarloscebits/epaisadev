@@ -59,6 +59,7 @@ class EditProduct extends Component {
       saveButtonAction,
       orientation,
       imageSource,
+      imageAtributes,
     } = this.props;
 
     const saveButtonTextStyle = {
@@ -93,7 +94,7 @@ class EditProduct extends Component {
         this.name.state.value === '' ||
         this.quantity.state.value === '' ||
         this.price.state.value === '' ||
-        this.discount.state.discount === '0' ||
+        (parseFloat(this.discount.state.discount)>99.99 || parseFloat(this.discount.state.discount)<=0) ||
         imageSource === ''
       ) {
         if(this.name.state.value === '') this.setState({ename:true});
@@ -102,9 +103,9 @@ class EditProduct extends Component {
         else this.setState({equantity:false});
         if(this.price.state.value === '') this.setState({eprice:true});
         else this.setState({eprice:false});
-        if(this.discount.state.discount === '0') {this.setState({ediscount:true});}
+        if(parseFloat(this.discount.state.discount)>99.99 || parseFloat(this.discount.state.discount)<=0) {this.setState({ediscount:true});}
         else this.setState({ediscount:false});
-        if(this.discount.state.discount === '0') {this.setState({allow:true});}
+        if(parseFloat(this.discount.state.discount)>99.99 || parseFloat(this.discount.state.discount)<=0) {this.setState({allow:true});}
         else this.setState({allow:false});
         return;
       }
@@ -179,11 +180,12 @@ class EditProduct extends Component {
                   containerStyle={{
                     width: '100%',
                     height: '100%',
-                    borderRadius: 10,
+                    borderRadius: 5,
                   }}
                   imageSize={buttonIconSize}
                   onPress={cameraButtonAction}
                   imageSource={imageSource}
+                  imageAtributes={imageAtributes}
                 />
               </View>
               <FloatingTextEditProductInput

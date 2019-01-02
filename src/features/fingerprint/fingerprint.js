@@ -102,7 +102,7 @@ class FingerPrint extends Component {
         ) : (
           <View style={styles.wrapper}>
             <Text style={styles.textDown}>
-              All of the fingerprints stores on this device can be used to
+              All of the fingerprints stored on this device can be used to
             </Text>
             <Text style={styles.textDown}>log into your ePaisa account.</Text>
           </View>

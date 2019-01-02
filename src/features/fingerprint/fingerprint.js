@@ -85,7 +85,7 @@ class FingerPrint extends Component {
     return (
       <View style={styles.container}>
         <BackgroundImage
-          source={require('./assets/img/side_nav_portrait_faded.png')}
+          source={isTablet?require('./assets/img/backgroundL.png'):require('./assets/img/backgroundP.png')}
         />
         {isTablet ? (
           <View style={styles.wrapper}>

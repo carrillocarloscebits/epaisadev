@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Dimensions,View, Text, StyleSheet, ImageBackground,TouchableOpacity,Image} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { isTablet } from '../../constants/isLandscape';
 // create a component
 class FingerContainer extends Component {
     render() {
@@ -12,8 +13,9 @@ class FingerContainer extends Component {
                 </View>
                
                 <Text style={styles.textLogin}>Log in with your fingerprint</Text>
-                <Text style={styles.textDescription}>Use your fingerprint for faster, easier access to</Text>
-                <Text style={styles.textDescription}>your ePaisa account.</Text>
+                
+                <Text style={styles.textDescription}>{isTablet?"Use your fingerprint for faster, easier access to your ePaisa account.":"Use your fingerprint for faster, easier access to"}</Text>
+                {!isTablet?<Text style={styles.textDescription}>your ePaisa account.</Text>:null}
             </View>
         );
     }

@@ -32,7 +32,7 @@ class Alert extends Component {
         width: '75%',
       },
       textStyle: {
-        fontSize: '1.8rem',
+        fontSize: hp('3%'),
         textAlign: 'center',
         fontWeight: '700',
         color: '#4e5965',

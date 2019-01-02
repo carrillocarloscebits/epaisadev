@@ -3,6 +3,7 @@ import { Platform, View, TouchableOpacity } from 'react-native';
 import { TextMontserrat } from 'components';
 import LinearGradient from 'react-native-linear-gradient';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const ButtonGradient = ({ title, onPress, style, disabled }) => {
   const { buttonText, linearGradient, container } = styles;

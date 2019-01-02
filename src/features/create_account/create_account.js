@@ -34,7 +34,7 @@ class CreateAccount extends Component {
   state = {
     modalTerms: false,
     modalESign: false,
-    termsAccepted: true,
+    termsAccepted: false,
     can_resend_otp: false,
   };
 

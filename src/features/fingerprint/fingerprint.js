@@ -60,15 +60,10 @@ class FingerPrint extends Component {
     try {
       const isSensor = await Biometrics.isSensorAvailable();
       if (isSensor === Biometrics.TouchID) {
-        // await Biometrics.createKeys('register');
-
-        const signature = await Biometrics.createSignature(
-          'register',
-          'keyToEncrypt'
-        );
+        const publicKey = await Biometrics.createKeys('register');
         this.props.register_fingerprint(
           this.props.user.response.id,
-          signature,
+          publicKey,
           this.props.user.response.auth_key
         );
       } else {
@@ -100,7 +95,7 @@ class FingerPrint extends Component {
                 { fontSize: hp('2%'), fontFamily: 'Montserrat-SemiBold' },
               ]}
             >
-              All of the fingerprints stores on this device can be used to log
+              All of the fingerprints stored on this device can be used to log
               into your ePaisa account.
             </Text>
           </View>

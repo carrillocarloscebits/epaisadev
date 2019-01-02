@@ -37,8 +37,8 @@ export function login(email, password, signature) {
                 console.log(value[userId]);
                 // We have data!!
                 if (value[userId].fingerprintLinkRejected) {
-                  NavigationService.navigate(CASH_REGISTER);
-                  // NavigationService.navigate(FINGERPRINT);
+                  // NavigationService.navigate(CASH_REGISTER);
+                  NavigationService.navigate(FINGERPRINT);
                 } else {
                   NavigationService.navigate(FINGERPRINT);
                 }

@@ -90,14 +90,14 @@ class ForgotPasswordForm extends Component {
 const styles = EStyleSheet.create({
   instructions: {
     fontWeight: '700',
-    fontSize: '1.5rem',
+    fontSize: '1.42rem',
     textAlign: 'center',
   },
   or: {
     fontSize: '2rem',
     textAlign: 'center',
     fontWeight: '700',
-    marginTop: '1.5rem',
+    marginTop: '1.42rem',
     marginBottom: '1rem',
   },
   nameInputs: {

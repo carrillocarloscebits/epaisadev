@@ -186,6 +186,9 @@ class Login extends Component {
                   returnKeyType={'next'}
                   onSubmitEditing={() => this.passwordInput.focus()}
                 />
+                {
+                  this.state.orientation || <View style={{height:hp('1.5%')}}/>
+                }
                 <FloatingTextInput
                   inputRef={input => {
                     this.passwordInput = input;

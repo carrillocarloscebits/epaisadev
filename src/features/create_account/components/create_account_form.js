@@ -167,6 +167,7 @@ class CreateAccountForm extends Component {
             onChangeText={val => this._textChange('Username', val)}
             onSubmitEditing={this._checkEmail.bind(this)}
             errors={errors.Username || []}
+            autoCapitalize={'none'}
           />
         </View>
         <View>

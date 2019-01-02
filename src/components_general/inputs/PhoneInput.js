@@ -223,7 +223,7 @@ class PhoneInput extends Component {
                 </View>
 
                 <View>
-                  {noAngle ? <Icon name={'angle-down'} size={25} /> : null}
+                  <Icon name={'angle-down'} size={25} />
                 </View>
               </View>
             </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Dimensions } from 'react-native';
+import { View, Dimensions, ScrollView } from 'react-native';
 import { Colors } from 'api';
 import {
   DoubleBackground,
@@ -136,7 +136,7 @@ class ForgotPassword extends Component {
         <View style={{ width: 50, position: 'absolute', height: 50 }}>
           <BackHeader {...this.props} />
         </View>
-        <View style={styles.mainContainer}>
+        <ScrollView style={styles.mainContainer}>
           <View style={styles.logoContainer}>
             <Logo />
           </View>
@@ -152,7 +152,7 @@ class ForgotPassword extends Component {
               />
             </View>
           </View>
-        </View>
+        </ScrollView>
 
         {this.props.reset_password.alert && (
           <Alert

@@ -11,6 +11,7 @@
     "instabug-reactnative": "^8.0.20",
     "react": "16.6.3",
     "react-native": "0.57.8",
+    "react-native-android-open-settings": "^1.2.0",
     "react-native-biometrics": "github:carrillocarloscebits/react-native-biometrics-epaisa",
     "react-native-device-info": "^0.24.3",
     "react-native-drawer": "^2.5.1",

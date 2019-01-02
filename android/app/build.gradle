@@ -154,6 +154,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-android-open-settings')
     compile project(':instabug-reactnative')
     compile project(':react-native-vector-icons')
     compile project(':react-native-svg')

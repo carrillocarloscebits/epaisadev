@@ -255,7 +255,7 @@ class FloatingTextInput extends Component {
       color: isFocused ? inputActiveColor : inputInActiveColor,
       height: EStyleSheet.value('4rem'),
       marginTop: this.props.margin || 20,
-      fontFamily: 'Montserrat-Bold',
+      fontFamily: 'Montserrat-SemiBold',
       width: '80%',
     };
 
@@ -365,6 +365,11 @@ class FloatingTextInput extends Component {
             </View>
           )}
           <TextInput
+            ref={input => {
+              if (this.props.inputRef) {
+                this.props.inputRef(input);
+              }
+            }}
             style={[
               textInputStyle,
               inputStyle,
@@ -372,7 +377,7 @@ class FloatingTextInput extends Component {
                 paddingLeft: leftPadding + paddingLeftFlags,
                 marginLeft: paddingLeftFlags,
                 borderLeftWidth: this.props.phone && this.showFlag() ? 2 : 0,
-                borderColor: this.state.isFocused ? inputActiveColor : '#eee',                                        
+                borderColor: this.state.isFocused ? inputActiveColor : '#eee',
               },
             ]}
             onFocus={this.handleFocus}

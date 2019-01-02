@@ -138,7 +138,6 @@ class CreateAccount extends Component {
   };
 
   render() {
-    console.log(Dimensions.get('window'));
     const otpStyles = EStyleSheet.create({
       textInstructions: {
         fontSize: '1.8rem',
@@ -198,7 +197,10 @@ class CreateAccount extends Component {
           </View>
           <View style={styles.cardContainer}>
             <Card style={styles.card}>
-              <CreateAccountForm onChangeForm={this._setUserData.bind(this)} />
+              <CreateAccountForm
+                onChangeForm={this._setUserData.bind(this)}
+                isValid={formValid => this.setState({ formValid })}
+              />
               {this.props.register.loading && <Loading />}
             </Card>
           </View>
@@ -232,6 +234,7 @@ class CreateAccount extends Component {
               <ButtonGradient
                 title={'CREATE NEW ACCOUNT'}
                 onPress={this._handleCreateAccount}
+                disabled={!this.state.formValid}
               />
             </View>
           </View>

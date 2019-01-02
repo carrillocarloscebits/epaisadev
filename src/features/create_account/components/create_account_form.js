@@ -96,21 +96,66 @@ class CreateAccountForm extends Component {
     this.setState({ [key]: value });
     const errors = this.state.errors;
     errors[key] = [];
-    this.setState({
-      errors,
-    });
-    this._changeForm({
-      ...this.state,
-      ...{ [key]: value },
-    });
+    this.setState(
+      {
+        errors,
+      },
+      () => {
+        this._changeForm({
+          ...this.state,
+          ...{ [key]: value },
+        });
+      }
+    );
   }
 
   _changeForm = payload => {
     if (this.props.onChangeForm) {
       const { errors, ...newPayload } = payload;
+      console.log(errors);
+      this.formIsValid();
+
       console.log(newPayload);
       this.props.onChangeForm(newPayload);
     }
+  };
+
+  formIsValid = () => {
+    const errors = {};
+    if (this.state.UserFirstName === '') {
+      errors['UserFirstName'] = ['First name cannot be empty'];
+    }
+
+    if (this.state.UserLastName === '') {
+      errors['UserLastName'] = ['Last name cannot be empty'];
+    }
+    if (this.state.Password === '') {
+      errors['Password'] = ['Password name cannot be empty'];
+    }
+    if (this.state.UserMobileNumber === '') {
+      errors['UserMobileNumber'] = ['Mobile number cannot be empty'];
+    }
+    this.setState(
+      {
+        errors: {
+          ...(this.state.errors || {}),
+          ...errors,
+        },
+      },
+      () => {
+        console.log(errors);
+        let valid = true;
+        for (const key in this.state.errors) {
+          if (errors.hasOwnProperty(key)) {
+            const element = this.state.errors[key];
+            if (element.length > 0) {
+              valid = false;
+            }
+          }
+        }
+        this.props.isValid(valid);
+      }
+    );
   };
 
   _changePhone = value => {
@@ -135,7 +180,6 @@ class CreateAccountForm extends Component {
       Password,
       UserFirstName,
       UserLastName,
-      UserMobileNumber,
       registeredReferralCode,
       BusinessName,
       errors,
@@ -149,6 +193,7 @@ class CreateAccountForm extends Component {
               label={'First Name'}
               value={UserFirstName}
               onChangeText={val => this._textChange('UserFirstName', val)}
+              // errors={errors.UserFirstName || []}
             />
           </View>
           <View style={{ flex: 1 }}>
@@ -166,6 +211,7 @@ class CreateAccountForm extends Component {
             value={Username}
             onChangeText={val => this._textChange('Username', val)}
             onSubmitEditing={this._checkEmail.bind(this)}
+            onBlur={this._checkEmail.bind(this)}
             errors={errors.Username || []}
             autoCapitalize={'none'}
           />

@@ -143,7 +143,6 @@ class CreateAccountForm extends Component {
         },
       },
       () => {
-        console.log(errors);
         let valid = true;
         for (const key in this.state.errors) {
           if (errors.hasOwnProperty(key)) {
@@ -153,6 +152,7 @@ class CreateAccountForm extends Component {
             }
           }
         }
+        console.log(errors);
         this.props.isValid(valid);
       }
     );

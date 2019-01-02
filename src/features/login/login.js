@@ -86,6 +86,7 @@ class Login extends Component {
       console.log(error);
     }
   }
+  passwordInput = {};
 
   getHeight = () => {
     if (this.state.orientation) {
@@ -182,13 +183,19 @@ class Login extends Component {
                   autoCapitalize={'none'}
                   onChangeText={email => this.setState({ email })}
                   value={email}
+                  returnKeyType={'next'}
+                  onSubmitEditing={() => this.passwordInput.focus()}
                 />
                 <FloatingTextInput
+                  inputRef={input => {
+                    this.passwordInput = input;
+                  }}
                   label={'Password'}
                   autoCapitalize={'none'}
                   secureTextEntry={true}
                   onChangeText={password => this.setState({ password })}
                   value={password}
+                  onSubmitEditing={this.handleLogin.bind(this)}
                 />
                 {this.props.auth.loggingIn && <Loading />}
                 {this.props.auth.loginFailureMessage && (

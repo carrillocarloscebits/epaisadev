@@ -365,6 +365,11 @@ class FloatingTextInput extends Component {
             </View>
           )}
           <TextInput
+            ref={input => {
+              if (this.props.inputRef) {
+                this.props.inputRef(input);
+              }
+            }}
             style={[
               textInputStyle,
               inputStyle,

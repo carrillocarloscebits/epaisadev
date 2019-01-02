@@ -13,6 +13,7 @@ import { CASH_REGISTER } from 'navigation/screen_names';
 import { connect } from 'react-redux';
 import Biometrics from 'react-native-biometrics';
 import { register_fingerprint } from './actions';
+import AndroidOpenSettings from 'react-native-android-open-settings'
 
 class FingerPrint extends Component {
   static navigationOptions = {
@@ -116,6 +117,7 @@ class FingerPrint extends Component {
           <FingerprintModal
             action={this.changeStatus}
             status={this.state.status}
+            openSettings={()=> AndroidOpenSettings.securitySettings()}
             cancel={() => this.setState({ modalActive: false })}
             notNow={() => this.setState({ modalActive: false })}
           />

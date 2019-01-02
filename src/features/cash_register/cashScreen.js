@@ -67,13 +67,16 @@ class CashScreen extends Component {
   // ACTIONS REDUX
   sumAmount = value => {
     const { sum_amo } = this.props;
-    sum_amo(value);
+    const { amount } = this.props.state
+    if((amount * 10 + value / 100)<=999999){
+      sum_amo(value);
+    }
     this.setState({
       modalOptions: false,
     });
   };
   sumTotal = () => {
-    const { sum_tot, amount } = this.props;
+    const { sum_tot} = this.props;
     sum_tot();
     this.setState({
       modalOptions: false,

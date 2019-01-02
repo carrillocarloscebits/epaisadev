@@ -34,6 +34,12 @@ class EditProduct extends Component {
     tempImage: '',
 
     products: [],
+    //error vars
+    ename: false,
+    equantity: false,
+    eprice: false,
+    ediscount: false,
+    allow:false
   };
 
   render() {
@@ -86,14 +92,29 @@ class EditProduct extends Component {
       if (
         this.name.state.value === '' ||
         this.quantity.state.value === '' ||
-        this.price.state.discount === '' ||
+        this.price.state.value === '' ||
         this.discount.state.discount === '0' ||
         imageSource === ''
       ) {
-        alert('Please, insert valid data.');
+        if(this.name.state.value === '') this.setState({ename:true});
+        else this.setState({ename:false});
+        if(this.quantity.state.value === '') this.setState({equantity:true})
+        else this.setState({equantity:false});
+        if(this.price.state.value === '') this.setState({eprice:true});
+        else this.setState({eprice:false});
+        if(this.discount.state.discount === '0') {this.setState({ediscount:true});}
+        else this.setState({ediscount:false});
+        if(this.discount.state.discount === '0') {this.setState({allow:true});}
+        else this.setState({allow:false});
         return;
       }
-
+      
+      this.setState({
+        ename:false,
+        equantity:false,
+        eprice:false,
+        ediscount:false
+      });
       let product = {
         ...this.props.item,
         name: this.name.state.value,
@@ -114,6 +135,7 @@ class EditProduct extends Component {
       const { edit_product } = this.props;
       edit_product(product);
 
+      
       saveEditingState();
       const { closeModal } = this.props;
       closeModal();
@@ -167,8 +189,9 @@ class EditProduct extends Component {
               <FloatingTextEditProductInput
                 width={productNameInputSize.width}
                 height={productNameInputSize.height}
+                error={this.state.ename}
                 labelText={'Product Name'}
-                value={this.state.name}
+                value={this.props.item.name}
                 eraseOption={false}
                 autoCapitalizeText={'words'}
                 orientation={orientation}
@@ -181,6 +204,7 @@ class EditProduct extends Component {
             <FloatingTextEditProductInput
               width={quantityInputSize.width}
               height={quantityInputSize.height}
+              error={this.state.equantity}
               labelText={'Quantity'}
               typeOfKeyboard={'numeric'}
               value={this.props.item.quant}
@@ -195,6 +219,7 @@ class EditProduct extends Component {
             <FloatingTextEditProductInput
               width={priceInputSize.width}
               height={priceInputSize.height}
+              error={this.state.eprice}
               labelText={'Price (₹)'}
               value={this.props.item.unitPrice}
               typeOfKeyboard={'numeric'}
@@ -214,6 +239,7 @@ class EditProduct extends Component {
               }}
             >
               <SelectorDiscount
+                error={this.state.ediscount}
                 width={discountSelectorSize.width}
                 orientation={this.props.orientation}
                 ref={discount => {

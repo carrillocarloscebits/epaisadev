@@ -36,13 +36,15 @@ export default class SelectorDiscount extends Component {
 
       keyboardActive: false,
       orientation: this.props.orientation,
+
+      error:this.props.error
     };
 
     this.changeDropdownDiscountArrow = this.changeDropdownDiscountArrow.bind(
       this
     );
   }
-
+  
   clearModalDiscountInput = () => {
     this.setState({
       discount: '',
@@ -96,7 +98,7 @@ export default class SelectorDiscount extends Component {
 
   render() {
     let dataDiscountNomination = [{ value: '%' }, { value: '₹' }];
-
+    const {error} = this.props
     return (
       <View
         ref={ref => {
@@ -108,14 +110,14 @@ export default class SelectorDiscount extends Component {
                 discountStylesPortrait.textInputModal,
                 {
                   width: wp(this.props.width + '%'),
-                  borderBottomColor: this.state.colorError,
+                  borderBottomColor: error? '#D0021B':this.state.colorError,
                 },
               ]
             : [
                 discountStylesLandscape.textInputModalLandscape,
                 {
                   width: wp(this.props.width + '%'),
-                  borderBottomColor: this.state.colorError,
+                  borderBottomColor: error? '#D0021B':this.state.colorError,
                 },
               ]
         }
@@ -130,8 +132,8 @@ export default class SelectorDiscount extends Component {
           <TextMontserrat
             style={
               this.state.orientation
-                ? { fontSize: hp('1.7%'), fontWeight: '600', color: '#6B6B6B' }
-                : { fontSize: hp('1.7%'), fontWeight: '600', color: '#6B6B6B' }
+                ? { fontSize: hp('1.7%'), fontWeight: '600', color: error? '#D0021B':'#6B6B6B' }
+                : { fontSize: hp('1.7%'), fontWeight: '600',  color: error? '#D0021B': '#6B6B6B' }
             }
           >
             Discount
@@ -149,7 +151,7 @@ export default class SelectorDiscount extends Component {
               //box label
               boxLabelStyle={{
                 fontSize: hp('2.1%'),
-                color: this.state.colorError,
+                color:error? '#D0021B': this.state.colorError,
                 fontFamily: 'Montserrat-SemiBold',
               }}
               //keyActive?
@@ -203,13 +205,13 @@ export default class SelectorDiscount extends Component {
                 this.state.orientation
                   ? [
                       discountStylesPortrait.inputsSeparator,
-                      { backgroundColor: this.state.colorError },
+                      { backgroundColor: error? '#D0021B':this.state.colorError },
                     ]
                   : {
                       height: hp('4%'),
                       width: wp('0.2%'),
                       paddingTop: hp('0.5%'),
-                      backgroundColor: this.state.colorError,
+                      backgroundColor: error? '#D0021B':this.state.colorError,
                     }
               }
             />
@@ -229,11 +231,11 @@ export default class SelectorDiscount extends Component {
                 this.state.orientation
                   ? [
                       discountStylesPortrait.discountModalDiscountInputPortrait,
-                      { color: this.state.colorError },
+                      { color: error? '#D0021B':this.state.colorError },
                     ]
                   : [
                       discountStylesLandscape.discountModalDiscountInputLandscape,
-                      { color: this.state.colorError },
+                      { color: error? '#D0021B':this.state.colorError },
                     ]
               }
               onChangeText={text => {

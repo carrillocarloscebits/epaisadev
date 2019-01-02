@@ -15,7 +15,7 @@ const cashData = (state = initialState, action) => {
     case cashConstants.SUM_AMOUNT:
       return {
         ...state,
-        amount: (state.amount * 10 + action.payload / 100).toFixed(2),
+        amount: parseFloat(state.amount * 10 + action.payload / 100).toFixed(2),
       };
     case cashConstants.SUM_TOTAL:
       return state.amount != 0

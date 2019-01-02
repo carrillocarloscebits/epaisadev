@@ -22,6 +22,7 @@ class FloatingLabelInput extends Component {
       isFocused: false,
       rupeeSign: '₹ ',
       orientation: this.props.orientation,
+      
     };
   }
 
@@ -43,6 +44,7 @@ class FloatingLabelInput extends Component {
 
   render() {
     const { label, ...props } = this.props;
+    const error = this.props.error || false
     const labelStyle = {
       position: 'absolute',
       left: wp('1%'),
@@ -66,7 +68,7 @@ class FloatingLabelInput extends Component {
       width: this.props.eraseOption ? '93.5%' : '100%',
       fontSize: hp('2.1%'),
       paddingBottom: 0,
-      color: this.state.isFocused ? '#174285' : '#174285',
+      color: error ? '#D0021B' : '#174285',
       fontFamily: 'Montserrat-SemiBold',
     };
 
@@ -75,7 +77,7 @@ class FloatingLabelInput extends Component {
       width: this.props.eraseOption ? '88%' : '100%',
       fontSize: hp('2.1%'),
       paddingBottom: 0,
-      color: this.state.isFocused ? '#174285' : '#174285',
+      color: error ? '#D0021B' : '#174285',
       fontFamily: 'Montserrat-SemiBold',
       paddingLeft: this.props.rupeeSign ? 0 : wp('1%'),
     };
@@ -85,7 +87,7 @@ class FloatingLabelInput extends Component {
       width: '8%',
       fontSize: hp('2.1%'),
       paddingBottom: 0,
-      color: '#174285',
+      color: error ? '#D0021B' :'#174285',
       fontFamily: 'Montserrat-SemiBold',
     };
 
@@ -94,7 +96,7 @@ class FloatingLabelInput extends Component {
       width: '10%',
       fontSize: hp('2.1%'),
       paddingBottom: 0,
-      color: '#174285',
+      color: error ? '#D0021B' :'#174285',
       fontFamily: 'Montserrat-SemiBold',
       paddingLeft: wp('1%'),
     };
@@ -122,7 +124,7 @@ class FloatingLabelInput extends Component {
           height: hp('' + this.props.inputHeight) /*backgroundColor:'#EDCFAC'*/,
         }}
       >
-        <Animated.Text style={labelStyle}>{label}</Animated.Text>
+        <Animated.Text style={[labelStyle, error?{color:'#D0021B'}:null]}>{label}</Animated.Text>
         <View style={{ flexDirection: 'row' }}>
           {this.props.rupeeSign && (
             <TextInput
@@ -167,8 +169,8 @@ class FloatingLabelInput extends Component {
         </View>
         <View
           style={{
-            backgroundColor: this.state.isFocused
-              ? '#174285'
+            backgroundColor: error
+              ? '#D0021B'
               : /* 6B6B6B */ '#174285',
             width: wp('' + this.props.inputWidth),
             height: hp('0.35%'),
@@ -203,6 +205,7 @@ export default class FloatingTextEditProductInput extends Component {
         <FloatingLabelInput
           inputWidth={this.props.width}
           inputHeight={this.props.height}
+          error={this.props.error}
           //label={(!this.state.isFocused && this.state.value !== '')  ? '' : this.props.labelText }
           label={this.props.labelText}
           value={this.state.value}

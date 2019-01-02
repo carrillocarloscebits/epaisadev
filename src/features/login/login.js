@@ -17,7 +17,7 @@ import {
   DoubleBackground,
   Loading,
   Logo,
-} from 'components-login';
+} from 'components';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Biometrics from 'react-native-biometrics';
 import {
@@ -43,8 +43,8 @@ class Login extends Component {
   };
 
   state = {
-    email: 'am26@epaisa.com',
-    password: 'Test@789',
+    email: '', //am26@epaisa.com',
+    password: '', //Test@789',
     loading: false,
 
     orientation: isPortrait(),
@@ -179,11 +179,13 @@ class Login extends Component {
               >
                 <FloatingTextInput
                   label={'E-mail'}
+                  autoCapitalize={'none'}
                   onChangeText={email => this.setState({ email })}
                   value={email}
                 />
                 <FloatingTextInput
                   label={'Password'}
+                  autoCapitalize={'none'}
                   secureTextEntry={true}
                   onChangeText={password => this.setState({ password })}
                   value={password}
@@ -212,40 +214,28 @@ class Login extends Component {
               Forgot your Password?
             </TouchableText>
           </View>
-          <ButtonGradient
-            title={'SIGN IN'}
+          <View
             style={
               this.state.orientation
                 ? portraitStyles.buttonSignIn
                 : landscapeStyles.buttonSignIn
             }
-            buttonTextStyle={
-              this.state.orientation
-                ? portraitStyles.textSignIn
-                : landscapeStyles.textSignIn
-            }
-            onPress={this.handleLogin.bind(this)}
-          />
+          >
+            <ButtonGradient
+              title={'SIGN IN'}
+              onPress={this.handleLogin.bind(this)}
+            />
+          </View>
           <View
             style={
               this.state.orientation
-                ? portraitStyles.containerCreateAccount
-                : landscapeStyles.containerCreateAccount
+                ? portraitStyles.buttonCreateAccount
+                : landscapeStyles.buttonCreateAccount
             }
           >
             <ButtonOutline
               title={'CREATE NEW ACCOUNT'}
               onPress={() => this.props.navigation.navigate(CREATE_ACCOUNT)}
-              style={
-                this.state.orientation
-                  ? portraitStyles.buttonCreateAccount
-                  : landscapeStyles.buttonCreateAccount
-              }
-              buttonTextStyle={
-                this.state.orientation
-                  ? portraitStyles.textCreateAccount
-                  : landscapeStyles.textCreateAccount
-              }
             />
           </View>
         </View>

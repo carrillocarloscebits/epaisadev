@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Dimensions, ScrollView } from 'react-native';
+import { View, Dimensions, ScrollView, Text } from 'react-native';
 import { Colors } from 'api';
 import {
   DoubleBackground,
@@ -17,6 +17,8 @@ import {
 import EStyleSheet from 'react-native-extended-stylesheet';
 import ForgotPasswordForm from './containers/form_container';
 import OtpForgotPassword from './components/otp_forgot_password';
+import { portraitStyles } from './styles/portrait';
+import { landscapeStyles } from './styles/landscape';
 
 const isPortrait = () => {
   const dim = Dimensions.get('window');
@@ -29,6 +31,7 @@ const isPortrait = () => {
 
 class ForgotPassword extends Component {
   state = {
+    orientation: isPortrait(),
     loading: false,
     otp: false,
     canResetPassword: false,
@@ -144,29 +147,24 @@ class ForgotPassword extends Component {
     const otpMessage = ['We have sent an OTP to'];
 
     return (
-      <ScrollView keyboardShouldPersistTaps="handled" style={styles.mainContainer}>
       <DoubleBackground>
-        <View style={{ width: 50, position: 'absolute', height: 50 }}>
-          <BackHeader {...this.props} />
-        </View>
-        
-          <View style={styles.logoContainer}>
-            <Logo />
+        <View
+          style={{ height: hp('100%'), width: '100%', backgroundColor:'green' }}
+        >
+          <BackHeader {...this.props} style={{backgroundColor:'blue', flex:0, height:hp('6.5%')}} size={this.state.orientation ? hp('6.5%') : hp('4%')}/>
+          <View style={this.state.orientation ? portraitStyles.logoContainer : landscapeStyles.logoContainer}>
+            {/*<Logo />*/}
           </View>
-          <View style={styles.cardContainer}>
-            <Card style={styles.card}>
-              <ForgotPasswordForm onChangeForm={this.handleChange} />
+          <View style={this.state.orientation ? portraitStyles.cardContainer : landscapeStyles.cardContainer}>
+            <Card style={this.state.orientation ? portraitStyles.card : landscapeStyles.card}>
+              {/*<ForgotPasswordForm onChangeForm={this.handleChange} />*/}
             </Card>
-            <View style={styles.resetPasswordButton}>
               {/* disabled={!this.state.canResetPassword} */}
               <ButtonGradient
                 title={'RESET PASSWORD'}
                 onPress={() => this.setState({ otp: true })}
               />
-            </View>
           </View>
-        </DoubleBackground>
-
         {this.props.reset_password.alert && (
           //true && (
           <Alert
@@ -186,7 +184,8 @@ class ForgotPassword extends Component {
             onClosePress={this.closeOtp}
           />
         )}
-      </ScrollView>
+        </View>
+      </DoubleBackground>
     );
   }
 }

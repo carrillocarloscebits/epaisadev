@@ -80,8 +80,7 @@ export function check_mobile(mobile) {
       }
     } catch (err) {
       res.mobile.errors = ['Network error, try again!'];
-      console.log(err);
-      // dispatch(failureCheck(res));
+      dispatch(failureCheck(res));
     }
   };
 

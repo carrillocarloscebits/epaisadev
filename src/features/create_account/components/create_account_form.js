@@ -79,7 +79,8 @@ class CreateAccountForm extends Component {
 
   _checkMobile() {
     const { UserMobileNumber, CallingCode } = this.state;
-    if (UserMobileNumber === '' || UserMobileNumber.length > 10) {
+    const regex = new RegExp(/^\d{10}$/);
+    if (!regex.test(UserMobileNumber)) {
       return this.setState({
         errors: {
           ...(this.state.errors || {}),

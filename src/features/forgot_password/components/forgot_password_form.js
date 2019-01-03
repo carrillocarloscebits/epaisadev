@@ -12,7 +12,9 @@ class ForgotPasswordForm extends Component {
 
   _textChange(key, value) {
     this.setState({ [key]: value });
-    this.props[key].errors = [];
+    if (this.props[key]) {
+      this.props[key].errors = [];
+    }
   }
 
   _checkField = key => {
@@ -21,7 +23,15 @@ class ForgotPasswordForm extends Component {
         this.props.check_email(this.state.email);
         break;
       case 'mobile':
-        this.props.check_mobile(this.state.mobile);
+        const regex = new RegExp(/^\d{10}$/);
+        console.log(this.state);
+        if (regex.test(this.state.number)) {
+          this.props.check_mobile(this.state.mobile);
+        } else {
+          this.setState({
+            number: { errors: ['Enter a valid mobile number.'] },
+          });
+        }
         break;
 
       default:
@@ -30,7 +40,21 @@ class ForgotPasswordForm extends Component {
   };
 
   getErrors = key => {
-    return this.props[key] ? this.props[key].errors : [];
+    let errors = [];
+    switch (key) {
+      case 'email':
+        return this.props[key] ? this.props[key].errors : [];
+      case 'mobile':
+        if (this.props[key]) {
+          errors = [...errors, ...this.props[key].errors];
+        }
+        if (this.state.number) {
+          errors = [...errors, ...(this.state.number.errors || [])];
+        }
+        return errors;
+      default:
+        break;
+    }
   };
 
   render() {
@@ -72,6 +96,7 @@ class ForgotPasswordForm extends Component {
           onChange={val => {
             const phone = `+${val.callingCode}${val.phone}`;
             this._textChange('mobile', phone);
+            this._textChange('number', val.phone);
           }}
           margin={22}
           height={-hp('1%')}
@@ -81,6 +106,7 @@ class ForgotPasswordForm extends Component {
             Keyboard.dismiss;
             this._checkField('mobile');
           }}
+          errors={this.getErrors('mobile')}
         />
       </View>
     );

@@ -157,7 +157,7 @@ class ForgotPassword extends Component {
         {this.props.reset_password.alert && (
           //true && (
           <Alert
-            style={{ height: hp('27.5%'), width: wp('85%') }}
+            style={{ height: hp('27.5%'), width: wp('85%'), justifyContent:'center' }}
             message={this.props.reset_password.alert}
             //message={alertMessage}
             buttonTitle="OK"

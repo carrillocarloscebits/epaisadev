@@ -270,6 +270,7 @@ class PhoneInput extends Component {
               <CountryItem
                 flag={flag}
                 selected={true}
+                alpha2Code={alpha2Code}
                 name={name}
                 callingCode={callingCodes[0]}
               />

@@ -68,6 +68,9 @@ class ForgotPasswordForm extends Component {
         </TextMontserrat>
         <View>
           <FloatingTextInput
+            inputRef={input => {
+              this.emailForgotInput = input;
+            }}
             label={'E-mail'}
             autoCapitalize={'none'}
             keyboardType="email-address"
@@ -98,6 +101,9 @@ class ForgotPasswordForm extends Component {
             const phone = `+${val.callingCode}${val.phone}`;
             this._textChange('mobile', phone);
             this._textChange('number', val.phone);
+          }}      
+          inputRef={input => {
+            this.phoneForgotInput = input;
           }}
           margin={22}
           height={-hp('1%')}

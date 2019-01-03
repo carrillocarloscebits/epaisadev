@@ -149,6 +149,7 @@ class PhoneInput extends Component {
       <View>
         <View style={{ flexDirection: 'row' }}>
           <FloatingTextInput
+            ref={this.props.inputRef}
             label={text}
             phone={true}
             keyboardType="phone-pad"

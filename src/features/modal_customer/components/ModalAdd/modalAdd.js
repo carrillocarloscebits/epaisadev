@@ -14,7 +14,7 @@ class ModalAdd extends Component {
         const isLandscape =isTablet
         return(
             <Modal visible={active} transparent={true} animationType="fade" onRequestClose={closeModal} >
-                <ScrollView style={styles.container} contentContainerStyle={{alignItems:'center', justifyContent:'center'}}> 
+                <ScrollView keyboardShouldPersistTaps="handled" style={styles.container} contentContainerStyle={{alignItems:'center', justifyContent:'center'}}> 
                     <View style={{width:'100%', height:hp('100%'), alignItems:'center',justifyContent:'center'}}>
                     <CardWithHeader isLandscape={isLandscape} sizeHeaderLabel={isLandscape?"3.5%":"2.2%"} onPressCloseButton={closeModal} customBodyStyle={{alignItems:'center',justifyContent:'center'}} 
                         headerTitle="Customer Information" closeButton={true} customCardStyle={{width: hp(widthModal),}}>

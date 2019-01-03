@@ -119,86 +119,88 @@ class OtpForgotPassword extends Component {
 
         return (
             <PopUp style={popupContainer}>
-                <ScrollView contentContainerStyle={mainContainer}>
-                    <View style={closeContainer}>
-                        <ButtonClose onPress={onClosePress}/>
-                    </View>
-                    <View style={containerTopMessages}>
-                        {this.renderTopMessages()}
-                    </View>
-                    <View style={containerPhoneNumber}>
-                        <TextMontserrat style={numberText}>{this.props.reset_password.mobile_number}</TextMontserrat>
-                    </View>
-                    
+                <View style={{flex:1}}>
+                    <ScrollView contentContainerStyle={null}>
+                        <View style={closeContainer}>
+                            <ButtonClose onPress={onClosePress}/>
+                        </View>
+                        <View style={containerTopMessages}>
+                            {this.renderTopMessages()}
+                        </View>
+                        <View style={containerPhoneNumber}>
+                            <TextMontserrat style={numberText}>{this.props.reset_password.mobile_number}</TextMontserrat>
+                        </View>
+                        
 
-                    <View style={{flex: 1, flexGrow: 1, justifyContent: "space-between"}}>
-                        <View style={containerOtpFields}>
-                            <TextMontserrat style={labelOtp}> Insert OTP </TextMontserrat>
-                            <OtpInputs
-                            valid={this.props.reset_password.otp_valid}
-                            invalid={this.props.reset_password.otp_invalid}
-                            data={['first', 'second', 'third', 'fourth', 'fifth', 'sixth']}
-                            onComplete={(otp) => {
-                                this.props.validate_otp(this.props.reset_password.mobile_number, otp);
-                            }} />
-                            {this.props.reset_password.otp_invalid && 
-                            <TextMontserrat style={{fontWeight:'600', fontSize:hp('1.9%'), color:'#D0021B'}}>
-                                Incorrect Code - Re-insert or resend
-                            </TextMontserrat>}
-                        </View>
-                        <View style={containerTimer}>
-                            <Timer
-                                ref={(timer => this.timer = timer)}
-                                textStyle={timerText}
-                                onStart={() => this.setState({can_resend_otp: false})}
-                                onFinished={() => this.setState({can_resend_otp: true})}
-                            />
-                        </View>
-                        <View style={resendContainer}>
-                            <View style={{width: '70%'}}>
-                                <ButtonGradient 
-                                    title={buttonTitle}
-                                    disabled={!this.state.can_resend_otp}
-                                    onPress={() => {
-                                        this.timer.restart()
-                                        this.props.resend_otp(this.props.reset_password.mobile_number)
-                                    }}
+                        <View style={{flex: 1, flexGrow: 1, justifyContent: "space-between"}}>
+                            <View style={containerOtpFields}>
+                                <TextMontserrat style={labelOtp}> Insert OTP </TextMontserrat>
+                                <OtpInputs
+                                valid={this.props.reset_password.otp_valid}
+                                invalid={this.props.reset_password.otp_invalid}
+                                data={['first', 'second', 'third', 'fourth', 'fifth', 'sixth']}
+                                onComplete={(otp) => {
+                                    this.props.validate_otp(this.props.reset_password.mobile_number, otp);
+                                }} />
+                                {this.props.reset_password.otp_invalid && 
+                                <TextMontserrat style={{fontWeight:'600', fontSize:hp('1.9%'), color:'#D0021B'}}>
+                                    Incorrect Code - Re-insert or resend
+                                </TextMontserrat>}
+                            </View>
+                            <View style={containerTimer}>
+                                <Timer
+                                    ref={(timer => this.timer = timer)}
+                                    textStyle={timerText}
+                                    onStart={() => this.setState({can_resend_otp: false})}
+                                    onFinished={() => this.setState({can_resend_otp: true})}
                                 />
                             </View>
+                            <View style={resendContainer}>
+                                <View style={{width: '70%'}}>
+                                    <ButtonGradient 
+                                        title={buttonTitle}
+                                        disabled={!this.state.can_resend_otp}
+                                        onPress={() => {
+                                            this.timer.restart()
+                                            this.props.resend_otp(this.props.reset_password.mobile_number)
+                                        }}
+                                    />
+                                </View>
+                            </View>
                         </View>
-                    </View>
-                    <View>
-                        <TextMontserrat style={{
-                            fontSize: '1.8rem',
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                            marginTop: '1.5rem',
-                        }}>Insert New Password</TextMontserrat>
-                        <FloatingTextInput
-                            label={'Password'}
-                            secureTextEntry={true}
-                            editable={false}
-                            validate={this._password_validations()}
-                            onChangeText={(password) => this.setState({password})}
-                            />
-                        <FloatingTextInput
-                            label={'Re-type Password'}
-                            secureTextEntry={true}
-                            editable={false}
-                            errors={this._password_match()}
-                            onChangeText={(password_confirm) => this.setState({password_confirm})}
-                            />
-                        <View style={{marginTop: 20}}>
-                            <ButtonGradient disabled={(!this.props.reset_password.otp_valid && !this.props.reset_password.auth_key)} title={'RESET PASSWORD'} onPress={() => {
-                                if(this._password_match().length === 0) {
-                                    const {mobile_number, otp_code, auth_key} = this.props.reset_password;
-                                    const {password} = this.state
-                                    this.props.reset_pass(mobile_number, otp_code, password, auth_key)
-                                }
-                            }} />
+                        <View>
+                            <TextMontserrat style={{
+                                fontSize: '1.8rem',
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                                marginTop: '1.5rem',
+                            }}>Insert New Password</TextMontserrat>
+                            <FloatingTextInput
+                                label={'Password'}
+                                secureTextEntry={true}
+                                editable={false}
+                                validate={this._password_validations()}
+                                onChangeText={(password) => this.setState({password})}
+                                />
+                            <FloatingTextInput
+                                label={'Re-type Password'}
+                                secureTextEntry={true}
+                                editable={false}
+                                errors={this._password_match()}
+                                onChangeText={(password_confirm) => this.setState({password_confirm})}
+                                />
+                            <View style={{marginTop: 20}}>
+                                <ButtonGradient disabled={(!this.props.reset_password.otp_valid && !this.props.reset_password.auth_key)} title={'RESET PASSWORD'} onPress={() => {
+                                    if(this._password_match().length === 0) {
+                                        const {mobile_number, otp_code, auth_key} = this.props.reset_password;
+                                        const {password} = this.state
+                                        this.props.reset_pass(mobile_number, otp_code, password, auth_key)
+                                    }
+                                }} />
+                            </View>
                         </View>
-                    </View>
-                </ScrollView>
+                    </ScrollView>
+                </View>
             </PopUp>
         )
     }

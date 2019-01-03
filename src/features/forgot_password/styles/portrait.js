@@ -86,4 +86,9 @@ export const portraitStyles = StyleSheet.create({
         height:hp('29.5%'),
         paddingBottom:hp('8.35%')
     },
+    headerStyle: {
+        fontSize: wp('3.5%'),
+        fontWeight: '700',
+        textAlign: 'center',
+    },
 })

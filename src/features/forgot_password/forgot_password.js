@@ -163,7 +163,10 @@ class ForgotPassword extends Component {
             </View>
             <View style={this.state.orientation ? portraitStyles.cardContainer : landscapeStyles.cardContainer}>
               <Card style={this.state.orientation ? portraitStyles.card : landscapeStyles.card}>
-                <ForgotPasswordForm onChangeForm={this.handleChange} />
+                <ForgotPasswordForm 
+                  onChangeForm={this.handleChange} 
+                  headerStyle={this.state.orientation ? portraitStyles.headerStyle : landscapeStyles.headerStyle}
+                />
               </Card>
                 {/* disabled={!this.state.canResetPassword} */}
             </View>
@@ -205,7 +208,7 @@ class ForgotPassword extends Component {
             onClosePress={this.closeOtp}
           />
         )}
-        
+
         </View>
       </DoubleBackground>
     );

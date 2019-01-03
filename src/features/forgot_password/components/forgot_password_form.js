@@ -60,10 +60,10 @@ class ForgotPasswordForm extends Component {
   render() {
     return (
       <View style={{}}>
-        <TextMontserrat style={styles.instructions}>
+        <TextMontserrat style={this.props.headerStyle}>
           Enter your mobile number or e-mail
         </TextMontserrat>
-        <TextMontserrat style={styles.instructions}>
+        <TextMontserrat style={this.props.headerStyle}>
           address to reset your password
         </TextMontserrat>
         <View>

@@ -11,6 +11,7 @@ class ForgotPasswordForm extends Component {
 
   _textChange(key, value) {
     this.setState({ [key]: value });
+    this.props[key].errors = [];
   }
 
   _checkField = key => {
@@ -28,10 +29,11 @@ class ForgotPasswordForm extends Component {
   };
 
   getErrors = key => {
-    return this.props[key] ? this.props[key].error : [];
+    return this.props[key] ? this.props[key].errors : [];
   };
 
   render() {
+    console.log(this.props);
     return (
       <View style={styles.formContainer}>
         <TextMontserrat style={styles.instructions}>
@@ -67,7 +69,6 @@ class ForgotPasswordForm extends Component {
                     /> */}
         <PhoneInput
           label="Mobile Number"
-          noAngle={false}
           onChange={val => {
             const phone = `+${val.callingCode}${val.phone}`;
             this._textChange('mobile', phone);

@@ -4,19 +4,26 @@ import { Dimensions,View, Text, StyleSheet, ImageBackground,TouchableOpacity,Ima
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 class UsernameContainer extends Component {
+    processName=(value)=>{
+        name=value.split(" ");
+        result=''
+        name.map(str=>result+=(" "+str.charAt(0).toUpperCase()+ str.slice(1).toLowerCase()))
+        return result.slice(1);
+    }
     render() {
+        const {customer,toggleModal}=this.props	
         return (
              <View style={styles.container}>
-                <View style={styles.usernameBox}>
-                    <View style={styles.shadowBox} />
+                <TouchableOpacity onPress={toggleModal} style={styles.usernameBox}>
+                    <View style={[styles.shadowBox, customer?{height:hp('7%')}:{height:hp('4.8%')}]} />
 
-                    <View style={styles.borderBox}>
+                    <View style={[styles.borderBox, customer?{height:hp('7%')}:{height:hp('4.8%')}]}>
                         <Text numberOfLines={1} 
-                            style={[styles.defaultText,{paddingTop:hp('0.40%'),paddingRight:wp('2%'), fontSize:hp('2.2%')}]}>Username</Text>
-                        <Text numberOfLines={1} 
-                            style={[styles.defaultText,{paddingTop:hp('0.2%'), fontSize:hp('1.85%')}]}>174 265 44</Text>
+                            style={[styles.defaultText,{paddingTop:hp('0.40%'),paddingRight:wp('2%'), fontSize:customer?hp('2%'):hp('2.2%')}]}>{customer?this.processName(customer.name):"Customer #43"}</Text>
+                        {customer && <Text numberOfLines={1} 
+                            style={[styles.defaultText,{ fontFamily:'Montserrat-SemiBold', paddingTop:hp('0.2%'), fontSize:hp('1.85%')}]}>{customer.number}</Text>}
                     </View>                 
-                </View>
+                </TouchableOpacity>
             </View>
                    
         );
@@ -54,9 +61,8 @@ const styles = StyleSheet.create({
         borderRadius:hp('1.4%')
     },
     defaultText:{
-        height:'50%', 
         width:'100%',
-        paddingLeft:wp('2%'), 
+        paddingLeft:hp('1%'), 
         fontFamily:'Montserrat-Bold', 
         color:'white'
     }

@@ -27,14 +27,14 @@ class RightSideBar extends Component {
         keyboard=false
     }
     render() {
-        const {products, subtotal, discount, delivery,actionClose, type, openDiscount,openDelivery,removeDiscount,removeDelivery} = this.props
+        const {customer,products, subtotal, discount, delivery,actionClose, type, openDiscount,openDelivery,removeDiscount,removeDelivery,toggleModal} = this.props
         const isLandscape= isTablet
         const width = isLandscape? '34%' : null
         return (
             
             <View style={[styles.drawerRightContainer,{width},keyboard?{height:hp('100%'),}:null]}>
                 <BackgroundImage source={require('./assets/side_nav_portrait_faded.png') }/>
-                <Header actionClose={actionClose} openDiscount={openDiscount} openDelivery={openDelivery}/>
+                <Header toggleModal={toggleModal} customer={customer} actionClose={actionClose} openDiscount={openDiscount} openDelivery={openDelivery}/>
                 <Table products={products} actionClose={actionClose}/>
                 <Footer products={products} discount={discount} delivery={delivery} subtotal={subtotal} type={type} removeDiscount={removeDiscount} removeDelivery={removeDelivery}/>
             </View>

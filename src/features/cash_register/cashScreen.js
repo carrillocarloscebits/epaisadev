@@ -235,6 +235,8 @@ class CashScreen extends Component {
             content={
               //RIGHT SIDE BAR
               <RightSideBar
+                customer={customer}
+                toggleModal={this.toggleModalCustomer}
                 type={type}
                 products={products}
                 discount={totalDiscount}
@@ -290,7 +292,7 @@ class CashScreen extends Component {
                 addDelivery={this.addDelivery}
               />
               <ModalCustomer
-                widthModal="50%"
+                widthModal="45%"
                 active={this.state.modalCustomer}
                 closeModal={this.toggleModalCustomer}
                 addCustomer={this.addCustomer}
@@ -341,10 +343,13 @@ class CashScreen extends Component {
                 widthModal="60%"
                 active={this.state.modalCustomer}
                 closeModal={this.toggleModalCustomer}
+                addCustomer={this.addCustomer}
               />
             </View>
             <RightSideBar
+            customer={customer}
               type={type}
+              toggleModal={this.toggleModalCustomer}
               products={products}
               discount={totalDiscount}
               delivery={totalDelivery}

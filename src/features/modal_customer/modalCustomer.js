@@ -16,7 +16,7 @@ class ModalCustomer extends Component {
             "TAMAN SINGH/+91 98201 54617",
             "RAPHAEL BRAVO/+51 96334 99640",]
         return(
-            <ModalFind values={values} addCustomer={addCustomer} widthModal={widthModal} active={active} closeModal={closeModal}/>
+            <ModalAdd values={values} addCustomer={addCustomer} widthModal={widthModal} active={active} closeModal={closeModal}/>
         )
     }
 }

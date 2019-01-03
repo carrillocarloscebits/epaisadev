@@ -254,7 +254,7 @@ class FloatingTextInput extends Component {
       fontSize: ExtendedStyles.textInput.fontSize,
       color: isFocused ? inputActiveColor : inputInActiveColor,
       paddingVertical: 0,
-      height: EStyleSheet.value('4rem')+(this.props.height||0),
+      height: EStyleSheet.value('4rem') + (this.props.height || 0),
       marginTop: this.props.margin || 20,
       fontFamily: 'Montserrat-SemiBold',
       width: '80%',
@@ -268,7 +268,7 @@ class FloatingTextInput extends Component {
       left: leftOffset + leftPadding,
       top: this._animatedIsFocusedAndEmpty.interpolate({
         inputRange: [0, 1],
-        outputRange: [28, this.props.topper||5],
+        outputRange: [28, this.props.topper || 5],
       }),
       fontSize: this._animatedIsFocusedAndEmpty.interpolate({
         inputRange: [0, 1],

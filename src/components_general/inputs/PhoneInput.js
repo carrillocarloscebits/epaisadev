@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { FloatingTextInput } from './index';
 import { CountryItem } from './components';
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
-// import ExtraDimensions from "react-native-extra-dimensions-android";
+import flags from './api/flags';
 import { countries } from './api/countries';
 import { letters } from './api/letters';
 import { letterIndexes, sections } from './api/sections';
@@ -51,7 +51,12 @@ class PhoneInput extends Component {
       });
     });
 
-    this.setState({ sections, countries, dataToShow: sections, letterIndexes });
+    this.setState({
+      sections: sections,
+      countries: countries,
+      dataToShow: sections,
+      letterIndexes,
+    });
   }
 
   getItemLayout = sectionListGetItemLayout({
@@ -63,7 +68,6 @@ class PhoneInput extends Component {
   getLettersArr = () => {
     const letters = [];
     const { letterIndexes } = this.state;
-    console.log(letterIndexes);
 
     for (let key in letterIndexes) {
       letters.push(letterIndexes[key]);
@@ -130,7 +134,7 @@ class PhoneInput extends Component {
   };
 
   render() {
-    const { callingCodes, flag, name } = this.state.selectedCountry;
+    const { callingCodes, flag, name, alpha2Code } = this.state.selectedCountry;
     const { label, noAngle } = this.props;
     const { phone } = this.state;
     const text = label || 'Mobile';
@@ -159,7 +163,7 @@ class PhoneInput extends Component {
               <View style={countryCodeContainer}>
                 <View>
                   <Image
-                    source={{ uri: flag }}
+                    source={flags[alpha2Code]}
                     style={{ width: 30, height: 25 }}
                   />
                 </View>
@@ -291,11 +295,12 @@ class PhoneInput extends Component {
                   )}
                   renderItem={({
                     item,
-                    item: { flag, name, callingCodes },
+                    item: { flag, name, callingCodes, alpha2Code },
                   }) => (
                     <CountryItem
                       flag={flag}
                       name={name}
+                      alpha2Code={alpha2Code}
                       callingCode={callingCodes[0]}
                       onPress={() => this._selectCountryCode(item)}
                     />

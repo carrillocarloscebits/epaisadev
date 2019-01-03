@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import backgroung_portrait from './assets/backgroung_portrait.png';
-import background_image_login_landscape from './assets/background_image_login_landscape.png';
+import background_image_login_landscape from './assets/background_image_login_landscape_medium2.jpg';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -25,13 +25,13 @@ class DoubleBackground extends Component {
           <Image
             source={backgroung_portrait}
             style={{ height: hp('100%'), width: '100%' }}
-            resizeMode={'stretch'}
+            resizeMode="stretch"
           />
         ) : (
           <Image
             source={background_image_login_landscape}
-            style={{ height: hp('100%'), width: '100%' }}
-            resizeMode={'stretch'}
+            style={{ height: hp('115%'), width: '100%' }}
+            resizeMode={'cover'}
           />
         )}
 

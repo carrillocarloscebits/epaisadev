@@ -132,11 +132,12 @@ class ForgotPassword extends Component {
     const otpMessage = ['We have sent an OTP to'];
 
     return (
+      <ScrollView keyboardShouldPersistTaps="handled" style={styles.mainContainer}>
       <DoubleBackground>
         <View style={{ width: 50, position: 'absolute', height: 50 }}>
           <BackHeader {...this.props} />
         </View>
-        <ScrollView style={styles.mainContainer}>
+        
           <View style={styles.logoContainer}>
             <Logo />
           </View>
@@ -152,7 +153,7 @@ class ForgotPassword extends Component {
               />
             </View>
           </View>
-        </ScrollView>
+        </DoubleBackground>
 
         {this.props.reset_password.alert && (
           //true && (
@@ -172,7 +173,7 @@ class ForgotPassword extends Component {
             onClosePress={this.closeOtp}
           />
         )}
-      </DoubleBackground>
+      </ScrollView>
     );
   }
 }

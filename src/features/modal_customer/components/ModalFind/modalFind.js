@@ -30,6 +30,7 @@ class ModalFind extends Component {
     }
     renderResultsBox = () => {
         let value=this.state.searchStr;
+        const {addCustomer,closeModal} = this.props
         if(this.state.valuesResults.length>0){
         return this.state.valuesResults.map((item,i)=>{
             let index = item.toLowerCase().indexOf(value.toString().toLowerCase())
@@ -48,7 +49,7 @@ class ModalFind extends Component {
                 <Text style={[{backgroundColor:'#5AC8FA', paddingVertical:hp('0.3%')},styles.labelNumberCustomer]}>{number.slice(index-1-nameLen,index+valLen-1-nameLen)}</Text>
                 <Text style={styles.labelNumberCustomer}>{number.slice(index-1-nameLen+valLen,numberLen)}</Text>
             </View>)
-            return(<TouchableOpacity style={[styles.itemBox,{flexDirection:'row', alignItems:'center'},i>0?{borderTopWidth:1, borderColor:'rgba(108,123,138,0.08)'}:null]} key={i}>
+            return(<TouchableOpacity onPress={()=>{this.setState({searchStr:''}); addCustomer({name:name, number:number}); closeModal()}} style={[styles.itemBox,{flexDirection:'row', alignItems:'center'},i>0?{borderTopWidth:1, borderColor:'rgba(108,123,138,0.08)'}:null]} key={i}>
                 {index<nameLen?nameMatch:(<Text style={styles.labelNameCustomer}>{name}</Text>)}
                 <Text style={styles.labelNameCustomer}>/</Text>{
                 index>nameLen?numberMatch:(<Text style={styles.labelNumberCustomer}>{number}</Text>)}
@@ -68,7 +69,7 @@ class ModalFind extends Component {
         return(
             <Modal visible={active} transparent={true} animationType="fade" onRequestClose={closeModal}>
                 <View onLayout={(event) => {this.setState({containerheight:event.nativeEvent.layout.height}) }} style={styles.container}>
-                <View onLayout={(event) => {this.setState({cardheight:event.nativeEvent.layout.height}) }} style={{alignItems:'center'}}>
+                <View onLayout={(event) => {this.setState({cardheight:event.nativeEvent.layout.height}) }} style={{alignItems:'center',justifyContent:'center', flex:1, marginTop: -hp('20%')}}>
                 <CardWithHeader isLandscape={isLandscape} sizeHeaderLabel={isLandscape?"3.5%":"2.2%"} onPressCloseButton={closeModal} customBodyStyle={{alignItems:'center',justifyContent:'center'}} 
                 headerTitle="Customer Information" closeButton={true} customCardStyle={{width: hp(widthModal),}}>
 
@@ -85,7 +86,7 @@ class ModalFind extends Component {
                     
                 </CardWithHeader>
                 { this.state.searchStr!=''?
-                        <View style={[styles.helpBox,{top:-hp('4.0%'),width: (hp(widthModal)-hp('6%'))}]}>
+                        <View style={[styles.helpBox,{top:this.state.cardheight/2+hp('4.9%'),width: (hp(widthModal)-hp('6%'))}]}>
                             {
                                 this.renderResultsBox()
                             }

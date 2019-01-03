@@ -10,7 +10,8 @@ export const cashActions = {
     add_delivery,
     remove_delivery,
     remove_discount,
-    edit_product
+    edit_product,
+    add_customer
 };
 
 function sum_amount(value) {
@@ -40,7 +41,9 @@ function add_discount(value) {
 function add_delivery(value) {
     return { type: cashConstants.ADD_DELIVERY, payload: value };
 }
-
+function add_customer(value) {
+    return { type: cashConstants.ADD_CUSTOMER, payload: value };
+}
 function remove_discount() {
     return { type: cashConstants.REMOVE_DISCOUNT};
 }

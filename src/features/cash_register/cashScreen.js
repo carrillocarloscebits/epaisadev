@@ -182,6 +182,10 @@ class CashScreen extends Component {
       console.log(error);
     }
   };
+  addCustomer = (customer)=>{
+    const { addcustomer } = this.props;
+    addcustomer(customer);
+  }
   render() {
     const {
       amount,
@@ -191,6 +195,7 @@ class CashScreen extends Component {
       totalDiscount,
       totalDelivery,
       type,
+      customer
     } = this.props.state;
     const opa = this.state.modalActive || this.state.modalRight ? true : false;
     console.log(keyboard);
@@ -246,7 +251,7 @@ class CashScreen extends Component {
             {
               //MAIN VIEW
             }
-            <View style={[styles.container, { height: keyboard }]}>
+            <View style={[styles.container, { height: "100%" }]}>
               <Header
                 label="CASH REGISTER"
                 cant={products.length}
@@ -264,7 +269,7 @@ class CashScreen extends Component {
                 cleanTotal={this.cleanTotal}
                 backAmount={this.backAmount}
               />
-              <Footer toggleModal={this.toggleModalCustomer} />
+              <Footer customer={customer} toggleModal={this.toggleModalCustomer} />
               {opa ? <View style={styles.opacity} /> : null}
               {this.state.modalOptions ? (
                 <ModalOptions
@@ -288,6 +293,7 @@ class CashScreen extends Component {
                 widthModal="50%"
                 active={this.state.modalCustomer}
                 closeModal={this.toggleModalCustomer}
+                addCustomer={this.addCustomer}
               />
             </View>
           </Drawer>
@@ -297,7 +303,7 @@ class CashScreen extends Component {
               style={[
                 styles.container,
                 isTablet ? { flex: 1 } : null,
-                { height: keyboard },
+                { height: "100%" },
               ]}
             >
               <Header
@@ -414,6 +420,9 @@ const mapDispatchToProps = dispatch => ({
   },
   delivery: val => {
     return dispatch(cashActions.add_delivery(val));
+  },
+  addcustomer: val => {
+    return dispatch(cashActions.add_customer(val));
   },
   remove_discount: () => {
     return dispatch(cashActions.remove_discount());

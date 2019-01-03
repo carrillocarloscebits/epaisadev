@@ -15,6 +15,7 @@ const isPortrait = () => {
     return false;
   }
 };
+
 class Alert extends Component {
   render() {
     const { style, message, buttonTitle, onPress } = this.props;
@@ -30,7 +31,6 @@ class Alert extends Component {
         alignItems: 'center',
         marginBottom: 20,
         marginTop: 20,
-        justifyContent:'center'
       },
       containerButton: {
         width: '100%',
@@ -39,12 +39,10 @@ class Alert extends Component {
         // marginBottom: 20,
       },
       button: {
-        width: wp('50%'),
-        height: hp('6.25%')
+        width: '75%',
       },
       textStyle: {
-        //fontSize: hp('2.1%'),
-        fontSize: isPortrait() ? wp('3.7%') : hp('2.1%'),
+        fontSize: isPortrait() ? wp('3.7%') : hp('2.8%'),
         textAlign: 'center',
         fontWeight: '700',
         color: '#4e5965',
@@ -97,7 +95,7 @@ class Alert extends Component {
           }}
           activeOpacity={1}
         >
-          <Card style={[card, style]}>
+          <Card style={[card, alertContainer]}>
             <View style={messageContainer}>
               {message.map((element, i) => {
                 return (

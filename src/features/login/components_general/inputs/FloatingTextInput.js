@@ -175,7 +175,8 @@ class FloatingTextInput extends Component {
     const leftPadding = this.props.lineLeft ? 10 : 0;
     const paddingLeftFlags = this.props.children ? 10: 0;
     const { isFocused, value, secureTextEntry } = this.state;
-    const { label, underline, inputStyle, keyboardType, returnKeyType, onSubmitEditing, refTo } = this.props;
+    const { label, underline, inputStyle, keyboardType, returnKeyType, onSubmitEditing, refTo, 
+      autoCapitalize, } = this.props;
 
     const inputActiveColor = this._hasError() ? Colors.danger : Colors.primary;
     const inputInActiveColor = this._hasError() ? Colors.danger : "#6b6b6b";
@@ -289,6 +290,11 @@ class FloatingTextInput extends Component {
             {this.props.children}
           </View>}
           <TextInput
+            ref={input => {
+              if (this.props.inputRef) {
+                this.props.inputRef(input);
+              }
+            }}
             style={[textInputStyle, inputStyle, {
               paddingLeft: leftPadding + paddingLeftFlags,
               marginLeft: paddingLeftFlags,
@@ -305,6 +311,7 @@ class FloatingTextInput extends Component {
             underlineColorAndroid="transparent"
             returnKeyType={returnKeyType}
             onSubmitEditing={onSubmitEditing}
+            autoCapitalize={autoCapitalize}
           />
         </View>
         {renderUnderline()}

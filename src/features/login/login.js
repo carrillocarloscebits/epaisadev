@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+
 import {
   View,
   KeyboardAvoidingView,
   Platform,
   Dimensions,
   AsyncStorage,
-  Text,
 } from 'react-native';
 import { CREATE_ACCOUNT, FORGOT_PASSWORD } from 'navigation/screen_names';
 import {
@@ -17,7 +17,8 @@ import {
   DoubleBackground,
   Loading,
   Logo,
-} from 'components';
+} from 'components-login';
+
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Biometrics from 'react-native-biometrics';
 import {
@@ -222,28 +223,40 @@ class Login extends Component {
               Forgot your Password?
             </TouchableText>
           </View>
-          <View
+          <ButtonGradient
+            title={'SIGN IN'}
             style={
               this.state.orientation
                 ? portraitStyles.buttonSignIn
                 : landscapeStyles.buttonSignIn
             }
-          >
-            <ButtonGradient
-              title={'SIGN IN'}
-              onPress={this.handleLogin.bind(this)}
-            />
-          </View>
+            buttonTextStyle={
+                this.state.orientation
+                  ? portraitStyles.textSignIn
+                  : landscapeStyles.textSignIn
+              }
+            onPress={this.handleLogin.bind(this)}
+          />
           <View
             style={
               this.state.orientation
-                ? portraitStyles.buttonCreateAccount
-                : landscapeStyles.buttonCreateAccount
+                ? portraitStyles.containerCreateAccount
+                : landscapeStyles.containerCreateAccount
             }
           >
             <ButtonOutline
               title={'CREATE NEW ACCOUNT'}
               onPress={() => this.props.navigation.navigate(CREATE_ACCOUNT)}
+                style={
+                    this.state.orientation
+                        ? portraitStyles.buttonCreateAccount
+                        : landscapeStyles.buttonCreateAccount
+                }
+                buttonTextStyle={
+                    this.state.orientation
+                        ? portraitStyles.textCreateAccount
+                        : landscapeStyles.textCreateAccount
+                    }
             />
           </View>
         </View>

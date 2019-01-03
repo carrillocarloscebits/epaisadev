@@ -18,6 +18,15 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import ForgotPasswordForm from './containers/form_container';
 import OtpForgotPassword from './components/otp_forgot_password';
 
+const isPortrait = () => {
+  const dim = Dimensions.get('window');
+  if (dim.height >= dim.width) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 class ForgotPassword extends Component {
   state = {
     loading: false,
@@ -125,6 +134,9 @@ class ForgotPassword extends Component {
   render() {
     const styles = this.getStyles();
 
+    const alertPortraitStyle = { height: hp('27.5%'), width: wp('85%'), justifyContent:'center' }
+    const alertLandscapeStyle = { height: hp('33%'), width: wp('45%'), justifyContent:'center' }
+
     const alertMessage = [
       'Check your email for further',
       'instructions to reset your password.',
@@ -158,7 +170,7 @@ class ForgotPassword extends Component {
         {this.props.reset_password.alert && (
           //true && (
           <Alert
-            style={{ height: hp('27.5%'), width: wp('85%'), justifyContent:'center' }}
+            style={isPortrait() ? alertPortraitStyle : alertLandscapeStyle}
             message={this.props.reset_password.alert}
             //message={alertMessage}
             buttonTitle="OK"
@@ -167,6 +179,7 @@ class ForgotPassword extends Component {
         )}
         {this.props.reset_password.loading && <Loading />}
         {this.props.reset_password.show_otp && (
+          //true && (
           <OtpForgotPassword
             message={otpMessage}
             buttonTitle="RESEND OTP"

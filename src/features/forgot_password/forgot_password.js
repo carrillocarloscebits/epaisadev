@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Dimensions, ScrollView, Text } from 'react-native';
+import { View, Dimensions, ScrollView, Text, KeyboardAvoidingView } from 'react-native';
 import { Colors } from 'api';
 import {
   DoubleBackground,
@@ -7,8 +7,6 @@ import {
   Loading,
   Alert,
   BackHeader,
-  ButtonGradient,
-  Logo,
 } from 'components';
 import {
   heightPercentageToDP as hp,
@@ -19,6 +17,8 @@ import ForgotPasswordForm from './containers/form_container';
 import OtpForgotPassword from './components/otp_forgot_password';
 import { portraitStyles } from './styles/portrait';
 import { landscapeStyles } from './styles/landscape';
+import Logo from './components/utilities/logo/logo';
+import {ButtonGradient} from './components/buttons';
 
 const isPortrait = () => {
   const dim = Dimensions.get('window');
@@ -148,22 +148,42 @@ class ForgotPassword extends Component {
 
     return (
       <DoubleBackground>
+        
         <View
-          style={{ height: hp('100%'), width: '100%', backgroundColor:'green' }}
+          style={{height: hp('100%'), width: '100%'}}
         >
-          <BackHeader {...this.props} style={{backgroundColor:'blue', flex:0, height:hp('6.5%')}} size={this.state.orientation ? hp('6.5%') : hp('4%')}/>
+        <KeyboardAvoidingView behavior="position" enabled>
+          {this.state.orientation &&
+            <BackHeader {...this.props} style={portraitStyles.backHeaderPortraitStyle} size={hp('7%')}/>
+          }
           <View style={this.state.orientation ? portraitStyles.logoContainer : landscapeStyles.logoContainer}>
-            {/*<Logo />*/}
+            <Logo />
+            {this.state.orientation ||
+              <BackHeader {...this.props} style={landscapeStyles.backHeaderLandscapeStyle} size={hp('8.5%')}/>
+            }
           </View>
           <View style={this.state.orientation ? portraitStyles.cardContainer : landscapeStyles.cardContainer}>
             <Card style={this.state.orientation ? portraitStyles.card : landscapeStyles.card}>
-              {/*<ForgotPasswordForm onChangeForm={this.handleChange} />*/}
+              <ForgotPasswordForm onChangeForm={this.handleChange} />
             </Card>
               {/* disabled={!this.state.canResetPassword} */}
-              <ButtonGradient
-                title={'RESET PASSWORD'}
-                onPress={() => this.setState({ otp: true })}
-              />
+          </View>
+          </KeyboardAvoidingView>
+          <View style={{width:'100%', alignItems:'center'}}>
+            <ButtonGradient
+              title={'RESET PASSWORD'}
+              style={
+                this.state.orientation
+                  ? portraitStyles.buttonResetPassword
+                  : landscapeStyles.buttonResetPassword
+              }
+              buttonTextStyle={
+                  this.state.orientation
+                    ? portraitStyles.textSignIn
+                    : landscapeStyles.textSignIn
+                }
+              onPress={() => this.setState({ otp: true })}
+            />
           </View>
         {this.props.reset_password.alert && (
           //true && (

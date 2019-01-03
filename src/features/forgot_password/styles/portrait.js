@@ -3,21 +3,26 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import {Colors} from 'api';
 
 export const portraitStyles = StyleSheet.create({
+    backHeaderPortraitStyle: {
+        zIndex:0, 
+        flex:0, 
+        paddingTop:hp('1%'), 
+        height:hp('7%'), 
+        marginLeft:wp('1.5%')
+    },
     logoContainer: {
-        height:hp('24.2%'),
+        height:hp('16.5%'),
         width:'100%',
-        justifyContent:'flex-end',
-        marginBottom:hp('6.4%'),
-        backgroundColor:'red'
+        paddingTop:hp('1.5%'),
     },
     cardContainer: {
         alignItems: 'center',
-        backgroundColor:'green'
+        height: hp('45%'),
     },
     card: {
         backgroundColor:'yellow',
         width: wp('86.6%'),
-        height: hp('25.3%'),
+        height: hp('42.2%'),
         backgroundColor:'white',
         borderRadius:hp('2%'),
         paddingHorizontal:wp('8.8%'),
@@ -38,10 +43,10 @@ export const portraitStyles = StyleSheet.create({
         fontSize: hp('2.1%'),
         marginTop:hp('2.1%')
     },
-    buttonSignIn: {
+    buttonResetPassword: {
         width:wp('86.6%'), 
         height:hp('7.5%'),
-        marginTop:hp('2.3%'),
+        marginTop:hp('3.5%'),
         borderRadius:hp('20%'),
         justifyContent:'center',
         alignItems:'center',

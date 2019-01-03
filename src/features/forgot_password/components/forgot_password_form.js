@@ -59,7 +59,7 @@ class ForgotPasswordForm extends Component {
 
   render() {
     return (
-      <View style={{backgroundColor:'red'}}>
+      <View style={{}}>
         <TextMontserrat style={styles.instructions}>
           Enter your mobile number or e-mail
         </TextMontserrat>

@@ -3,18 +3,25 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import {Colors} from 'api';
 
 export const landscapeStyles = StyleSheet.create({
+    backHeaderLandscapeStyle: {
+        zIndex:0, 
+        flex:0, 
+        position:'absolute',
+        paddingTop:hp('3%'), 
+        height:hp('10%'), 
+        marginLeft:wp('0.5%'),
+    },
     logoContainer: {
-        height:hp('30%'),
+        height:hp('22.1%'),
         width:'100%',
-        justifyContent:'flex-end',
-        marginBottom:hp('3.8%')
+        paddingTop:hp('6.8%'),
     },
     cardContainer: {
         alignItems: 'center',
     },
     card: {
         width: wp('45.7%'),
-        height: hp('31.7%'),
+        height: hp('52.8%'),
         backgroundColor:'white',
         borderRadius:hp('2%'),
         paddingHorizontal:wp('4.7%'),
@@ -35,10 +42,10 @@ export const landscapeStyles = StyleSheet.create({
         fontSize: hp('2.5%'),
         marginTop:hp('0.7%')
     },
-    buttonSignIn: {
+    buttonResetPassword: {
         width:wp('45.7%'), 
         height:hp('7.8%'),
-        marginTop:hp('3.3%'),
+        marginTop:hp('8%'),
         borderRadius:hp('20%'),
         justifyContent:'center',
         alignItems:'center',

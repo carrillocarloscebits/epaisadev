@@ -86,7 +86,7 @@ export const landscapeStyles = StyleSheet.create({
         paddingBottom:hp('8.35%')
     },
     headerStyle: {
-        fontSize: hp('2%'),
+        fontSize: wp('1.8%'),
         fontWeight: '700',
         textAlign: 'center',
     },

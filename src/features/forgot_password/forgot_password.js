@@ -151,7 +151,10 @@ class ForgotPassword extends Component {
         <View
           style={{height: hp('100%'), width: '100%'}}
         >
-          <KeyboardAvoidingView behavior="position" enabled>
+          <KeyboardAvoidingView 
+            behavior="position" enabled
+            keyboardVerticalOffset={this.state.orientation ? null : hp('5%')}
+          >
             {this.state.orientation &&
               <BackHeader {...this.props} style={portraitStyles.backHeaderPortraitStyle} size={hp('7%')}/>
             }

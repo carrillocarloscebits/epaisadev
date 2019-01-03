@@ -153,7 +153,10 @@ class Login extends Component {
         <View
           style={{ alignItems: 'center', height: hp('100%'), width: '100%' }}
         >
-          <KeyboardAvoidingView behavior="position" enabled>
+          <KeyboardAvoidingView 
+            behavior="position" enabled
+            keyboardVerticalOffset={this.state.orientation ? null : hp('5%')}
+            >
             <View
               style={
                 this.state.orientation

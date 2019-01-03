@@ -201,6 +201,7 @@ class PhoneInput extends Component {
             onChangeText={this._changeText}
             focus={this.state.touched}
             maxLength={10}
+            topper={-5}
             {...this.props}
           >
             <TouchableOpacity onPress={this._toggleModal}>

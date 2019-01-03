@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { View, Keyboard } from 'react-native';
 import { TextMontserrat, FloatingTextInput, PhoneInput } from 'components';
 import EStyleSheet from 'react-native-extended-stylesheet';
-
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import {isTablet} from '../../cash_register/constants/isLandscape'
 class ForgotPasswordForm extends Component {
   state = {
     mobile: '',
@@ -73,6 +74,8 @@ class ForgotPasswordForm extends Component {
             const phone = `+${val.callingCode}${val.phone}`;
             this._textChange('mobile', phone);
           }}
+          margin={22}
+          height={-hp('1%')}
           onBlur={this._changeForm}
           returnKeyType={'done'}
           onSubmitEditing={() => {
@@ -88,14 +91,14 @@ class ForgotPasswordForm extends Component {
 const styles = EStyleSheet.create({
   instructions: {
     fontWeight: '700',
-    fontSize: '1.5rem',
+    fontSize: '1.42rem',
     textAlign: 'center',
   },
   or: {
     fontSize: '2rem',
     textAlign: 'center',
     fontWeight: '700',
-    marginTop: '1.5rem',
+    marginTop: '1.42rem',
     marginBottom: '1rem',
   },
   nameInputs: {

@@ -183,14 +183,15 @@ class CreateAccount extends Component {
     const styles = this.getStyles();
     const { termsAccepted } = this.state;
     return (
-      <DoubleBackground>
-        <View style={{ width: 50, position: 'absolute', height: 50 }}>
-          <BackHeader {...this.props} />
-        </View>
+      
         <ScrollView
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.scroll}
         >
+          <DoubleBackground>
+          <View style={{ width: 50, position: 'absolute', height: 50 }}>
+            <BackHeader {...this.props} />
+          </View>
           <View style={{ width: '100%', height: 50 }} />
           <View style={styles.logoContainer}>
             <Logo />
@@ -238,7 +239,9 @@ class CreateAccount extends Component {
               />
             </View>
           </View>
-        </ScrollView>
+          
+      </DoubleBackground>
+      
 
         <TermsModal
           visible={this.state.modalTerms}
@@ -311,7 +314,7 @@ class CreateAccount extends Component {
             onButtonClick={() => this.props.navigation.replace(LOGIN)}
           />
         )}
-      </DoubleBackground>
+          </ScrollView>
     );
   }
 }

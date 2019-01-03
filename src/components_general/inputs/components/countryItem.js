@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
 import { Colors } from 'api';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import flags from './../api/flags';
 export default class CountryItem extends Component {
   renderCheckmark = () => {
     if (this.props.selected) {
@@ -14,7 +14,14 @@ export default class CountryItem extends Component {
     }
   };
   render() {
-    const { name, callingCode, flag, selected, onPress } = this.props;
+    const {
+      name,
+      callingCode,
+      flag,
+      selected,
+      onPress,
+      alpha2Code,
+    } = this.props;
     return (
       <TouchableWithoutFeedback onPress={onPress}>
         <View
@@ -25,7 +32,7 @@ export default class CountryItem extends Component {
         >
           <View>
             <Image
-              source={{ uri: flag }}
+              source={flags[alpha2Code]}
               style={{
                 width: 30,
                 height: 25,

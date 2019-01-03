@@ -24,13 +24,11 @@ const authData = (state = initialState, action) => {
         loginFailureMessage: true,
       };
     case userConstants.HIDE_FAILURE_MESSAGE:
-      console.log('EN HIDE');
       return {
         loggingIn: false,
         loginFailureMessage: false,
       };
     default:
-      console.log('EN default');
       return state;
   }
 };

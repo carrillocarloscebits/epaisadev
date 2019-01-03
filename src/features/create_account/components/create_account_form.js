@@ -57,7 +57,6 @@ class CreateAccountForm extends Component {
     }
     return check_email(Username)
       .then(res => {
-        console.log(res);
         const errors =
           res.errors[0] == 'There is no user found with given details.'
             ? []
@@ -121,10 +120,8 @@ class CreateAccountForm extends Component {
   _changeForm = payload => {
     if (this.props.onChangeForm) {
       const { errors, ...newPayload } = payload;
-      console.log(errors);
       this.formIsValid();
 
-      console.log(newPayload);
       this.props.onChangeForm(newPayload);
     }
   };

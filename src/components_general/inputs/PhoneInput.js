@@ -18,6 +18,8 @@ import { CountryItem } from './components';
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
 // import ExtraDimensions from "react-native-extra-dimensions-android";
 import { countries } from './api/countries';
+import { letters } from './api/letters';
+import { letterIndexes, sections } from './api/sections';
 import { get_user_country } from '../../services/user_service';
 
 class PhoneInput extends Component {
@@ -37,8 +39,7 @@ class PhoneInput extends Component {
     },
   };
   componentDidMount() {
-    let currentLetter;
-    let letters = [];
+    console.log('PHONE INPUT');
     get_user_country().then(x => {
       this.setState({
         selectedCountry: {
@@ -48,37 +49,6 @@ class PhoneInput extends Component {
           alpha2Code: x.country_code,
         },
       });
-    });
-    const letterIndexes = {};
-    countries.map(({ name }, index) => {
-      if (!currentLetter) {
-        currentLetter = {
-          letter: name.charAt(0),
-          start: 0,
-        };
-      }
-      const itemLetter = name.charAt(0) === 'Å' ? 'A' : name.charAt(0);
-      if (itemLetter !== currentLetter.letter) {
-        currentLetter['end'] = index;
-        letters.push(currentLetter);
-        currentLetter = {
-          letter: name.charAt(0),
-          start: index,
-        };
-      }
-    });
-
-    let letterI = 0;
-    const sections = letters.map(({ letter, start, end }) => {
-      letterIndexes[letter] = {
-        letter: letter,
-        index: letterI,
-      };
-      letterI++;
-      return {
-        title: letter,
-        data: countries.slice(start, end),
-      };
     });
 
     this.setState({ sections, countries, dataToShow: sections, letterIndexes });
@@ -93,29 +63,10 @@ class PhoneInput extends Component {
   getLettersArr = () => {
     const letters = [];
     const { letterIndexes } = this.state;
-    for (key in letterIndexes) {
+    console.log(letterIndexes);
+
+    for (let key in letterIndexes) {
       letters.push(letterIndexes[key]);
-    }
-    return letters;
-  };
-  renderLetters = () => {
-    const { letterIndexes } = this.state;
-    const letters = [];
-    for (key in letterIndexes) {
-      const { letter, index } = letterIndexes[key];
-      letters.push(
-        <TouchableWithoutFeedback
-          onPress={() => {
-            console.log(this.myFlatList);
-            this.myFlatList.scrollToLocation({
-              itemIndex: 0,
-              sectionIndex: index,
-            });
-          }}
-        >
-          <Text style={{ fontSize: 20 }}>{letter}</Text>
-        </TouchableWithoutFeedback>
-      );
     }
     return letters;
   };

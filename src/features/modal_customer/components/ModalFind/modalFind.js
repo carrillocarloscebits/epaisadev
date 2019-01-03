@@ -120,8 +120,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     field:{
-        fontSize: hp('1.8%'),
-        paddingLeft: hp('2%'),
+        fontSize: hp('1.7%'),
+        paddingLeft: hp('1.3%'),
         paddingVertical: 0,
         fontFamily: 'Montserrat-Bold',
         marginTop:hp("0.3%"),

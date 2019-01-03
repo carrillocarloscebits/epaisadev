@@ -39,9 +39,5 @@ const styles = EStyleSheet.create({
         width:hp('4%'), 
         marginRight: '6%',
       },
-      '@media (min-width: 200) and (max-width: 400)': { // media queries
-        optionText:{
-            fontSize: 14,
-        },
-      }
+      
 });

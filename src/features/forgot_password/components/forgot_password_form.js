@@ -3,7 +3,7 @@ import { View, Keyboard } from 'react-native';
 import { TextMontserrat, FloatingTextInput, PhoneInput } from 'components';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import {isTablet} from '../../cash_register/constants/isLandscape'
+import { isTablet } from '../../cash_register/constants/isLandscape';
 class ForgotPasswordForm extends Component {
   state = {
     mobile: '',
@@ -34,7 +34,6 @@ class ForgotPasswordForm extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <View style={styles.formContainer}>
         <TextMontserrat style={styles.instructions}>

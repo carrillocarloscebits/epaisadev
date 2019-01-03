@@ -141,9 +141,7 @@ class Login extends Component {
   }
 
   handleHide() {
-    console.log(this.props.auth);
     this.props.failureHide();
-    console.log(this.props.auth);
   }
 
   render() {
@@ -186,9 +184,9 @@ class Login extends Component {
                   returnKeyType={'next'}
                   onSubmitEditing={() => this.passwordInput.focus()}
                 />
-                {
-                  this.state.orientation || <View style={{height:hp('1.5%')}}/>
-                }
+                {this.state.orientation || (
+                  <View style={{ height: hp('1.5%') }} />
+                )}
                 <FloatingTextInput
                   inputRef={input => {
                     this.passwordInput = input;

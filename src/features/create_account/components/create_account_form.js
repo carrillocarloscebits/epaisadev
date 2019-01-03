@@ -57,10 +57,18 @@ class CreateAccountForm extends Component {
     }
     return check_email(Username)
       .then(res => {
+        console.log(res);
+        const errors =
+          res.errors[0] == 'There is no user found with given details.'
+            ? []
+            : res.errors;
+        const taken = res.exists
+          ? ['This email address is already taken.']
+          : [];
         return this.setState({
           errors: {
             ...(this.state.errors || {}),
-            Username: res.errors,
+            Username: [...taken, ...errors],
           },
         });
       })

@@ -7,6 +7,7 @@ const initialState = {
   totalDiscount: (0).toFixed(2),
   totalDelivery: (0).toFixed(2),
   sideOption: '0',
+  customer: null
 };
 
 //dummy content
@@ -61,7 +62,8 @@ const cashData = (state = initialState, action) => {
       return { ...state, totalDiscount: parseFloat(0) };
     case cashConstants.REMOVE_DELIVERY:
       return { ...state, totalDelivery: parseFloat(0) };
-
+    case cashConstants.ADD_CUSTOMER:
+      return { ...state, customer: action.payload };
     case cashConstants.EDIT_PRODUCT:
       let newTotal = 0;
       let newProducts = state.products.map(product =>

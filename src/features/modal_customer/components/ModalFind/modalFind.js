@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import {StyleSheet, Modal,Text, View, Image,TextInput} from 'react-native';
+import {StyleSheet, Modal,Text, View, Image,TextInput,TouchableOpacity} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import colors from '../../styles/colors';
 import { isTablet } from '../../constants/isLandscape';
@@ -10,7 +10,13 @@ class ModalFind extends Component {
     state={
         values: this.props.values,
         valuesResults: [],
-        searchStr: ''
+        searchStr: '',
+        cardheight:0,
+        containerheight:0
+    }
+    find_dimesions(layout){
+        const {x, y, width, height} = layout;
+        alert(height)
     }
     searchCountry = (value) => {
         this.setState({searchStr:value});
@@ -24,7 +30,8 @@ class ModalFind extends Component {
     }
     renderResultsBox = () => {
         let value=this.state.searchStr;
-        console.log(this.state.valuesResults.length)
+        const {addCustomer,closeModal} = this.props
+        if(this.state.valuesResults.length>0){
         return this.state.valuesResults.map((item,i)=>{
             let index = item.toLowerCase().indexOf(value.toString().toLowerCase())
             let valLen= value.length
@@ -42,39 +49,50 @@ class ModalFind extends Component {
                 <Text style={[{backgroundColor:'#5AC8FA', paddingVertical:hp('0.3%')},styles.labelNumberCustomer]}>{number.slice(index-1-nameLen,index+valLen-1-nameLen)}</Text>
                 <Text style={styles.labelNumberCustomer}>{number.slice(index-1-nameLen+valLen,numberLen)}</Text>
             </View>)
-            return(<View style={[styles.itemBox,{flexDirection:'row', alignItems:'center'},i>0?{borderTopWidth:1, borderColor:'rgba(108,123,138,0.08)'}:null]} key={i}>
+            return(<TouchableOpacity onPress={()=>{this.setState({searchStr:''}); addCustomer({name:name, number:number}); closeModal()}} style={[styles.itemBox,{flexDirection:'row', alignItems:'center'},i>0?{borderTopWidth:1, borderColor:'rgba(108,123,138,0.08)'}:null]} key={i}>
                 {index<nameLen?nameMatch:(<Text style={styles.labelNameCustomer}>{name}</Text>)}
                 <Text style={styles.labelNameCustomer}>/</Text>{
                 index>nameLen?numberMatch:(<Text style={styles.labelNumberCustomer}>{number}</Text>)}
-            </View>)
-        })
+            </TouchableOpacity>)
+        })}else{
+            return(<TouchableOpacity style={[styles.itemBox,{flexDirection:'row', alignItems:'center'}]}>
+                    <Text style={styles.labelNameCustomer}>+ ADD A NEW CUSTOMER</Text>
+                </TouchableOpacity>)
+              
+        }
     }
     render() {
         
         const {widthModal, active, closeModal} = this.props
         const isLandscape = isTablet
+        let height
         return(
             <Modal visible={active} transparent={true} animationType="fade" onRequestClose={closeModal}>
-                <View style={styles.container}>
+                <View onLayout={(event) => {this.setState({containerheight:event.nativeEvent.layout.height}) }} style={styles.container}>
+                <View onLayout={(event) => {this.setState({cardheight:event.nativeEvent.layout.height}) }} style={{alignItems:'center',justifyContent:'center', flex:1, marginTop: -hp('20%')}}>
                 <CardWithHeader isLandscape={isLandscape} sizeHeaderLabel={isLandscape?"3.5%":"2.2%"} onPressCloseButton={closeModal} customBodyStyle={{alignItems:'center',justifyContent:'center'}} 
                 headerTitle="Customer Information" closeButton={true} customCardStyle={{width: hp(widthModal),}}>
+
                     <View style={styles.wrapper}>
                         <View style={[styles.fieldBox,{height:hp("5.3%"),width: (hp(widthModal)-hp('6%'))}]}>
                             <Image source={require('../../assets/icons/rectangleLarge.png')} resizeMethod="scale" resizeMode="stretch" 
                             style={{position:'absolute', top:hp("0.3%"),height:hp("4.9%"), width: (hp(widthModal)-hp('6%'))}}/>
-                            <TextInput placeholderTextColor="#808080" onChangeText={s=>{this.searchCountry(s)}} placeholder="Search Name/Mobile Number/Email" 
+                            <TextInput placeholderTextColor="#808080" onChangeText={s=>{this.searchCountry(s)}} placeholder={"Search Name/Mobile Number/Email"} 
                             style={[styles.field,{width: ((hp(widthModal)-hp('6%'))*0.9),}]}/>
                             <Image source={require('../../assets/icons/Shape.png')} style={{position:'absolute', right:hp("2%"),height:hp("2%"), width: hp("2%")}}/>
                         </View>
-                        { this.state.valuesResults.length>0?
-                        <View style={[styles.helpBox,{width: (hp(widthModal)-hp('6%'))}]}>
+                        
+                    </View>
+                    
+                </CardWithHeader>
+                { this.state.searchStr!=''?
+                        <View style={[styles.helpBox,{top:this.state.cardheight/2+hp('4.9%'),width: (hp(widthModal)-hp('6%'))}]}>
                             {
                                 this.renderResultsBox()
                             }
                         </View>:null
                         }
-                    </View>
-                </CardWithHeader>
+                </View>
             </View>
             </Modal>
         )
@@ -114,7 +132,9 @@ const styles = StyleSheet.create({
         backgroundColor:colors.white,
         elevation: 10,
         borderRadius: 10,
-        top:hp("5.3%"),
+        zIndex:1,
+        //top:hp("5.3%"),
+        transform: [{'translate': [0,0, 4]}]
     },
     labelNameCustomer:{
         fontFamily:"Montserrat-Bold", 

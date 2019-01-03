@@ -3,15 +3,33 @@ import {Platform, StyleSheet, Text, View,Image, TouchableOpacity} from 'react-na
 import colors from '../../styles/colors';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { TextMontserrat } from '../../../modal_delivery/components/texts';
 export default class Footer extends Component{
   render() {
-    const {toggleModal} = this.props
-    return (
+    const {toggleModal, customer} = this.props
+    const points=0
+    if(customer){
+    return(
       <TouchableOpacity style={styles.container} onPress={toggleModal}>
-      <Image source={require('../../assets/img/Group.png')} style={styles.img}/>
-        <Text style={styles.title} > ADD CUSTOMER</Text>
+        <View style={{flexDirection:'row',alignItems:"center", justifyContent:'space-between', width: '100%', paddingHorizontal:hp('1%')}}>
+          <View>
+            <TextMontserrat style={{fontWeight: '800', fontSize:hp('2%'), color:'#FFFFFF', letterSpacing:2}}>{customer.name}</TextMontserrat>
+            <TextMontserrat style={{fontWeight: '600', fontSize:hp('1.8%'), color:'#FFFFFF'}}>{customer.number}</TextMontserrat>
+          </View>
+          <View>
+            <TextMontserrat style={{fontWeight: '700', fontSize:hp('2.5%'), color:'#FFFFFF'}}>{points} Points</TextMontserrat>
+            
+          </View>
+        </View>
       </TouchableOpacity>
-    );
+    )}else{
+      return(
+        <TouchableOpacity style={styles.container} onPress={toggleModal}>
+            <Image source={require('../../assets/img/Group.png')} style={styles.img}/>
+            <Text style={styles.title}> ADD CUSTOMER</Text>
+        </TouchableOpacity>
+      )
+    }
   }
 }
 

@@ -155,9 +155,11 @@ class ForgotPassword extends Component {
         </ScrollView>
 
         {this.props.reset_password.alert && (
+          //true && (
           <Alert
             style={{ height: hp('27.5%'), width: wp('85%') }}
             message={this.props.reset_password.alert}
+            //message={alertMessage}
             buttonTitle="OK"
             onPress={this.props.reset_password.dismissAlert}
           />

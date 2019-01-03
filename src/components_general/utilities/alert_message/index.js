@@ -21,6 +21,7 @@ class Alert extends Component {
         alignItems: 'center',
         marginBottom: 20,
         marginTop: 20,
+        justifyContent:'center'
       },
       containerButton: {
         width: '100%',
@@ -32,7 +33,7 @@ class Alert extends Component {
         width: '75%',
       },
       textStyle: {
-        fontSize: hp('3%'),
+        fontSize: hp('2.1%'),
         textAlign: 'center',
         fontWeight: '700',
         color: '#4e5965',
@@ -85,7 +86,7 @@ class Alert extends Component {
           }}
           activeOpacity={1}
         >
-          <Card style={card}>
+          <Card style={[card, style]}>
             <View style={messageContainer}>
               {message.map((element, i) => {
                 return (

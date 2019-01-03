@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { FloatingTextInput } from 'components';
 import { PhoneInput } from 'components'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
+import LinearGradient from 'react-native-linear-gradient';
 class AddCustomerForm extends Component {
   state = {
     Username: '',
@@ -12,9 +12,9 @@ class AddCustomerForm extends Component {
     UserLastName: '',
     UserMobileNumber: '',
     CountryCode: '',
-    registeredReferralCode: '',
+    Anniversary: '',
     otpType: 1,
-    BusinessName: '',
+    DateBirth: '',
     errors: {},
   };
 
@@ -128,8 +128,8 @@ class AddCustomerForm extends Component {
       Password,
       UserFirstName,
       UserLastName,
-      registeredReferralCode,
-      BusinessName,
+      Anniversary,
+      DateBirth,
       errors,
     } = this.state;
 
@@ -165,37 +165,6 @@ class AddCustomerForm extends Component {
           />
         </View>
         <View>
-          <FloatingTextInput
-            label={'Password'}
-            secureTextEntry={true}
-            value={Password}
-            onChangeText={val => this._textChange('Password', val)}
-            validate={{
-              title: 'Password must contain',
-              validations: [
-                {
-                  name: '8 Characters',
-                  validateInput: val => {
-                    return val.length > 8;
-                  },
-                },
-                {
-                  name: '1 Number',
-                  validateInput: val => {
-                    return /\d/.test(val);
-                  },
-                },
-                {
-                  name: '1 Special Character',
-                  validateInput: val => {
-                    return /\W+/.test(val);
-                  },
-                },
-              ],
-            }}
-          />
-        </View>
-        <View>
           <PhoneInput
             onChange={this._changePhone}
             onSubmitEditing={() => this._checkMobile()}
@@ -204,21 +173,39 @@ class AddCustomerForm extends Component {
         </View>
         <View>
           <FloatingTextInput
-            label={'Company Name'}
+            label={'Date of Birth'}
             labelOptional={'(Optional)'}
-            value={BusinessName}
-            onChangeText={val => this._textChange('BusinessName', val)}
+            value={DateBirth}
+            onChangeText={val => this._textChange('DateBirth', val)}
           />
         </View>
         <View>
           <FloatingTextInput
-            label={'Referral Code'}
+            label={'Anniversary'}
             labelOptional={'(Optional)'}
-            value={registeredReferralCode}
+            value={Anniversary}
             onChangeText={val =>
-              this._textChange('registeredReferralCode', val)
+              this._textChange('Anniversary', val)
             }
           />
+        </View>
+        <View>
+          <TouchableOpacity
+              onPress={()=>{
+              }}
+              style={styles.touchableModalDiscountAdd }>
+
+              <LinearGradient 
+                  colors={['#174285', '#0079AA']} 
+                  start={{ x: 0, y: 1 }}
+                  end={{ x: 1, y: 1 }}
+                  style={ { borderRadius: 50 , alignItems: 'center', width: '100%',
+                  elevation: 5,} }>        
+                  <View style= {{width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'}} >
+                  <Text style= { styles.textDiscountAddButtonPortrait}>ADD</Text>                
+                  </View>
+              </LinearGradient>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -231,7 +218,23 @@ const styles = {
   },
   formContainer:{
     paddingHorizontal: hp('4%'),
-  }
+    paddingVertical: hp('1%'),
+  },
+  textDiscountAddButtonPortrait:{
+    fontFamily: 'Montserrat-SemiBold', 
+    color:'white', 
+    fontSize: hp('1.95%'), 
+    letterSpacing: 1.33,
+    textAlign:'center',
+  },
+  touchableModalDiscountAdd:{
+    width: '100%',
+    height: hp('6.25%'),
+    marginTop: hp('4%'),
+    borderRadius: 50,
+    marginBottom: hp('3%'),
+    alignItems:'center'
+  },
 };
 
 export default AddCustomerForm;

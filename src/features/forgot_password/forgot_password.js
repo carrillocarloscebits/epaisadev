@@ -148,26 +148,25 @@ class ForgotPassword extends Component {
 
     return (
       <DoubleBackground>
-        
         <View
           style={{height: hp('100%'), width: '100%'}}
         >
-        <KeyboardAvoidingView behavior="position" enabled>
-          {this.state.orientation &&
-            <BackHeader {...this.props} style={portraitStyles.backHeaderPortraitStyle} size={hp('7%')}/>
-          }
-          <View style={this.state.orientation ? portraitStyles.logoContainer : landscapeStyles.logoContainer}>
-            <Logo />
-            {this.state.orientation ||
-              <BackHeader {...this.props} style={landscapeStyles.backHeaderLandscapeStyle} size={hp('8.5%')}/>
+          <KeyboardAvoidingView behavior="position" enabled>
+            {this.state.orientation &&
+              <BackHeader {...this.props} style={portraitStyles.backHeaderPortraitStyle} size={hp('7%')}/>
             }
-          </View>
-          <View style={this.state.orientation ? portraitStyles.cardContainer : landscapeStyles.cardContainer}>
-            <Card style={this.state.orientation ? portraitStyles.card : landscapeStyles.card}>
-              <ForgotPasswordForm onChangeForm={this.handleChange} />
-            </Card>
-              {/* disabled={!this.state.canResetPassword} */}
-          </View>
+            <View style={this.state.orientation ? portraitStyles.logoContainer : landscapeStyles.logoContainer}>
+              <Logo />
+              {this.state.orientation ||
+                <BackHeader {...this.props} style={landscapeStyles.backHeaderLandscapeStyle} size={hp('8.5%')}/>
+              }
+            </View>
+            <View style={this.state.orientation ? portraitStyles.cardContainer : landscapeStyles.cardContainer}>
+              <Card style={this.state.orientation ? portraitStyles.card : landscapeStyles.card}>
+                <ForgotPasswordForm onChangeForm={this.handleChange} />
+              </Card>
+                {/* disabled={!this.state.canResetPassword} */}
+            </View>
           </KeyboardAvoidingView>
           <View style={{width:'100%', alignItems:'center'}}>
             <ButtonGradient
@@ -185,6 +184,7 @@ class ForgotPassword extends Component {
               onPress={() => this.setState({ otp: true })}
             />
           </View>
+
         {this.props.reset_password.alert && (
           //true && (
           <Alert
@@ -195,6 +195,7 @@ class ForgotPassword extends Component {
             onPress={this.props.reset_password.dismissAlert}
           />
         )}
+
         {this.props.reset_password.loading && <Loading />}
         {this.props.reset_password.show_otp && (
           //true && (
@@ -204,6 +205,7 @@ class ForgotPassword extends Component {
             onClosePress={this.closeOtp}
           />
         )}
+        
         </View>
       </DoubleBackground>
     );

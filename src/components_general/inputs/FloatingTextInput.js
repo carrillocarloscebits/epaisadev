@@ -326,7 +326,7 @@ class FloatingTextInput extends Component {
     };
 
     return (
-      <View style={{ width: '100%' }}>
+      <View style={[{ width: '100%', }, this.props.inputContainerStyle || {}]}>
         <Animated.Text style={labelStyle}>
           {label}{' '}
           {this._hasError() && (
@@ -373,13 +373,13 @@ class FloatingTextInput extends Component {
             }}
             style={[
               textInputStyle,
-              inputStyle,
               {
                 paddingLeft: leftPadding + paddingLeftFlags,
                 marginLeft: paddingLeftFlags,
                 borderLeftWidth: this.props.phone && this.showFlag() ? 2 : 0,
                 borderColor: this.state.isFocused ? inputActiveColor : '#eee',
               },
+              inputStyle,
             ]}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}

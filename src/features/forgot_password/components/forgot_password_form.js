@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Keyboard } from 'react-native';
 import { TextMontserrat, FloatingTextInput, PhoneInput } from 'components';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { isTablet } from '../../cash_register/constants/isLandscape';
 class ForgotPasswordForm extends Component {
   state = {
@@ -82,7 +82,10 @@ class ForgotPasswordForm extends Component {
               this._checkField('email');
             }}
             errors={this.getErrors('email')}
-            //labelStyle={{color:'yellow'}}
+            inputContainerStyle={{backgroundColor:'#F0C1AC', height:hp('8%')}}
+            labelStyle={{}}
+            inputStyle={{backgroundColor:'yellow', fontSize:wp('3.5%'), height:hp('5%'), marginTop:hp('3%'), paddingBottom:0}}
+            underlineStyle={{height:hp('0.4%')}}
           />
         </View>
         <TextMontserrat style={styles.or}>OR</TextMontserrat>

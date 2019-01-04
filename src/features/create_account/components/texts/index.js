@@ -1,3 +1,4 @@
-import TextMontserrat from './textMontserrat';
+import TextMontserrat from "./textMontserrat";
+import TouchableText from "./TextTouchable";
 
-export {TextMontserrat} 
+export { TextMontserrat, TouchableText };

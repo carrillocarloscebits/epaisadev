@@ -17,8 +17,8 @@ export const portraitStyles = StyleSheet.create({
     },
     cardContainer: {
         alignItems: 'center',
-        height: hp('56.65%'),
-        backgroundColor:'green',
+        height: hp('56.9%'),
+        //backgroundColor:'green',
         marginTop:hp('-2.1%')
     },
     card: {

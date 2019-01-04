@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Dimensions } from 'react-native';
+import { View, ScrollView, Dimensions, KeyboardAvoidingView } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 import { Colors } from 'api';
@@ -202,6 +202,10 @@ class CreateAccount extends Component {
           <View
             style={{height: hp('100%'), width: '100%'}}
           > 
+          <KeyboardAvoidingView 
+            behavior="position" enabled
+            keyboardVerticalOffset={this.state.orientation ? null : hp('5%')}
+          >
             {this.state.orientation &&
               <BackHeader {...this.props} style={portraitStyles.backHeaderPortraitStyle} size={hp('7%')}/>
             }
@@ -222,8 +226,10 @@ class CreateAccount extends Component {
                 {this.props.register.loading && <Loading />}
               </Card>
             </View>
+            
+          </KeyboardAvoidingView> 
 
-            <View style={{width:'100%', backgroundColor:'#BEEAD4', flexDirection:'row', justifyContent:'center'}}>
+            <View style={{width:'100%', flexDirection:'row', justifyContent:'center'}}>
                 <Checkmark
                   onPress={this._toggleTerms.bind(this)}
                   checked={termsAccepted}
@@ -236,7 +242,7 @@ class CreateAccount extends Component {
                   ePaisa's{' '}
                 </TextMontserrat>
                 <TouchableText
-                  style={styles.touchableText}
+                  style={{ fontSize: wp('3.5%'), fontWeight: '700', color: Colors.primary, textAlign: 'center'}}
                   onPress={() => this._toggleModal('modalTerms')}
                 >
                   Seller Agreement
@@ -249,14 +255,14 @@ class CreateAccount extends Component {
                 and{' '}
                 </TextMontserrat>
                 <TouchableText
-                  style={styles.touchableText}
+                  style={{ fontSize: wp('3.5%'), fontWeight: '700', color: Colors.primary, textAlign: 'center'}}
                   onPress={() => this._toggleModal('modalESign')}
                 >
                   e-Sign Consent
                 </TouchableText>
             </View>
 
-            <View style={{width:'100%', alignItems:'center'}}>
+            <View style={{width:'100%', alignItems:'center', marginTop:hp('3.4%')}}>
               <ButtonGradientCustom
                 title={'CREATE NEW ACCOUNT'}
                 style={
@@ -273,8 +279,7 @@ class CreateAccount extends Component {
                   onPress={this._handleCreateAccount}
                   disabled={!this.state.formValid}
               />
-            </View>
-            
+            </View> 
           </View>
 
         {/* ***************  MODALS *************** */}

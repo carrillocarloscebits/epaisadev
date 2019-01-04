@@ -17,7 +17,7 @@ const isPortrait = () => {
 const styles = EStyleSheet.create({
     container: {
         alignItems: 'center',
-        backgroundColor:'green',
+        //backgroundColor:'green',
     },
     logoPortrait: {
         height: hp('5.8%'),

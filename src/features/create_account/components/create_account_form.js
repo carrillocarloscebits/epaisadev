@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { FloatingTextInput } from 'components';
 import { PhoneInput } from 'components';
 import {
@@ -7,6 +7,17 @@ import {
   check_mobile,
   get_user_country,
 } from './../../../services/user_service';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
+const isPortrait = () => {
+  const dim = Dimensions.get('window');
+  if (dim.height >= dim.width) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 class CreateAccountForm extends Component {
   state = {
     //Username: 'rigelifoz@shayzam.net',
@@ -29,6 +40,8 @@ class CreateAccountForm extends Component {
     otpType: 1,
     BusinessName: '',
     errors: {},
+
+    orientation: isPortrait(),
   };
 
   componentDidMount() {
@@ -199,6 +212,21 @@ class CreateAccountForm extends Component {
               label={'First Name'}
               value={UserFirstName}
               onChangeText={val => this._textChange('UserFirstName', val)}
+
+              labelSizeUp={this.state.orientation ? hp('1.8%') : hp('2.2%')}
+              labelSizeDown={this.state.orientation ? hp('2.1%') : hp('2.7%')}
+              labelPlacingUp={0}
+              labelPlacingDown={this.state.orientation ? hp('4%') : hp('4%')}
+
+              inputContainerStyle={this.state.orientation ? {height:hp('8%')} : {height:hp('10%')}}
+              inputStyle={
+                this.state.orientation ? 
+                { fontSize:hp('2.1%'), height:hp('5%'), marginTop:hp('3%'), paddingBottom:0} :
+                { fontSize:hp('2.7%'), height:hp('6.9%'), marginTop:hp('3%'), paddingBottom:0}
+              }
+              underlineStyle={this.state.orientation ? {height:hp('0.4%')} : {height:hp('0.4%')}}
+              iconStyle={this.state.orientation ? {bottom: hp('0.1%'), zIndex: 0,} : {bottom: hp('0.1%'), zIndex: 0,}}
+              iconSize={this.state.orientation ? hp('3%') : hp('3.8%')}
               //inputStyle={{backgroundColor:'#E3C1A5'}}
               // errors={errors.UserFirstName || []}
             />
@@ -209,6 +237,21 @@ class CreateAccountForm extends Component {
               lineLeft={true}
               value={UserLastName}
               onChangeText={val => this._textChange('UserLastName', val)}
+
+              labelSizeUp={this.state.orientation ? hp('1.8%') : hp('2.2%')}
+              labelSizeDown={this.state.orientation ? hp('2.1%') : hp('2.7%')}
+              labelPlacingUp={0}
+              labelPlacingDown={this.state.orientation ? hp('4%') : hp('4%')}
+
+              inputContainerStyle={this.state.orientation ? {height:hp('8%')} : {height:hp('10%')}}
+              inputStyle={
+                this.state.orientation ? 
+                { fontSize:hp('2.1%'), height:hp('5%'), marginTop:hp('3%'), paddingBottom:0} :
+                { fontSize:hp('2.7%'), height:hp('6.9%'), marginTop:hp('3%'), paddingBottom:0}
+              }
+              underlineStyle={this.state.orientation ? {height:hp('0.4%')} : {height:hp('0.4%')}}
+              iconStyle={this.state.orientation ? {bottom: hp('0.1%'), zIndex: 0,} : {bottom: hp('0.1%'), zIndex: 0,}}
+              iconSize={this.state.orientation ? hp('3%') : hp('3.8%')}
             />
           </View>
         </View>
@@ -221,6 +264,21 @@ class CreateAccountForm extends Component {
             onBlur={this._checkEmail.bind(this)}
             errors={errors.Username || []}
             autoCapitalize={'none'}
+
+            labelSizeUp={this.state.orientation ? hp('1.8%') : hp('2.2%')}
+              labelSizeDown={this.state.orientation ? hp('2.1%') : hp('2.7%')}
+              labelPlacingUp={0}
+              labelPlacingDown={this.state.orientation ? hp('4%') : hp('4%')}
+
+              inputContainerStyle={this.state.orientation ? {height:hp('8%')} : {height:hp('10%')}}
+              inputStyle={
+                this.state.orientation ? 
+                { fontSize:hp('2.1%'), height:hp('5%'), marginTop:hp('3%'), paddingBottom:0} :
+                { fontSize:hp('2.7%'), height:hp('6.9%'), marginTop:hp('3%'), paddingBottom:0}
+              }
+              underlineStyle={this.state.orientation ? {height:hp('0.4%')} : {height:hp('0.4%')}}
+              iconStyle={this.state.orientation ? {bottom: hp('0.1%'), zIndex: 0,} : {bottom: hp('0.1%'), zIndex: 0,}}
+              iconSize={this.state.orientation ? hp('3%') : hp('3.8%')}
           />
         </View>
         <View>
@@ -252,6 +310,21 @@ class CreateAccountForm extends Component {
                 },
               ],
             }}
+
+            labelSizeUp={this.state.orientation ? hp('1.8%') : hp('2.2%')}
+              labelSizeDown={this.state.orientation ? hp('2.1%') : hp('2.7%')}
+              labelPlacingUp={0}
+              labelPlacingDown={this.state.orientation ? hp('4%') : hp('4%')}
+
+              inputContainerStyle={this.state.orientation ? {height:hp('8%')} : {height:hp('10%')}}
+              inputStyle={
+                this.state.orientation ? 
+                { fontSize:hp('2.1%'), height:hp('5%'), marginTop:hp('3%'), paddingBottom:0} :
+                { fontSize:hp('2.7%'), height:hp('6.9%'), marginTop:hp('3%'), paddingBottom:0}
+              }
+              underlineStyle={this.state.orientation ? {height:hp('0.4%')} : {height:hp('0.4%')}}
+              iconStyle={this.state.orientation ? {bottom: hp('0.1%'), zIndex: 0,} : {bottom: hp('0.1%'), zIndex: 0,}}
+              iconSize={this.state.orientation ? hp('3%') : hp('3.8%')}
           />
         </View>
         <View>
@@ -259,6 +332,8 @@ class CreateAccountForm extends Component {
             onChange={this._changePhone}
             onSubmitEditing={() => this._checkMobile()}
             errors={errors.mobile || []}
+
+            restyleComp={true}
           />
         </View>
         <View>
@@ -267,9 +342,24 @@ class CreateAccountForm extends Component {
             labelOptional={'(Optional)'}
             value={BusinessName}
             onChangeText={val => this._textChange('BusinessName', val)}
+
+            labelSizeUp={this.state.orientation ? hp('1.8%') : hp('2.2%')}
+              labelSizeDown={this.state.orientation ? hp('2.1%') : hp('2.7%')}
+              labelPlacingUp={0}
+              labelPlacingDown={this.state.orientation ? hp('4%') : hp('4%')}
+
+              inputContainerStyle={this.state.orientation ? {height:hp('8%')} : {height:hp('10%')}}
+              inputStyle={
+                this.state.orientation ? 
+                { fontSize:hp('2.1%'), height:hp('5%'), marginTop:hp('3%'), paddingBottom:0} :
+                { fontSize:hp('2.7%'), height:hp('6.9%'), marginTop:hp('3%'), paddingBottom:0}
+              }
+              underlineStyle={this.state.orientation ? {height:hp('0.4%')} : {height:hp('0.4%')}}
+              iconStyle={this.state.orientation ? {bottom: hp('0.1%'), zIndex: 0,} : {bottom: hp('0.1%'), zIndex: 0,}}
+              iconSize={this.state.orientation ? hp('3%') : hp('3.8%')}
           />
         </View>
-        {/*<View>
+        <View>
           <FloatingTextInput
             label={'Referral Code'}
             labelOptional={'(Optional)'}
@@ -277,8 +367,23 @@ class CreateAccountForm extends Component {
             onChangeText={val =>
               this._textChange('registeredReferralCode', val)
             }
+
+            labelSizeUp={this.state.orientation ? hp('1.8%') : hp('2.2%')}
+            labelSizeDown={this.state.orientation ? hp('2.1%') : hp('2.7%')}
+            labelPlacingUp={0}
+            labelPlacingDown={this.state.orientation ? hp('4%') : hp('4%')}
+
+            inputContainerStyle={this.state.orientation ? {height:hp('8%')} : {height:hp('10%')}}
+            inputStyle={
+              this.state.orientation ? 
+                { fontSize:hp('2.1%'), height:hp('5%'), marginTop:hp('3%'), paddingBottom:0} :
+                { fontSize:hp('2.7%'), height:hp('6.9%'), marginTop:hp('3%'), paddingBottom:0}
+              }
+            underlineStyle={this.state.orientation ? {height:hp('0.4%')} : {height:hp('0.4%')}}
+            iconStyle={this.state.orientation ? {bottom: hp('0.1%'), zIndex: 0,} : {bottom: hp('0.1%'), zIndex: 0,}}
+            iconSize={this.state.orientation ? hp('3%') : hp('3.8%')}
           />
-          </View>*/}
+          </View>
       </View>
     );
   }

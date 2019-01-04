@@ -129,8 +129,6 @@ const styles = EStyleSheet.create({
   '@media (min-width: 200) and (max-width: 400)': { // media queries
     badge:{
       
-      right:-hp('1.3%'),
-      top:-hp('1.3%'),
     },
   }
 

@@ -292,7 +292,7 @@ class CashScreen extends Component {
                 addDelivery={this.addDelivery}
               />
               <ModalCustomer
-                widthModal="45%"
+                widthModal="48%"
                 active={this.state.modalCustomer}
                 closeModal={this.toggleModalCustomer}
                 addCustomer={this.addCustomer}

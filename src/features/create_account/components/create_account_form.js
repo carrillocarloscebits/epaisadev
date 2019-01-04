@@ -192,13 +192,14 @@ class CreateAccountForm extends Component {
     } = this.state;
 
     return (
-      <View style={styles.formContainer}>
+      <View style={this.props.containerStyle}>
         <View style={styles.nameInputs}>
           <View style={{ flex: 1 }}>
             <FloatingTextInput
               label={'First Name'}
               value={UserFirstName}
               onChangeText={val => this._textChange('UserFirstName', val)}
+              //inputStyle={{backgroundColor:'#E3C1A5'}}
               // errors={errors.UserFirstName || []}
             />
           </View>
@@ -268,7 +269,7 @@ class CreateAccountForm extends Component {
             onChangeText={val => this._textChange('BusinessName', val)}
           />
         </View>
-        <View>
+        {/*<View>
           <FloatingTextInput
             label={'Referral Code'}
             labelOptional={'(Optional)'}
@@ -277,7 +278,7 @@ class CreateAccountForm extends Component {
               this._textChange('registeredReferralCode', val)
             }
           />
-        </View>
+          </View>*/}
       </View>
     );
   }

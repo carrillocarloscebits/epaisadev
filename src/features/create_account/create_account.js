@@ -10,11 +10,10 @@ import {
   Card,
   TextMontserrat,
   BackHeader,
-  ButtonGradient,
   Loading,
   TouchableText,
-  Logo,
   PopUp,
+  ButtonGradient
 } from 'components';
 import CreateAccountForm from './components/create_account_form';
 import TermsModal from './components/terms_modal';
@@ -23,6 +22,20 @@ import Checkmark from './components/checkmark';
 import OtpInputs from './components/otp_inputs';
 import AccountCreated from '../account_created/account_created';
 import { LOGIN } from 'navigation/screen_names';
+import { portraitStyles } from './styles/portrait';
+import { landscapeStyles } from './styles/landscape';
+import Logo from './components/utilities/logo/logo';
+import {ButtonGradientCustom} from './components/buttons';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
+const isPortrait = () => {
+  const dim = Dimensions.get('window');
+  if(dim.height >= dim.width){
+    return true;
+  }else {
+    return false;
+  }
+};
 
 class CreateAccount extends Component {
   static navigationOptions = {
@@ -36,6 +49,8 @@ class CreateAccount extends Component {
     modalESign: false,
     termsAccepted: false,
     can_resend_otp: false,
+
+    orientation : isPortrait(),
   };
 
   _toggleModal = key => {
@@ -72,7 +87,7 @@ class CreateAccount extends Component {
       },
       termsMainContainer: {
         alignItems: 'center',
-        marginBottom: '1.5rem',
+        //marginBottom: '1.5rem',
       },
       termsText: {
         fontSize: Dimensions.get('screen').width <= 320 ? 12 : 14,
@@ -183,66 +198,86 @@ class CreateAccount extends Component {
     const styles = this.getStyles();
     const { termsAccepted } = this.state;
     return (
-      
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          contentContainerStyle={styles.scroll}
-        >
-          <DoubleBackground>
-          <View style={{ width: 50, position: 'absolute', height: 50 }}>
-            <BackHeader {...this.props} />
-          </View>
-          <View style={{ width: '100%', height: 50 }} />
-          <View style={styles.logoContainer}>
-            <Logo />
-          </View>
-          <View style={styles.cardContainer}>
-            <Card style={styles.card}>
-              <CreateAccountForm
-                onChangeForm={this._setUserData.bind(this)}
-                isValid={formValid => this.setState({ formValid })}
-              />
-              {this.props.register.loading && <Loading />}
-            </Card>
-          </View>
-          <View style={styles.termsMainContainer}>
-            <View style={styles.termsContainer}>
-              <Checkmark
-                onPress={this._toggleTerms.bind(this)}
-                checked={termsAccepted}
-              />
-              <TextMontserrat style={styles.termsText}>
-                {' '}
-                ePaisa's{' '}
-              </TextMontserrat>
-              <TouchableText
-                style={styles.touchableText}
-                onPress={() => this._toggleModal('modalTerms')}
-              >
-                Seller Agreement
-              </TouchableText>
-              <TextMontserrat style={styles.termsText}> and </TextMontserrat>
+        <DoubleBackground>
+          <View
+            style={{height: hp('100%'), width: '100%'}}
+          > 
+            {this.state.orientation &&
+              <BackHeader {...this.props} style={portraitStyles.backHeaderPortraitStyle} size={hp('7%')}/>
+            }
+            <View style={this.state.orientation ? portraitStyles.logoContainer : landscapeStyles.logoContainer}>
+              <Logo />
+              {this.state.orientation ||
+                <BackHeader {...this.props} style={landscapeStyles.backHeaderLandscapeStyle} size={hp('8.5%')}/>
+              }
             </View>
-            <TouchableText
-              style={styles.touchableText}
-              onPress={() => this._toggleModal('modalESign')}
-            >
-              e-Sign Consent
-            </TouchableText>
-          </View>
-          <View style={styles.createAccountContainer}>
-            <View style={styles.createAccountButton}>
-              <ButtonGradient
-                title={'CREATE NEW ACCOUNT'}
-                onPress={this._handleCreateAccount}
-                disabled={!this.state.formValid}
-              />
-            </View>
-          </View>
-          
-      </DoubleBackground>
-      
 
+            <View style={this.state.orientation ? portraitStyles.cardContainer : landscapeStyles.cardContainer}>
+              <Card style={this.state.orientation ? portraitStyles.card : landscapeStyles.card}>
+                <CreateAccountForm
+                    onChangeForm={this._setUserData.bind(this)}
+                    isValid={formValid => this.setState({ formValid })}
+                    containerStyle={{height:hp('53.75%'), width:'100%'}}
+                  />
+                {this.props.register.loading && <Loading />}
+              </Card>
+            </View>
+
+            <View style={{width:'100%', backgroundColor:'#BEEAD4', flexDirection:'row', justifyContent:'center'}}>
+                <Checkmark
+                  onPress={this._toggleTerms.bind(this)}
+                  checked={termsAccepted}
+                />
+                <TextMontserrat style={
+                  { fontSize: wp('3.5%'), fontWeight: '600', textAlign: 'center', color: '#666',}
+                  }
+                >
+                  {' '}
+                  ePaisa's{' '}
+                </TextMontserrat>
+                <TouchableText
+                  style={styles.touchableText}
+                  onPress={() => this._toggleModal('modalTerms')}
+                >
+                  Seller Agreement
+                </TouchableText>
+                <TextMontserrat style={
+                  { fontSize: wp('3.5%'), fontWeight: '600', textAlign: 'center', color: '#666',}
+                  }
+                > 
+                {' '}
+                and{' '}
+                </TextMontserrat>
+                <TouchableText
+                  style={styles.touchableText}
+                  onPress={() => this._toggleModal('modalESign')}
+                >
+                  e-Sign Consent
+                </TouchableText>
+            </View>
+
+            <View style={{width:'100%', alignItems:'center'}}>
+              <ButtonGradientCustom
+                title={'CREATE NEW ACCOUNT'}
+                style={
+                  this.state.orientation
+                    ? portraitStyles.buttonResetPassword
+                    : landscapeStyles.buttonResetPassword
+                }
+                buttonTextStyle={
+                    this.state.orientation
+                      ? portraitStyles.textSignIn
+                      : landscapeStyles.textSignIn
+                  }
+                
+                  onPress={this._handleCreateAccount}
+                  disabled={!this.state.formValid}
+              />
+            </View>
+            
+          </View>
+
+        {/* ***************  MODALS *************** */}
         <TermsModal
           visible={this.state.modalTerms}
           closeModal={() => this._toggleModal('modalTerms')}
@@ -314,7 +349,8 @@ class CreateAccount extends Component {
             onButtonClick={() => this.props.navigation.replace(LOGIN)}
           />
         )}
-          </ScrollView>
+          
+      </DoubleBackground>
     );
   }
 }

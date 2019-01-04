@@ -171,13 +171,18 @@ class FloatingTextInput extends Component {
   };
 
   _changeText = v => {
-    const { decimals } = this.props;
-    if (decimals) {
-      //   v = v.toFixed(decimals);
-    }
-    this.setState({ value: v });
-    if (this.props.onChangeText) {
-      this.props.onChangeText(v);
+    if (this.props.onlyNumbers) {
+      if (/^(\s*|\d+)$/.test(v)) {
+        this.setState({ value: v });
+        if (this.props.onChangeText) {
+          this.props.onChangeText(v);
+        }
+      }
+    } else {
+      this.setState({ value: v });
+      if (this.props.onChangeText) {
+        this.props.onChangeText(v);
+      }
     }
   };
 

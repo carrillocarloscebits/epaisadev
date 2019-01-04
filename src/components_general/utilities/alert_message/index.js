@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import { Modal, View, TouchableOpacity, Dimensions } from 'react-native';
+import { Modal, View, TouchableOpacity } from 'react-native';
 import { TextMontserrat, ButtonGradient, Card } from 'components';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import EStyleSheet from 'react-native-extended-stylesheet';
-
-const isPortrait = () => {
-  const dim = Dimensions.get('window');
-  if (dim.height >= dim.width) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
 class Alert extends Component {
   render() {
     const { style, message, buttonTitle, onPress } = this.props;
@@ -42,7 +32,7 @@ class Alert extends Component {
         width: '75%',
       },
       textStyle: {
-        fontSize: isPortrait() ? wp('3.7%') : hp('2.8%'),
+        fontSize: '1.8rem',
         textAlign: 'center',
         fontWeight: '700',
         color: '#4e5965',
@@ -95,7 +85,7 @@ class Alert extends Component {
           }}
           activeOpacity={1}
         >
-          <Card style={[card, alertContainer]}>
+          <Card style={card}>
             <View style={messageContainer}>
               {message.map((element, i) => {
                 return (

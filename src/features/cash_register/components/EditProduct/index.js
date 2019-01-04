@@ -94,7 +94,7 @@ class EditProduct extends Component {
         this.name.state.value === '' ||
         this.quantity.state.value === '' ||
         this.price.state.value === '' ||
-        (parseFloat(this.discount.state.discount)>99.99 || parseFloat(this.discount.state.discount)<=0) ||
+        ((parseFloat(this.discount.state.discount)>99.99 && this.discount.state.discountSign === '%') || parseFloat(this.discount.state.discount)<=0) ||
         imageSource === ''
       ) {
         if(this.name.state.value === '') this.setState({ename:true});

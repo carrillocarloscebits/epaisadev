@@ -119,12 +119,15 @@ class PhoneInput extends Component {
   };
 
   _changeText = v => {
-    this.setState({ phone: v });
-    this.onChange({
-      alpha2Code: this.state.selectedCountry.alpha2Code,
-      callingCode: this.state.selectedCountry.callingCodes[0],
-      phone: v,
-    });
+    console.log(/^\d+$/.test(v));
+    if (/^\d+$/.test(v)) {
+      this.setState({ phone: 123 });
+      this.onChange({
+        alpha2Code: this.state.selectedCountry.alpha2Code,
+        callingCode: this.state.selectedCountry.callingCodes[0],
+        phone: v,
+      });
+    }
   };
 
   onChange = payload => {
@@ -135,7 +138,7 @@ class PhoneInput extends Component {
 
   render() {
     const { callingCodes, flag, name, alpha2Code } = this.state.selectedCountry;
-    const { label, noAngle } = this.props;
+    const { label } = this.props;
     const { phone } = this.state;
     const text = label || 'Mobile';
     const {
@@ -152,8 +155,9 @@ class PhoneInput extends Component {
             ref={this.props.inputRef}
             label={text}
             phone={true}
-            keyboardType="phone-pad"
+            keyboardType="numeric"
             value={phone}
+            onlyNumbers
             onChangeText={this._changeText}
             focus={this.state.touched}
             maxLength={10}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text, Animated, Platform } from 'react-native';
+import { View, TextInput, Text, Animated, Platform, Dimensions } from 'react-native';
 import { Colors } from 'api';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -46,6 +46,15 @@ import EStyleSheet from 'react-native-extended-stylesheet';
   />
  */
 
+const isPortrait = () => {
+  const dim = Dimensions.get('window');
+  if (dim.height >= dim.width) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 class FloatingTextInput extends Component {
   state = {
     isFocused: false,
@@ -54,6 +63,8 @@ class FloatingTextInput extends Component {
     isPassword: this.props.secureTextEntry,
     errors: this.props.errors || [],
     validate: this.props.validate,
+
+    orientation: isPortrait(),
   };
 
   componentWillMount() {
@@ -273,13 +284,16 @@ class FloatingTextInput extends Component {
       left: leftOffset + leftPadding,
       top: this._animatedIsFocusedAndEmpty.interpolate({
         inputRange: [0, 1],
-        outputRange: [28, this.props.topper || 5],
+        outputRange: [
+          this.props.labelPlacingDown || 28, 
+          this.props.labelPlacingUp || this.props.topper || 5
+        ],
       }),
       fontSize: this._animatedIsFocusedAndEmpty.interpolate({
         inputRange: [0, 1],
         outputRange: [
-          ExtendedStyles.labelDown.fontSize,
-          ExtendedStyles.labelUp.fontSize,
+          this.props.labelSizeDown || ExtendedStyles.labelDown.fontSize,
+          this.props.labelSizeUp || ExtendedStyles.labelUp.fontSize,
         ],
       }),
       color: '#6b6b6b',
@@ -352,7 +366,7 @@ class FloatingTextInput extends Component {
             <View
               style={{
                 width: 1,
-                height: 35,
+                height: hp('3.8%'),
                 backgroundColor: this.state.isFocused
                   ? inputActiveColor
                   : '#eee',
@@ -365,12 +379,29 @@ class FloatingTextInput extends Component {
             <View
               style={{
                 alignSelf: 'flex-end',
-                marginBottom: 8,
+                marginBottom: this.props.newSeparatorStyle ?
+                                  this.state.orientation ? 
+                                      hp('1%') :  hp('1.6%')
+                              : 8,
               }}
             >
               {this.props.children}
             </View>
           )}
+          { this.props.newSeparatorStyle ?
+            this.props.phone && this.showFlag() &&
+            <View style={{height:'100%', width: this.state.orientation ? wp('0.5%') : wp('0.25%'), justifyContent:'flex-end', alignItems:'flex-end'}}>
+              <View 
+                style={
+                  {
+                    width: this.state.orientation ? wp('0.5%') : wp('0.25%'), 
+                    height: this.state.orientation ? hp('4%') : hp('5.4%'), 
+                    backgroundColor: this.state.isFocused ? inputActiveColor : '#eee'
+                    }
+                }
+              />
+            </View> : null
+          }
           <TextInput
             ref={input => {
               if (this.props.inputRef) {

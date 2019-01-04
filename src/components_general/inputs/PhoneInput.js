@@ -21,6 +21,16 @@ import { countries } from './api/countries';
 import { letters } from './api/letters';
 import { letterIndexes, sections } from './api/sections';
 import { get_user_country } from '../../services/user_service';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
+const isPortrait = () => {
+  const dim = Dimensions.get('window');
+  if (dim.height >= dim.width) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 class PhoneInput extends Component {
   state = {
@@ -37,6 +47,8 @@ class PhoneInput extends Component {
       name: 'Afghanistan',
       alpha2Code: 'AF',
     },
+
+    orientation: isPortrait(),
   };
   componentDidMount() {
     console.log('PHONE INPUT');
@@ -151,44 +163,110 @@ class PhoneInput extends Component {
     return (
       <View>
         <View style={{ flexDirection: 'row' }}>
-          <FloatingTextInput
-            ref={this.props.inputRef}
-            label={text}
-            phone={true}
-            keyboardType="numeric"
-            value={phone}
-            onlyNumbers
-            onChangeText={this._changeText}
-            focus={this.state.touched}
-            maxLength={10}
-            topper={-5}
-            {...this.props}
-          >
-            <TouchableOpacity onPress={this._toggleModal}>
-              <View style={countryCodeContainer}>
-                <View>
-                  <Image
-                    source={flags[alpha2Code]}
-                    style={{ width: 30, height: 25 }}
-                  />
-                </View>
-                <View style={{ paddingHorizontal: 5 }}>
-                  <Text
-                    style={{
-                      fontSize: 17,
-                      fontWeight: 'bold',
-                      color: '#6b6b6b',
-                      bottom: 2,
-                    }}
-                  >{`+${callingCodes[0]}`}</Text>
-                </View>
+          { this.props.restyleComp ? 
+            <FloatingTextInput
+              ref={this.props.inputRef}
+              label={text}
+              newSeparatorStyle={true}
+              phone={true}
+              keyboardType="numeric"
+              value={phone}
+              onlyNumbers
+              onChangeText={this._changeText}
+              focus={this.state.touched}
+              maxLength={10}
+              //topper={-5}
 
-                {/*<View>
-                  <Icon name={'angle-down'} size={25} />
-                </View>*/}
-              </View>
-            </TouchableOpacity>
-          </FloatingTextInput>
+              labelSizeUp={this.state.orientation ? hp('1.8%') : hp('2.2%')}
+              labelSizeDown={this.state.orientation ? hp('2.1%') : hp('2.7%')}
+              labelPlacingUp={0}
+              labelPlacingDown={this.state.orientation ? hp('4%') : hp('4%')}
+
+              inputContainerStyle={this.state.orientation ? {height:hp('8%')} : {height:hp('10%')}}
+              inputStyle={
+                this.state.orientation ? 
+                { borderLeftWidth:0, fontSize:hp('2.1%'), height:hp('5%'), marginTop:hp('3%'), paddingBottom:0} :
+                { borderLeftWidth:0, fontSize:hp('2.7%'), height:hp('6.9%'), marginTop:hp('3%'), paddingBottom:0}
+              }
+              underlineStyle={this.state.orientation ? {height:hp('0.4%')} : {height:hp('0.4%')}}
+              //iconStyle={{bottom: hp('0.1%'), zIndex: 0,}}
+              iconSize={this.state.orientation ? hp('3%') : hp('3.8%')}
+
+              {...this.props}
+            >
+              <TouchableOpacity onPress={this._toggleModal} >
+                <View style={[countryCodeContainer,{}]}>
+                  <View>
+                    <Image
+                      source={flags[alpha2Code]}
+                      style={this.props.restyleComp ? 
+                                this.state.orientation ? 
+                                  { width: wp('7%'), height: hp('3.6%') } : 
+                                  { width: wp('3.4%'), height: hp('2.95%') } : 
+                            { width: 30, height: 25 }}
+                    />
+                  </View>
+                  <View style={{ paddingHorizontal: 5 }}>
+                    <Text
+                      style={{
+                        fontSize: this.props.restyleComp ? 
+                                    this.state.orientation ? 
+                                      hp('2.1%') : hp('2.7%')
+                                  : 17,
+                        fontWeight: 'bold',
+                        color: '#6b6b6b',
+                        bottom: this.props.restyleComp ? 0 : 2,
+                      }}
+                    >{`+${callingCodes[0]}`}</Text>
+                  </View>
+
+                  {/*<View>
+                    <Icon name={'angle-down'} size={25} />
+                  </View>*/}
+                </View>
+              </TouchableOpacity>
+            </FloatingTextInput> 
+            : 
+            <FloatingTextInput
+              ref={this.props.inputRef}
+              label={text}
+              phone={true}
+              keyboardType="numeric"
+              value={phone}
+              onlyNumbers
+              onChangeText={this._changeText}
+              focus={this.state.touched}
+              maxLength={10}
+              topper={-5}
+
+              {...this.props}
+            >
+              <TouchableOpacity onPress={this._toggleModal}>
+                <View style={countryCodeContainer}>
+                  <View>
+                    <Image
+                      source={flags[alpha2Code]}
+                      style={{ width: 30, height: 25 }}
+                    />
+                  </View>
+                  <View style={{ paddingHorizontal: 5 }}>
+                    <Text
+                      style={{
+                        fontSize: 17,
+                        fontWeight: 'bold',
+                        color: '#6b6b6b',
+                        bottom: 2,
+                      }}
+                    >{`+${callingCodes[0]}`}</Text>
+                  </View>
+
+                  {/*<View>
+                    <Icon name={'angle-down'} size={25} />
+                  </View>*/}
+                </View>
+              </TouchableOpacity>
+            </FloatingTextInput>
+          }
         </View>
 
         <Modal

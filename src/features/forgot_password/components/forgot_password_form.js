@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
-import { View, Keyboard } from 'react-native';
+import { View, Keyboard, Dimensions } from 'react-native';
 import { TextMontserrat, FloatingTextInput, PhoneInput } from 'components';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { isTablet } from '../../cash_register/constants/isLandscape';
+
+const isPortrait = () => {
+  const dim = Dimensions.get('window');
+  if (dim.height >= dim.width) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 class ForgotPasswordForm extends Component {
   state = {
     mobile: '',
     email: '',
+
+    orientation: isPortrait(),
   };
 
   _textChange(key, value) {
@@ -59,14 +71,19 @@ class ForgotPasswordForm extends Component {
 
   render() {
     return (
-      <View style={{}}>
+      <View style={{height:'100%', width:'100%', paddingTop: this.state.orientation ? 0 : hp('1.7%')}}>
         <TextMontserrat style={this.props.headerStyle}>
           Enter your mobile number or e-mail
         </TextMontserrat>
         <TextMontserrat style={this.props.headerStyle}>
           address to reset your password
         </TextMontserrat>
-        <View>
+        <View 
+          style={ this.state.orientation ? 
+            {marginTop:hp('1.5%'), marginBottom:hp('3.5%')} :
+            {marginTop:hp('2.3%'), marginBottom:hp('4%')}
+            }
+        >
           <FloatingTextInput
             inputRef={input => {
               this.emailForgotInput = input;
@@ -82,15 +99,31 @@ class ForgotPasswordForm extends Component {
               this._checkField('email');
             }}
             errors={this.getErrors('email')}
-            //inputContainerStyle={{ backgroundColor:'#F0C1AC', height:hp('8%')}}
-            //labelStyle={{}}
-            //inputStyle={{ backgroundColor:'#DBF3C5', fontSize:/*wp('3.5%')*/hp('2.1%'), height:hp('5%'), marginTop:hp('3%'), paddingBottom:0}}
-            //underlineStyle={{height:hp('0.4%')}}
-            //iconStyle={{bottom: hp('0.1%'), zIndex: 0,}}
-            //iconSize={hp('3%')}
+
+            labelSizeUp={this.state.orientation ? hp('1.8%') : hp('2.2%')}
+            labelSizeDown={this.state.orientation ? hp('2.1%') : hp('2.7%')}
+            labelPlacingUp={0}
+            labelPlacingDown={this.state.orientation ? hp('4%') : hp('4%')}
+
+            inputContainerStyle={this.state.orientation ? {height:hp('8%')} : {height:hp('10%')}}
+            inputStyle={
+              this.state.orientation ? 
+              { fontSize:hp('2.1%'), height:hp('5%'), marginTop:hp('3%'), paddingBottom:0} :
+              { fontSize:hp('2.7%'), height:hp('6.9%'), marginTop:hp('3%'), paddingBottom:0}
+            }
+            underlineStyle={this.state.orientation ? {height:hp('0.4%')} : {height:hp('0.4%')}}
+            iconStyle={this.state.orientation ? {bottom: hp('0.1%'), zIndex: 0,} : {bottom: hp('0.1%'), zIndex: 0,}}
+            iconSize={this.state.orientation ? hp('3%') : hp('3.8%')}
           />
         </View>
-        <TextMontserrat style={{margin:0, fontSize:hp('2.8%'), textAlign: 'center', fontWeight: '700',}}>OR</TextMontserrat>
+        <TextMontserrat 
+          style={ this.state.orientation ? 
+                    {marginBottom:hp('2.2%'), fontSize:hp('2.8%'), textAlign: 'center', fontWeight: '700',} : 
+                    {marginBottom:hp('2.7%'), fontSize:hp('3.6%'), textAlign: 'center', fontWeight: '700',}
+                }
+        >
+                OR
+        </TextMontserrat>
         {/* <FloatingTextInput
                         label={'Mobile Number'}
                         keyboardType='numeric'
@@ -119,6 +152,8 @@ class ForgotPasswordForm extends Component {
             this._checkField('mobile');
           }}
           errors={this.getErrors('mobile')}
+
+          restyleComp={true}
         />
       </View>
     );

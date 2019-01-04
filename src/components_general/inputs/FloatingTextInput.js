@@ -150,7 +150,7 @@ class FloatingTextInput extends Component {
         <IconMaterialCommunityIcons
           style={[styles.iconStyle, this.props.iconStyle]}
           name={icon}
-          size={24}
+          size={this.props.iconSize || 24}
           color="#666"
           onPress={this.iconPressHandler}
         />
@@ -159,9 +159,9 @@ class FloatingTextInput extends Component {
       if (this.state.isFocused) {
         return (
           <IconMaterialIcons
-            style={styles.iconStyle}
+            style={[styles.iconStyle, this.props.iconStyle]}
             name={'cancel'}
-            size={24}
+            size={this.props.iconSize || 24}
             color="#666"
             onPress={this.iconPressHandler}
           />

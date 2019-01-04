@@ -183,9 +183,9 @@ class PhoneInput extends Component {
                   >{`+${callingCodes[0]}`}</Text>
                 </View>
 
-                <View>
+                {/*<View>
                   <Icon name={'angle-down'} size={25} />
-                </View>
+                </View>*/}
               </View>
             </TouchableOpacity>
           </FloatingTextInput>

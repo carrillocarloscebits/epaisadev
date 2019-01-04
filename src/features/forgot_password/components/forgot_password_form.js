@@ -82,13 +82,15 @@ class ForgotPasswordForm extends Component {
               this._checkField('email');
             }}
             errors={this.getErrors('email')}
-            inputContainerStyle={{ height:hp('8%')}}
-            labelStyle={{}}
-            inputStyle={{ fontSize:wp('3.5%'), height:hp('5%'), marginTop:hp('3%'), paddingBottom:0}}
-            underlineStyle={{height:hp('0.4%')}}
+            //inputContainerStyle={{ backgroundColor:'#F0C1AC', height:hp('8%')}}
+            //labelStyle={{}}
+            //inputStyle={{ backgroundColor:'#DBF3C5', fontSize:/*wp('3.5%')*/hp('2.1%'), height:hp('5%'), marginTop:hp('3%'), paddingBottom:0}}
+            //underlineStyle={{height:hp('0.4%')}}
+            //iconStyle={{bottom: hp('0.1%'), zIndex: 0,}}
+            //iconSize={hp('3%')}
           />
         </View>
-        <TextMontserrat style={styles.or}>OR</TextMontserrat>
+        <TextMontserrat style={{margin:0, fontSize:hp('2.8%'), textAlign: 'center', fontWeight: '700',}}>OR</TextMontserrat>
         {/* <FloatingTextInput
                         label={'Mobile Number'}
                         keyboardType='numeric'

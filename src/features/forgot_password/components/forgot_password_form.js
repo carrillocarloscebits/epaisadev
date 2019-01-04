@@ -82,9 +82,9 @@ class ForgotPasswordForm extends Component {
               this._checkField('email');
             }}
             errors={this.getErrors('email')}
-            inputContainerStyle={{backgroundColor:'#F0C1AC', height:hp('8%')}}
+            inputContainerStyle={{ height:hp('8%')}}
             labelStyle={{}}
-            inputStyle={{backgroundColor:'yellow', fontSize:wp('3.5%'), height:hp('5%'), marginTop:hp('3%'), paddingBottom:0}}
+            inputStyle={{ fontSize:wp('3.5%'), height:hp('5%'), marginTop:hp('3%'), paddingBottom:0}}
             underlineStyle={{height:hp('0.4%')}}
           />
         </View>

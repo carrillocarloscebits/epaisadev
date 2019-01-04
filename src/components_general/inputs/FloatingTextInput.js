@@ -298,6 +298,7 @@ class FloatingTextInput extends Component {
       height: ExtendedStyles.underline.height,
       width: '100%',
       marginBottom: 3,
+      ...this.props.underlineStyle
     };
 
     renderUnderline = () => {
